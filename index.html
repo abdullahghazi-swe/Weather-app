@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <form class="search">
+        <div class="searchBox">
+            <input type="search" placeholder="Search city...">
+            <span class="searchErrors"></span>
+        </div>
+        <button type="submit">Search</button>
+    </form>
+    <div class="weather">
+        <div class="city">
+            Lahore
+        </div>
+        <div class="weather-state">
+            Clear
+        </div>
+        <div class="info-box">
+            <div class="info">Temperature: <span class="temp">32</span> °C</div>
+            <div class="info">Humidity: <span class="hum">25</span> %</div>
+            <div class="info">Wind Speed: <span class="wind">14</span> km/h</div>
+        </div>
+    </div>
+    <div class="forcast">
+        <div class="hours">
+            <div class="hour-card">
+                <p>10pm</p>
+                <p>37 C Clear</p>
+            </div>
+            <div class="hour-card">
+                <p>11pm</p>
+                <p>37 C Fog</p>
+            </div>
+            <div class="hour-card">
+                <p>12pm</p>
+                <p>37 C Rain</p>
+            </div>
+            <div class="hour-card">
+                <p>1am</p>
+                <p>37 C Clear</p>
+            </div>
+            <div class="hour-card">
+                <p>2am</p>
+                <p>37 C Wind</p>
+            </div>
+        </div>
+    </div>
+    
+    <script type="module" src="src/main.js" defer></script>
+</body>
+</html>
