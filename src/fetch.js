@@ -1,42 +1,65 @@
-import { humidity, searchErr } from "./dom.js"
+import { searchErr } from "./dom.js"
 import { setState } from "./state.js";
 import { render } from "./ui.js";
 
 export async function getCityWeather(cityName) {
-    const location = await getCityCoords(cityName);
+    const city = await getCity(cityName);
 
-    if (!location) {
-        searchErr.textContent = "City not found!"
+    if (!city) {
+        searchErr.textContent = "City not found!";
+        return;
     }
-    const weather = await getWeather(location.latitude, location.longitude);
 
-    setState({
-        city: cityName,
-        weather: weather.current.weather_code,
-        temperature: weather.current.temperature_2m,
-        humidity: weather.current.relative_humidity_2m,
-        wind: weather.current.wind_speed_10m,
-    })
+    const weather = await getWeather(city.latitude, city.longitude);
+
+    if (!weather) {
+        return;
+    }
+
+    setState(city, weather);
     render();
 }
-async function getCityCoords(name) {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${name}`
+async function getCity(name) {
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}`;
 
-    const response = await fetch(url)
-    const cities = await response.json()
+    try {
+        const response = await fetch(url)
 
-    if (!cities.results || cities.results.location === 0) return;
-    const city = cities.results[0]
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
+        }
 
-    return {latitude: city.latitude, longitude: city.longitude}
-    
+        const cities = await response.json()
+
+        if (!cities.results || cities.results.length === 0) {
+            return;
+        }
+        const city = cities.results[0]
+
+        return city;
+
+    } catch(error) {
+        console.error("Couldn't connect to server!", error)
+        return;
+    }
 }
 
 async function getWeather(lat, long) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&timezone=auto`
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation,wind_speed_10m,weather_code&timezone=auto`
 
-    const response = await fetch(url);
-    const weatherData = await response.json();
+    try {
+        const response = await fetch(url);
 
-    return weatherData;
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
+        }
+
+        const weatherData = await response.json();
+        
+        return weatherData;
+
+    } catch (error) {
+        console.error("Couldn't get weather!", error)
+        return;
+    } 
 }

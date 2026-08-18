@@ -7,11 +7,11 @@ export const state = {
     wind: null,
 }
 
-export function setState(newData) {
+export function setState(city, weather) {
 
-    state.city = newData.city;
-    state.weather = newData.weather;
-    state.temp = newData.temperature;
-    state.humidity = newData.humidity;
-    state.wind = newData.wind;
+    state.city = city.name;
+    state.weather = weather.current.weather_code;
+    state.temp = weather.current.temperature_2m;
+    state.humidity = weather.current.relative_humidity_2m;
+    state.wind = weather.current.wind_speed_10m;
 }
