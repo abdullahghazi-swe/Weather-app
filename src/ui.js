@@ -1,5 +1,6 @@
-import { city, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility } from "./dom.js";
 import { state } from "./state.js";
+import { formateTime } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -33,16 +34,20 @@ const WEATHERCODES = {
 };
 
 export function render() {
-    city.textContent = state.city;
-    weather.textContent = getWeatherState(state.weather);
-    temp.textContent = state.temp;
-    humidity.textContent = state.humidity;
-    wind.textContent = state.wind;
-    precip.textContent = state.precp;
-    uv.textContent = state.uvIndex;
-    pressure.textContent = state.pressure;
-    feels.textContent = state.feelsTemp;
-    visibility.textContent = state.visibility;
+    time.textContent = formateTime(state.location.time);
+    city.textContent = state.location.city;
+    country.textContent = `${state.location.province}, ${state.location.country}`;
+
+    weather.textContent = getWeatherState(state.baseData.weather);
+    temp.textContent = state.baseData.temperature;
+    humidity.textContent = state.baseData.humidity;
+    pressure.textContent = state.baseData.pressure;
+
+    wind.textContent = state.derivedData.windSpeed;
+    precip.textContent = state.derivedData.precipitation;
+    uv.textContent = state.derivedData.uvIndex;
+    feels.textContent = state.derivedData.apparentTemp;
+    visibility.textContent = state.derivedData.visibility;
 }
 
 function getWeatherState(code) {

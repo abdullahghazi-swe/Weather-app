@@ -2,7 +2,10 @@ export const search = document.querySelector('input');
 export const searchErr = document.querySelector('.searchErrors')
 export const searchBtn = document.querySelector('button');
 
+export const time = document.querySelector('.time')
 export const city = document.querySelector('.city')
+export const country = document.querySelector('.country')
+
 export const weather = document.querySelector('.weather-state')
 export const temp = document.querySelector('.temp')
 export const humidity = document.querySelector('.hum')

@@ -1,27 +1,41 @@
 
 export const state = {
-    city: null,
-    weather: null,
-    temp: null,
-    feelsTemp: null,
-    pressure: null,
-    humidity: null,
-    wind: null,
-    uvIndex: null,
-    precp: null,
-    visibility: null,
+    location: {
+        time: null,
+        city: null,
+        province: null,
+        country: null,
+    },
+    baseData: {
+        weather: null,
+        temperature: null,
+        pressure: null,
+        humidity: null,
+    },
+    derivedData: {
+        apparentTemp: null,
+        windSpeed: null,
+        uvIndex: null,
+        precipitation: null,
+        visibility: null,
+    },
+    hourlyData: null,
 }
 
 export function setState(city, weather) {
+    state.location.time = weather.current.time;
+    state.location.city = city.name;
+    state.location.province = city.admin1;
+    state.location.country = city.country;
 
-    state.city = city.name;
-    state.weather = weather.current.weather_code;
-    state.temp = weather.current.temperature_2m;
-    state.feelsTemp = weather.current.apparent_temperature;
-    state.pressure = weather.current.surface_pressure;
-    state.humidity = weather.current.relative_humidity_2m;
-    state.wind = weather.current.wind_speed_10m;
-    state.uvIndex = weather.current.uv_index;
-    state.precp = weather.current.precipitation;
-    state.visibility = weather.current.visibility;
+    state.baseData.weather = weather.current.weather_code;
+    state.baseData.temperature = weather.current.temperature_2m;
+    state.baseData.pressure = weather.current.surface_pressure;
+    state.baseData.humidity = weather.current.relative_humidity_2m;
+
+    state.derivedData.apparentTemp = weather.current.apparent_temperature;
+    state.derivedData.windSpeed = weather.current.wind_speed_10m;
+    state.derivedData.uvIndex = weather.current.uv_index;
+    state.derivedData.precipitation = weather.current.precipitation;
+    state.derivedData.visibility = weather.current.visibility;
 }
