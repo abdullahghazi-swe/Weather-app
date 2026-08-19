@@ -1,6 +1,6 @@
 import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility } from "./dom.js";
 import { state } from "./state.js";
-import { formateTime } from "./utils.js";
+import { formateTime, cleanHourTime } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -48,6 +48,8 @@ export function render() {
     uv.textContent = state.derivedData.uvIndex;
     feels.textContent = state.derivedData.apparentTemp;
     visibility.textContent = state.derivedData.visibility;
+
+    createHourList(state.hourlyData, hourList)
 }
 
 function getWeatherState(code) {
@@ -56,19 +58,22 @@ function getWeatherState(code) {
 
 
 
-// function createHourList(hours, hourList) {
-//     hourList.innerHTML = ''
-//     for (const hour in hours) {
-//         const card = document.createElement('div')
-//         card.classList.add('hour-card')
+function createHourList(hours, list) {
+    list.innerHTML = ''
+    for (const hour of hours) {
+        const card = document.createElement('div')
+        card.classList.add('hour-card')
         
-//         const hourLable = document.createElement('div')
-//         const hourTemp = document.createElement('p')
+        const hourLable = document.createElement('div')
+        const hourWeather = document.createElement('div')
+        const hourTemp = document.createElement('p')
 
-//         hourLable.textContent = `${hour}pm`;
-//         hourTemp.textContent = `${hours[hour]} C`;
+        hourLable.textContent = cleanHourTime(hour.time);
         
-//         card.append(hourLable, hourTemp)
-//         hourList.appendChild(card)
-//     }
-// }
+        hourWeather.textContent = getWeatherState(hour.weather);
+        hourTemp.textContent = `${hour.temp} °C`;
+        
+        card.append(hourLable, hourWeather, hourTemp)
+        hourList.appendChild(card)
+    }
+}

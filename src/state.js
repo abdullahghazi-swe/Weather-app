@@ -1,3 +1,4 @@
+import { cleanHourData } from "./utils.js";
 
 export const state = {
     location: {
@@ -19,7 +20,7 @@ export const state = {
         precipitation: null,
         visibility: null,
     },
-    hourlyData: null,
+    hourlyData: [],
 }
 
 export function setState(city, weather) {
@@ -38,4 +39,6 @@ export function setState(city, weather) {
     state.derivedData.uvIndex = weather.current.uv_index;
     state.derivedData.precipitation = weather.current.precipitation;
     state.derivedData.visibility = weather.current.visibility;
+
+    state.hourlyData = cleanHourData(weather.hourly)
 }

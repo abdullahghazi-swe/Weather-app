@@ -16,6 +16,6 @@ export const precip = document.querySelector('.precp')
 export const uv = document.querySelector('.uv')
 export const visibility = document.querySelector('.visibility')
 
-export const hourList = document.querySelector('.hours')
+export const hourList = document.querySelector('.hourlyForcast')
 
 export const form = document.querySelector('form')
