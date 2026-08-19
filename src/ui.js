@@ -1,4 +1,4 @@
-import { city, weather, temp, humidity, wind, hourList } from "./dom.js";
+import { city, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility } from "./dom.js";
 import { state } from "./state.js";
 
 const WEATHERCODES = {
@@ -38,6 +38,11 @@ export function render() {
     temp.textContent = state.temp;
     humidity.textContent = state.humidity;
     wind.textContent = state.wind;
+    precip.textContent = state.precp;
+    uv.textContent = state.uvIndex;
+    pressure.textContent = state.pressure;
+    feels.textContent = state.feelsTemp;
+    visibility.textContent = state.visibility;
 }
 
 function getWeatherState(code) {

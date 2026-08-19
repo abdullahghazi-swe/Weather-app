@@ -45,7 +45,7 @@ async function getCity(name) {
 }
 
 async function getWeather(lat, long) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation,wind_speed_10m,weather_code&timezone=auto`
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation,visibility,wind_speed_10m,weather_code&timezone=auto`
 
     try {
         const response = await fetch(url);
