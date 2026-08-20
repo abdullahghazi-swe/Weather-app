@@ -1,17 +1,31 @@
-import { weather } from "./dom.js"
-
-const dateFormater = new Intl.DateTimeFormat('en-US', { weekday: 'short', month: 'short', day: 'numeric' })
-const timeFormater = new Intl.DateTimeFormat('en-US', { hour12: true, hour: '2-digit', minute: '2-digit' })
 const hourFormater = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'numeric' })
+const dayFormater = new Intl.DateTimeFormat('en-US', { weekday: 'short' })
 
-export function formateTime(str) {
-    const time = new Date(str)
-    return `${dateFormater.format(time)} · ${timeFormater.format(time)}`
+export function formateTime(timezone) {
+    const now = new Date();
+    const dateFormater = new Intl.DateTimeFormat('en-US', { timeZone:timezone, weekday: 'short', month: 'short', day: 'numeric' });
+    const timeFormater = new Intl.DateTimeFormat('en-US', { timeZone:timezone, hour12: true, hour: '2-digit', minute: 'numeric' });
+    
+    return `${dateFormater.format(now)} · ${timeFormater.format(now)}`;
 }
 
-export function cleanHourTime(str) {
-    const time = new Date(str)
-    return hourFormater.format(time)
+export function cleanHourTime(timeStr, currentTime) {
+    if (timeStr.slice(0, 13) === currentTime.slice(0, 13)) {
+        return "Now";
+    } 
+
+    const time = new Date(timeStr);
+    return hourFormater.format(time);
+}
+
+export function cleanDay(dateStr, currentTime) {
+    console.log(dateStr, currentTime)
+    if (dateStr === currentTime.slice(0, 10)) {
+        return "Today";
+    }
+    
+    const day = new Date(dateStr);
+    return dayFormater.format(day);
 }
 
 export function cleanHourData(hourly) {
@@ -24,4 +38,18 @@ export function cleanHourData(hourly) {
         })
     }
     return timeList;
+}
+
+export function cleanDailyData(daily) {
+    const dayList = [];
+    for (let i=0; i < daily.time.length; i++) {
+        dayList.push({
+            date: daily.time[i],
+            weather: daily.weather_code[i],
+            precipitaion: daily.precipitation_probability_mean[i],
+            tempMax: daily.temperature_2m_max[i],
+            tempMin: daily.temperature_2m_min[i],
+        })
+    }
+    return dayList;
 }

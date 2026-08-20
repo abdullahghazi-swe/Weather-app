@@ -17,5 +17,6 @@ export const uv = document.querySelector('.uv')
 export const visibility = document.querySelector('.visibility')
 
 export const hourList = document.querySelector('.hourlyForcast')
+export const dailyList = document.querySelector('.dailyForcast')
 
 export const form = document.querySelector('form')

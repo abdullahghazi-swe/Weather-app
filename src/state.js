@@ -1,8 +1,9 @@
-import { cleanHourData } from "./utils.js";
+import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
     location: {
         time: null,
+        timezone: null,
         city: null,
         province: null,
         country: null,
@@ -21,10 +22,12 @@ export const state = {
         visibility: null,
     },
     hourlyData: [],
+    dailyData: [],
 }
 
 export function setState(city, weather) {
     state.location.time = weather.current.time;
+    state.location.timezone = weather.timezone;
     state.location.city = city.name;
     state.location.province = city.admin1;
     state.location.country = city.country;
@@ -41,4 +44,5 @@ export function setState(city, weather) {
     state.derivedData.visibility = weather.current.visibility;
 
     state.hourlyData = cleanHourData(weather.hourly)
+    state.dailyData = cleanDailyData(weather.daily)
 }

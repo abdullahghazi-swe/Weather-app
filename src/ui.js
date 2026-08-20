@@ -1,6 +1,6 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList } from "./dom.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime } from "./utils.js";
+import { formateTime, cleanHourTime, cleanDay } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -34,7 +34,7 @@ const WEATHERCODES = {
 };
 
 export function render() {
-    time.textContent = formateTime(state.location.time);
+    time.textContent = formateTime(state.location.timezone);
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
 
@@ -49,7 +49,8 @@ export function render() {
     feels.textContent = state.derivedData.apparentTemp;
     visibility.textContent = state.derivedData.visibility;
 
-    createHourList(state.hourlyData, hourList)
+    createHourList(state.hourlyData, hourList, state.location.time);
+    createDailyList(state.dailyData, dailyList, state.location.time);
 }
 
 function getWeatherState(code) {
@@ -58,7 +59,7 @@ function getWeatherState(code) {
 
 
 
-function createHourList(hours, list) {
+function createHourList(hours, list, currentTime) {
     list.innerHTML = ''
     for (const hour of hours) {
         const card = document.createElement('div')
@@ -68,12 +69,33 @@ function createHourList(hours, list) {
         const hourWeather = document.createElement('div')
         const hourTemp = document.createElement('p')
 
-        hourLable.textContent = cleanHourTime(hour.time);
+        hourLable.textContent = cleanHourTime(hour.time, currentTime);
         
         hourWeather.textContent = getWeatherState(hour.weather);
         hourTemp.textContent = `${hour.temp} °C`;
         
         card.append(hourLable, hourWeather, hourTemp)
-        hourList.appendChild(card)
+        list.appendChild(card)
+    }
+}
+
+function createDailyList(daily, list, currentTime) {
+    list.innerHTML = "";
+    for (const day of daily) {
+        const card = document.createElement('div')
+        card.classList.add('day-card')
+        
+        const dayBox = document.createElement('div')
+        const weatherBox = document.createElement('div')
+        const precipBox = document.createElement('span')
+        const tempBox = document.createElement('div')
+
+        dayBox.textContent = cleanDay(day.date, currentTime)
+        weatherBox.textContent = getWeatherState(day.weather);
+        precipBox.textContent = `${day.precipitaion}%`;
+        tempBox.textContent = `${day.tempMin}° - ${day.tempMax}°`
+        
+        card.append(dayBox, weatherBox, precipBox, tempBox)
+        list.appendChild(card)
     }
 }
