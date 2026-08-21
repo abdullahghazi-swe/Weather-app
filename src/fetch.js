@@ -85,12 +85,8 @@ export async function getWeatherOnLoad() {
         console.log("Couldnt get weather!")
         return;
     }
-    const city = {
-        name: location.address.city || location.address.village || location.address.town,
-        state: location.address.state,
-        country: location.address.country
-    }
-    setState(city, weather)
+
+    setState(location, weather)
     render()
 }
 
@@ -104,11 +100,35 @@ async function getlocationOnLoad() {
         const cityData = await response.json();
         
         if (cityData) {
-            return cityData;
+            return {
+                lat: cityData.lat,
+                lon: cityData.lon,
+                name: cityData.address.city || location.address.village || location.address.town,
+                state: cityData.address.state,
+                country: cityData.address.country
+            }
         }
     } catch (error) {
         console.error(error)
-    }    
+    }
+
+    try {
+        const response = await fetch("https://hackmyip.com/api/ip");
+        const cityData = await response.json();
+
+        if (location) {
+            return {
+                lat: cityData.data.location.latitude,
+                lon: cityData.data.location.longitude,
+                name: cityData.data.location.city,
+                state: cityData.data.location.region,
+                country: cityData.data.location.country_name
+            }
+        }
+
+    }catch (err) {
+        console.error(err)
+    }
 }
 
 function getLocationFromBrowser() {
