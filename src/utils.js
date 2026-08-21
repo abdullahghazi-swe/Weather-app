@@ -19,7 +19,7 @@ export function cleanHourTime(timeStr, currentTime) {
 }
 
 export function cleanDay(dateStr, currentTime) {
-    console.log(dateStr, currentTime)
+
     if (dateStr === currentTime.slice(0, 10)) {
         return "Today";
     }

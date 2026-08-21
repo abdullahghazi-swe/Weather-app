@@ -1,19 +1,25 @@
-import { searchErr } from "./dom.js"
+import { country, searchErr } from "./dom.js"
 import { setState } from "./state.js";
 import { render } from "./ui.js";
 
 export async function getCityWeather(cityName) {
-    const city = await getCity(cityName);
+    const location = await getCity(cityName);
 
-    if (!city) {
+    if (!location) {
         searchErr.textContent = "City not found!";
         return;
     }
 
-    const weather = await getWeather(city.latitude, city.longitude);
+    const weather = await getWeather(location.latitude, location.longitude);
 
     if (!weather) {
         return;
+    }
+
+    const city = {
+        name: city.name,
+        state: city.admin1,
+        country: city.country
     }
 
     setState(city, weather);
@@ -66,3 +72,58 @@ async function getWeather(lat, long) {
         return;
     } 
 }
+export async function getWeatherOnLoad() {
+    const location = await getlocationOnLoad();
+
+    if (!location) {
+        console.log("Couldn't get location");
+        return
+    }
+
+    const weather = await getWeather(location.lat, location.lon)
+    if (!weather) {
+        console.log("Couldnt get weather!")
+        return;
+    }
+    const city = {
+        name: location.address.city || location.address.village || location.address.town,
+        state: location.address.state,
+        country: location.address.country
+    }
+    setState(city, weather)
+    render()
+}
+
+
+async function getlocationOnLoad() {
+    try {
+        const data = await getLocationFromBrowser()
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${data.lat}&lon=${data.lon}&format=json`;
+
+        const response = await fetch(url);
+        const cityData = await response.json();
+        
+        if (cityData) {
+            return cityData;
+        }
+    } catch (error) {
+        console.error(error)
+    }    
+}
+
+function getLocationFromBrowser() {
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+            (position) => resolve({
+                lat: position.coords.latitude,
+                lon: position.coords.longitude
+        }),
+    (error) => reject(error),
+    {
+        enableHighAccuracy: false,
+        timeout: 5000,
+        maximumAge: 0,
+      })
+    })
+}
+

@@ -29,7 +29,7 @@ export function setState(city, weather) {
     state.location.time = weather.current.time;
     state.location.timezone = weather.timezone;
     state.location.city = city.name;
-    state.location.province = city.admin1;
+    state.location.province = city.state;
     state.location.country = city.country;
 
     state.baseData.weather = weather.current.weather_code;
