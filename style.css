@@ -20,6 +20,7 @@ body {
     display: flex;
     flex-direction: column;
     width: 50%;
+    position: relative;
 }
 
 .search {
@@ -27,6 +28,22 @@ body {
     justify-content: end;
     width: 100%;
     gap: 8px;
+}
+
+.search-results {
+    display: none;
+    width: 100%;
+    border-radius: 4px;
+    flex-direction: column;
+    position: absolute;
+    top: calc(100% + 4px);
+    background-color: white;
+    z-index: 10;
+    color: black;
+}
+
+.show-results {
+    display: flex;
 }
 
 input {
@@ -46,6 +63,17 @@ button {
     padding: 8px 16px;
     border-radius: 4px;
     cursor: pointer;
+}
+
+.city-result {
+    width: 100%;
+    border-bottom: 1px solid black;
+    padding: 8px;
+    cursor: pointer;
+}
+
+.city-result:hover {
+    background-color: rgb(232, 233, 235);
 }
 
 .city {
@@ -85,7 +113,7 @@ button {
     background-color: rgb(3, 40, 141);
     border-radius: 16px;
     width: 100%;
-    padding: 24px;
+    padding: 20px;
 }
 
 .day-card {

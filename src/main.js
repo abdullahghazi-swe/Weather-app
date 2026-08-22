@@ -1,6 +1,10 @@
-import { initApp } from "./search.js";
+import { initEventListeners } from "./events.js";
 import { getWeatherOnLoad } from "./fetch.js";
+
+function initApp() {
+    initEventListeners()
+    getWeatherOnLoad()
+}
 
 initApp()
 
-getWeatherOnLoad()

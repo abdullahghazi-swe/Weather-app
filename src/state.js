@@ -1,6 +1,7 @@
 import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
+    searchResult:  [],
     location: {
         time: null,
         timezone: null,

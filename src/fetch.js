@@ -1,6 +1,6 @@
-import { country, searchErr } from "./dom.js"
-import { setState } from "./state.js";
-import { render } from "./ui.js";
+import { searchErr } from "./dom.js"
+import { setState, state } from "./state.js";
+import { render, renderSearchResults } from "./ui.js";
 
 export async function getCityWeather(cityName) {
     const location = await getCity(cityName);
@@ -17,14 +17,68 @@ export async function getCityWeather(cityName) {
     }
 
     const city = {
-        name: city.name,
-        state: city.admin1,
-        country: city.country
+        name: location.name,
+        state: location.admin1,
+        country: location.country
     }
 
     setState(city, weather);
     render();
 }
+
+export async function manageSelectedCity(selectedCityId) {
+    const cityData = state.searchResult.find((city) => city.id === selectedCityId)
+
+    if (!cityData) return
+    console.log(cityData.id)
+    const weather = await getWeather(cityData.latitude, cityData.longitude);
+    
+    if (!weather) return;
+
+    const formatedData = {
+        name: cityData.name,
+        state: cityData.admin1,
+        country: cityData.country
+    }
+    setState(formatedData, weather);
+    render();
+}
+
+export async function cityResults(searchQuery) {
+    const citiesList = await getCitiesList(searchQuery);
+
+    if (!citiesList) {
+        searchErr.textContent = "City not found!";
+        return;
+    }
+    state.searchResult = citiesList;
+    renderSearchResults();
+}
+
+async function getCitiesList(query) {
+    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}`;
+
+    try {
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
+        }
+
+        const cities = await response.json();
+
+        if (!cities.results || cities.results.length === 0) {
+            return;
+        }
+
+        return cities.results;
+
+    } catch(error) {
+        console.error("Couldn't connect to server!", error)
+        return;
+    }
+}
+
 async function getCity(name) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}`;
 
@@ -72,6 +126,7 @@ async function getWeather(lat, long) {
         return;
     } 
 }
+
 export async function getWeatherOnLoad() {
     const location = await getlocationOnLoad();
 

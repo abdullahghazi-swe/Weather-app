@@ -1,6 +1,6 @@
 export const search = document.querySelector('input');
 export const searchErr = document.querySelector('.searchErrors')
-export const searchBtn = document.querySelector('button');
+export const searchResult = document.querySelector('.search-results')
 
 export const time = document.querySelector('.time')
 export const city = document.querySelector('.city')
@@ -18,5 +18,3 @@ export const visibility = document.querySelector('.visibility')
 
 export const hourList = document.querySelector('.hourlyForcast')
 export const dailyList = document.querySelector('.dailyForcast')
-
-export const form = document.querySelector('form')

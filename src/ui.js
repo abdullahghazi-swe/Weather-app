@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult } from "./dom.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay } from "./utils.js";
 
@@ -51,6 +51,8 @@ export function render() {
 
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
+
+    searchResult.classList.remove('show-results')
 }
 
 function getWeatherState(code) {
@@ -97,5 +99,29 @@ function createDailyList(daily, list, currentTime) {
         
         card.append(dayBox, weatherBox, precipBox, tempBox)
         list.appendChild(card)
+    }
+}
+
+export function renderSearchResults() {
+    searchResult.innerHTML = '';
+
+    searchResult.classList.add('show-results')
+    console.log(state.searchResult);
+    for (const city of state.searchResult) {
+        const box = document.createElement('div');
+        const cityName = document.createElement('div');
+        const details = document.createElement('div');
+
+        const state = city.admin1 ? `${city.admin1}, ` : '';
+        const district = city.admin2 ? `${city.admin2}, ` : '';
+        const division = city.admin3 ? `${city.admin3}, ` : '';
+
+        box.classList.add('city-result')
+        box.dataset.id = city.id;
+
+        cityName.textContent = city.name;
+        details.textContent = division + district + state + city.country;
+        box.append(cityName, details)
+        searchResult.appendChild(box)
     }
 }
