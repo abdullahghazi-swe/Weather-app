@@ -1,39 +1,23 @@
 import { searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderSearchResults } from "./ui.js";
+import { saveWeather, getCache } from "./storage.js";
 
 let controller;
-
-export async function getCityWeather(cityName) {
-    const location = await getCity(cityName);
-
-    if (!location) {
-        searchErr.textContent = "City not found!";
-        return;
-    }
-
-    const weather = await getWeather(location.latitude, location.longitude);
-
-    if (!weather) {
-        return;
-    }
-
-    const city = {
-        name: location.name,
-        state: location.admin1,
-        country: location.country
-    }
-
-    setState(city, weather);
-    render();
-}
 
 export async function manageSelectedCity(selectedCityId) {
     const cityData = state.searchResult.find((city) => city.id === selectedCityId)
 
-    if (!cityData) return
+    if (!cityData) return;
 
-    const weather = await getWeather(cityData.latitude, cityData.longitude);
+    const coords = { 
+        latitude: cityData.latitude,
+        longitude: cityData.longitude
+    }
+
+    const cachedWeather = getCache(coords)
+
+    const weather = cachedWeather || await getWeather(cityData.latitude, cityData.longitude);
     
     if (!weather) return;
 
@@ -42,6 +26,11 @@ export async function manageSelectedCity(selectedCityId) {
         state: cityData.admin1,
         country: cityData.country
     }
+
+    if (!cachedWeather) {
+        saveWeather(coords, weather)
+    }
+
     setState(formatedData, weather);
     render();
 }
@@ -83,31 +72,6 @@ async function getCitiesList(query) {
             console.log("Request aborted.")
             return "Abort";
         }
-        console.error("Couldn't connect to server!", error)
-        return;
-    }
-}
-
-async function getCity(name) {
-    const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}`;
-
-    try {
-        const response = await fetch(url)
-
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
-        }
-
-        const cities = await response.json()
-
-        if (!cities.results || cities.results.length === 0) {
-            return;
-        }
-        const city = cities.results[0]
-
-        return city;
-
-    } catch(error) {
         console.error("Couldn't connect to server!", error)
         return;
     }

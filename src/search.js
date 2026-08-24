@@ -1,5 +1,5 @@
 import { search, searchErr } from "./dom.js";
-import { getCityWeather, cityResults } from "./fetch.js";
+import { cityResults } from "./fetch.js";
 
 const searchState = {
     timer: null,
@@ -19,13 +19,6 @@ export function getCities() {
             cityResults(search.value)
         }
     }, 600)
-}
-
-export function searchData() {
-    searchErr.textContent = '';
-    const query = search.value.toLowerCase().trim();
-
-    getCityWeather(query)
 }
 
 
