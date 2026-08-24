@@ -7,13 +7,15 @@ const searchState = {
 
 export function getCities() {
     searchErr.textContent = '';
+    const query = search.value.trim();
+
     if (searchState.timer) {
         clearTimeout(searchState.timer);
         searchState.timer = null;
     }
 
     searchState.timer = setTimeout(() => {
-        if (search.value.length >= 2) {
+        if (query.length >= 2) {
             cityResults(search.value)
         }
     }, 600)

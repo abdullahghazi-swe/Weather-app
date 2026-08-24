@@ -106,7 +106,7 @@ export function renderSearchResults() {
     searchResult.innerHTML = '';
 
     searchResult.classList.add('show-results')
-    console.log(state.searchResult);
+
     for (const city of state.searchResult) {
         const box = document.createElement('div');
         const cityName = document.createElement('div');

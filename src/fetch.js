@@ -2,6 +2,8 @@ import { searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderSearchResults } from "./ui.js";
 
+let controller;
+
 export async function getCityWeather(cityName) {
     const location = await getCity(cityName);
 
@@ -30,7 +32,7 @@ export async function manageSelectedCity(selectedCityId) {
     const cityData = state.searchResult.find((city) => city.id === selectedCityId)
 
     if (!cityData) return
-    console.log(cityData.id)
+
     const weather = await getWeather(cityData.latitude, cityData.longitude);
     
     if (!weather) return;
@@ -47,19 +49,22 @@ export async function manageSelectedCity(selectedCityId) {
 export async function cityResults(searchQuery) {
     const citiesList = await getCitiesList(searchQuery);
 
+    if (citiesList === "Abort") return;
     if (!citiesList) {
         searchErr.textContent = "City not found!";
-        return;
     }
-    state.searchResult = citiesList;
+
+    state.searchResult = citiesList || [];
     renderSearchResults();
 }
 
 async function getCitiesList(query) {
     const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}`;
+    controller?.abort()
+    controller = new AbortController()
 
     try {
-        const response = await fetch(url);
+        const response = await fetch(url, {signal: controller.signal});
 
         if (!response.ok) {
             throw new Error(`HTTP ${response.status} : ${response.statusText}`);
@@ -74,6 +79,10 @@ async function getCitiesList(query) {
         return cities.results;
 
     } catch(error) {
+        if (error.name === 'AbortError') {
+            console.log("Request aborted.")
+            return "Abort";
+        }
         console.error("Couldn't connect to server!", error)
         return;
     }
