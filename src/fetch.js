@@ -15,11 +15,13 @@ export async function manageSelectedCity(selectedCityId) {
         longitude: cityData.longitude
     }
 
-    const cachedWeather = getCache(coords)
+    const cachedWeather = getCache(coords);
 
     const weather = cachedWeather || await getWeather(cityData.latitude, cityData.longitude);
-    
-    if (!weather) return;
+     
+    if (!weather) {
+        return;
+    }
 
     const formatedData = {
         name: cityData.name,
