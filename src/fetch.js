@@ -1,7 +1,7 @@
 import { searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderSearchResults } from "./ui.js";
-import { saveWeather, getCache } from "./storage.js";
+import { saveWeather, getCache, getDefaultLocation } from "./storage.js";
 
 let controller;
 
@@ -26,7 +26,8 @@ export async function manageSelectedCity(selectedCityId) {
     const formatedData = {
         name: cityData.name,
         state: cityData.admin1,
-        country: cityData.country
+        country: cityData.country,
+        coords: coords,
     }
 
     if (!cachedWeather) {
@@ -110,7 +111,7 @@ export async function getWeatherOnLoad() {
         return
     }
 
-    const weather = await getWeather(location.lat, location.lon)
+    const weather = await getWeather(location.coords.latitude, location.coords.longitude);
     if (!weather) {
         console.log("Couldnt get weather!")
         return;
@@ -122,6 +123,12 @@ export async function getWeatherOnLoad() {
 
 
 async function getlocationOnLoad() {
+    const defaultLocation = getDefaultLocation();
+
+    if (defaultLocation) {
+        return defaultLocation;
+    }
+
     try {
         const data = await getLocationFromBrowser()
         const url = `https://nominatim.openstreetmap.org/reverse?lat=${data.lat}&lon=${data.lon}&format=json`;
@@ -131,11 +138,14 @@ async function getlocationOnLoad() {
         
         if (cityData) {
             return {
-                lat: cityData.lat,
-                lon: cityData.lon,
                 name: cityData.address.city || location.address.village || location.address.town,
                 state: cityData.address.state,
-                country: cityData.address.country
+                country: cityData.address.country,
+                approx: false,
+                coords: {
+                    latitude: data.lat,
+                    longitude: data.lon,
+                }
             }
         }
     } catch (error) {
@@ -148,11 +158,14 @@ async function getlocationOnLoad() {
 
         if (location) {
             return {
-                lat: cityData.data.location.latitude,
-                lon: cityData.data.location.longitude,
                 name: cityData.data.location.city,
                 state: cityData.data.location.region,
-                country: cityData.data.location.country_name
+                country: cityData.data.location.country_name,
+                approx: true,
+                coords: {
+                    latitude: Number(cityData.data.location.latitude),
+                    longitude: Number(cityData.data.location.longitude),
+                }
             }
         }
 

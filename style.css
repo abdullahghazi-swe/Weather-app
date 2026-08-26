@@ -44,6 +44,7 @@ body {
 
 .show-results {
     display: flex;
+    min-height: 12px;
 }
 
 input {
@@ -78,6 +79,43 @@ button {
 
 .city {
     text-transform: capitalize;
+}
+
+.location-detail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.loc-left {
+    display: flex;
+    align-items: center;
+}
+
+.approx {
+    opacity: 0.6;
+    font-size: 12px;
+    margin-left: 48px;
+}
+
+.changeBtn {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.651);
+    border-radius: 20px;
+    font-size: 13px;
+    padding: 2px 4px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.changeBtn:hover {
+    background-color: white;
+    color: rgb(22, 49, 88);
+}
+
+.star {
+    cursor: pointer;
 }
 
 .weather-state {

@@ -5,6 +5,10 @@ export const searchResult = document.querySelector('.search-results')
 export const time = document.querySelector('.time')
 export const city = document.querySelector('.city')
 export const country = document.querySelector('.country')
+export const locDetail = document.querySelector('.loc-left')
+
+export const star = document.querySelector('.star')
+export const defaultText = document.querySelector('.default-text')
 
 export const weather = document.querySelector('.weather-state')
 export const temp = document.querySelector('.temp')

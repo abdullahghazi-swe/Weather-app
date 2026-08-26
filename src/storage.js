@@ -1,3 +1,6 @@
+import { country } from "./dom.js";
+import { state } from "./state.js";
+
 const AGELIMIT = 60 * 60 * 1000;
 
 export function saveWeather(coords, weather) {
@@ -47,6 +50,36 @@ export function getCache(coords) {
     }
 
     return weather.data;
+}
+
+export function getDefaultLocation() {
+    const location = localStorage.getItem('defaultLocation');
+    if (!location) return;
+
+    try {
+        return JSON.parse(location);
+    } catch {
+        localStorage.removeItem('defaultLocation');
+        return;
+    }
+}
+
+export function setDefaultLocation() {
+    const location = {
+        name: state.location.city,
+        state: state.location.province,
+        country: state.location.country,
+        coords: cleanCoords(state.location.coordinates),
+    }
+    
+    if (!location.coords) return;
+    
+    const strCoords = JSON.stringify(location)
+    localStorage.setItem('defaultLocation', strCoords);
+}
+
+export function removeDefaultLocation() {
+    localStorage.removeItem('defaultLocation');
 }
 
 function readWeather() {

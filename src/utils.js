@@ -1,3 +1,5 @@
+import { getDefaultLocation } from "./storage.js";
+
 const hourFormater = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'numeric' })
 const dayFormater = new Intl.DateTimeFormat('en-US', { weekday: 'short' })
 
@@ -52,4 +54,25 @@ export function cleanDailyData(daily) {
         })
     }
     return dayList;
+}
+
+export function checkDefault(currentCoords) {
+    const location = getDefaultLocation();
+    if (!location) return false;
+
+    const defaultCoords = location.coords;    
+
+    currentCoords = {
+        latitude: Number(currentCoords.latitude.toFixed(3)),
+        longitude: Number(currentCoords.longitude.toFixed(3))
+    }
+    
+    if (defaultCoords &&
+        currentCoords.latitude === defaultCoords.latitude &&
+        currentCoords.longitude === defaultCoords.longitude
+    ) {
+        return true;
+    }
+
+    return false;
 }

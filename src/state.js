@@ -8,6 +8,8 @@ export const state = {
         city: null,
         province: null,
         country: null,
+        approx:  false,
+        coordinates: null,
     },
     baseData: {
         weather: null,
@@ -32,6 +34,8 @@ export function setState(city, weather) {
     state.location.city = city.name;
     state.location.province = city.state;
     state.location.country = city.country;
+    state.location.approx = city.approx || false;
+    state.location.coordinates = city.coords;
 
     state.baseData.weather = weather.current.weather_code;
     state.baseData.temperature = weather.current.temperature_2m;

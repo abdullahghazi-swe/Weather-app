@@ -1,6 +1,6 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText } from "./dom.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay } from "./utils.js";
+import { formateTime, cleanHourTime, cleanDay, checkDefault } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -51,6 +51,13 @@ export function render() {
 
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
+
+    addSetDefault(state.location.coordinates)
+
+    removeChangeLoc();
+    if (state.location.approx) {
+        addChangeLocation();
+    }
 
     searchResult.classList.remove('show-results')
 }
@@ -123,5 +130,41 @@ export function renderSearchResults() {
         details.textContent = division + district + state + city.country;
         box.append(cityName, details)
         searchResult.appendChild(box)
+    }
+}
+
+function addChangeLocation() {
+    const note = document.createElement('span');
+    const btn = document.createElement('btn');
+
+    note.textContent = "Approximate";
+    btn.textContent = "Change";
+
+    note.className = 'approx';
+    btn.className = 'changeBtn'
+    
+    btn.addEventListener('click', () => {
+        search.focus();
+        setTimeout(() => searchResult.classList.add('show-results'), 100);
+    });
+
+    note.append(btn);
+    locDetail.append(note);
+}
+
+function removeChangeLoc() {
+    const appox = document.querySelector('.approx');
+    if (appox) appox.remove();
+}
+
+function addSetDefault(currentCoords) {
+    const isDefault = checkDefault(currentCoords);
+
+    if (isDefault) {
+        star.textContent = "★";
+        defaultText.textContent = "Default Location";
+    } else {
+        star.textContent = "☆";
+        defaultText.textContent = "Set as default";
     }
 }
