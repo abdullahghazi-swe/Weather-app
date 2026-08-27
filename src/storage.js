@@ -100,3 +100,25 @@ function cleanCoords(coords) {
         longitude: Number(coords.longitude.toFixed(3)),
     }
 }
+
+export function cacheDefLocWeather(weather) {
+    const cache = {
+        time: Date.now(),
+        weather: weather
+    }
+
+    const cacheStr = JSON.stringify(cache);
+    localStorage.setItem('defWeather', cacheStr);
+}
+
+export function getDefWeatherCache() {
+    const savedWeather = localStorage.getItem('defWeather');
+    if (!savedWeather) return;
+
+    try {
+        return JSON.parse(savedWeather);
+    } catch {
+        localStorage.removeItem('defWeather');
+        return;
+    }
+}

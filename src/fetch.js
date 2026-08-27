@@ -1,8 +1,9 @@
 import { searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderSearchResults } from "./ui.js";
-import { saveWeather, getCache, getDefaultLocation } from "./storage.js";
+import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache } from "./storage.js";
 
+const AGELIMIT = 60 * 60 * 1000;
 let controller;
 
 export async function manageSelectedCity(selectedCityId) {
@@ -111,10 +112,29 @@ export async function getWeatherOnLoad() {
         return
     }
 
-    const weather = await getWeather(location.coords.latitude, location.coords.longitude);
+    const cache = getDefWeatherCache();
+    let weather;
+
+    if (cache && Date.now() - cache.time <= 60 * 60 * 1000) {
+        weather = cache.weather;
+        weather.source = 'cache';
+    } else {
+        weather = await getWeather(location.coords.latitude, location.coords.longitude);
+        weather.source = 'api';
+    }
+
+    if (!weather && cache) {
+        weather = cache.weather;
+        weather.source = 'expiredCache';
+    }
+
     if (!weather) {
         console.log("Couldnt get weather!")
         return;
+    }
+
+    if (weather.source === 'api') {
+        cacheDefLocWeather(weather);
     }
 
     setState(location, weather)
