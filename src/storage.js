@@ -1,4 +1,3 @@
-import { country } from "./dom.js";
 import { state } from "./state.js";
 
 const AGELIMIT = 60 * 60 * 1000;
@@ -76,10 +75,12 @@ export function setDefaultLocation() {
     
     const strCoords = JSON.stringify(location)
     localStorage.setItem('defaultLocation', strCoords);
+    removeDefWeatherCache();
 }
 
 export function removeDefaultLocation() {
     localStorage.removeItem('defaultLocation');
+    removeDefWeatherCache();
 }
 
 function readWeather() {
@@ -121,4 +122,8 @@ export function getDefWeatherCache() {
         localStorage.removeItem('defWeather');
         return;
     }
+}
+
+export function removeDefWeatherCache() {
+    localStorage.removeItem('defWeather');
 }

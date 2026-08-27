@@ -19,6 +19,7 @@ export const pressure = document.querySelector('.pressure')
 export const precip = document.querySelector('.precp')
 export const uv = document.querySelector('.uv')
 export const visibility = document.querySelector('.visibility')
+export const update = document.querySelector('.updateTime')
 
 export const hourList = document.querySelector('.hourlyForcast')
 export const dailyList = document.querySelector('.dailyForcast')

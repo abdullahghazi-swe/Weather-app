@@ -111,21 +111,25 @@ export async function getWeatherOnLoad() {
         console.log("Couldn't get location");
         return
     }
+    let cache;
+    if (location.default) {
+        cache = getDefWeatherCache();
+    }
 
-    const cache = getDefWeatherCache();
     let weather;
 
-    if (cache && Date.now() - cache.time <= 60 * 60 * 1000) {
+    if (cache && Date.now() - cache.time <= AGELIMIT) {
         weather = cache.weather;
         weather.source = 'cache';
     } else {
         weather = await getWeather(location.coords.latitude, location.coords.longitude);
-        weather.source = 'api';
+        weather && (weather.source = 'api');
     }
 
     if (!weather && cache) {
         weather = cache.weather;
         weather.source = 'expiredCache';
+        weather.cachedTime = cache.time;
     }
 
     if (!weather) {
@@ -146,6 +150,7 @@ async function getlocationOnLoad() {
     const defaultLocation = getDefaultLocation();
 
     if (defaultLocation) {
+        defaultLocation.default = true;
         return defaultLocation;
     }
 

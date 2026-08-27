@@ -16,6 +16,7 @@ export const state = {
         temperature: null,
         pressure: null,
         humidity: null,
+        source: null,
     },
     derivedData: {
         apparentTemp: null,
@@ -41,6 +42,7 @@ export function setState(city, weather) {
     state.baseData.temperature = weather.current.temperature_2m;
     state.baseData.pressure = weather.current.surface_pressure;
     state.baseData.humidity = weather.current.relative_humidity_2m;
+    state.baseData.source = weather.source;
 
     state.derivedData.apparentTemp = weather.current.apparent_temperature;
     state.derivedData.windSpeed = weather.current.wind_speed_10m;

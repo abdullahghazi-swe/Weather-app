@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText, update } from "./dom.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault } from "./utils.js";
 
@@ -34,6 +34,8 @@ const WEATHERCODES = {
 };
 
 export function render() {
+    resetUI();
+
     time.textContent = formateTime(state.location.timezone);
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
@@ -49,12 +51,15 @@ export function render() {
     feels.textContent = state.derivedData.apparentTemp;
     visibility.textContent = state.derivedData.visibility;
 
+    if (state.baseData.source === 'expiredCache') {
+        showUpdateTime(state.location.time);
+    }
+
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
 
     addSetDefault(state.location.coordinates)
 
-    removeChangeLoc();
     if (state.location.approx) {
         addChangeLocation();
     }
@@ -152,9 +157,11 @@ function addChangeLocation() {
     locDetail.append(note);
 }
 
-function removeChangeLoc() {
+function resetUI() {
     const appox = document.querySelector('.approx');
     if (appox) appox.remove();
+
+    update.textContent = '';
 }
 
 function addSetDefault(currentCoords) {
@@ -167,4 +174,21 @@ function addSetDefault(currentCoords) {
         star.textContent = "☆";
         defaultText.textContent = "Set as default";
     }
+}
+
+function showUpdateTime(time) {
+    const weatherTime = new Date(time)
+    const now = new Date()
+
+    const timeDiff = now - weatherTime;
+    const hours = Math.floor(timeDiff / (1000 * 60 * 60)) 
+
+    let text;
+    if (hours >= 24) {
+        const days = Math.floor(hours / 24);
+        text = `Offline · Updated ${days} ${days === 1 ? 'day' : 'days'} ago`
+    } else {
+        text = `Offline · Updated ${hours} ${hours === 1 ? 'hour' : 'hour'} ago`
+    }
+    update.textContent = text;
 }
