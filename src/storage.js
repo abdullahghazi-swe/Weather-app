@@ -127,3 +127,33 @@ export function getDefWeatherCache() {
 export function removeDefWeatherCache() {
     localStorage.removeItem('defWeather');
 }
+
+export function saveRecentSearch(location) {
+    const recents = getRecentSearch();
+
+    const index = recents.findIndex(city => city.latitude === location.latitude && city.longitude === location.longitude);
+
+    if (index !== -1) {
+        recents.splice(index, 1);
+    } else if (recents.length >= 4) {
+        recents.shift();
+    }
+    
+    recents.push(location);
+    state.recentSearches = recents;
+
+    const strRecents = JSON.stringify(recents);
+    localStorage.setItem('recentSearches', strRecents);
+}
+
+export function getRecentSearch() {
+    const recents = localStorage.getItem('recentSearches');
+    if (!recents) return [];
+
+    try {
+        return JSON.parse(recents);
+    } catch {
+        localStorage.removeItem('recentSearches');
+        return [];
+    }
+}

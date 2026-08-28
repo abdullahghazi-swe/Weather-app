@@ -64,6 +64,8 @@ export function render() {
         addChangeLocation();
     }
 
+    renderRecentSearches();
+
     searchResult.classList.remove('show-results')
 }
 
@@ -117,25 +119,38 @@ function createDailyList(daily, list, currentTime) {
 export function renderSearchResults() {
     searchResult.innerHTML = '';
 
-    searchResult.classList.add('show-results')
-
     for (const city of state.searchResult) {
-        const box = document.createElement('div');
-        const cityName = document.createElement('div');
-        const details = document.createElement('div');
-
-        const state = city.admin1 ? `${city.admin1}, ` : '';
-        const district = city.admin2 ? `${city.admin2}, ` : '';
-        const division = city.admin3 ? `${city.admin3}, ` : '';
-
-        box.classList.add('city-result')
-        box.dataset.id = city.id;
-
-        cityName.textContent = city.name;
-        details.textContent = division + district + state + city.country;
-        box.append(cityName, details)
-        searchResult.appendChild(box)
+        searchResult.append(createSearchResult(city))
     }
+
+    searchResult.classList.add('show-results')
+}
+
+export function renderRecentSearches() {
+    searchResult.innerHTML = '';
+
+    for (const city of state.recentSearches) {
+        searchResult.prepend(createSearchResult(city))
+    }
+}
+
+function createSearchResult(city) {
+    const box = document.createElement('div');
+    const cityName = document.createElement('div');
+    const details = document.createElement('div');
+
+    const state = city.admin1 ? `${city.admin1}, ` : '';
+    const district = city.admin2 ? `${city.admin2}, ` : '';
+    const division = city.admin3 ? `${city.admin3}, ` : '';
+
+    box.classList.add('city-result')
+    box.dataset.id = city.id;
+
+    cityName.textContent = city.name;
+    details.textContent = division + district + state + city.country;
+    box.append(cityName, details)
+
+    return box;
 }
 
 function addChangeLocation() {
@@ -162,6 +177,7 @@ function resetUI() {
     if (appox) appox.remove();
 
     update.textContent = '';
+    search.value = '';
 }
 
 function addSetDefault(currentCoords) {

@@ -1,5 +1,6 @@
 import { search, searchErr } from "./dom.js";
 import { cityResults } from "./fetch.js";
+import { renderRecentSearches } from "./ui.js";
 
 const searchState = {
     timer: null,
@@ -8,6 +9,10 @@ const searchState = {
 export function getCities() {
     searchErr.textContent = '';
     const query = search.value.trim();
+
+    if (query === '') {
+        renderRecentSearches();
+    }
 
     if (searchState.timer) {
         clearTimeout(searchState.timer);

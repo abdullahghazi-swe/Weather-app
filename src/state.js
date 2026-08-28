@@ -2,6 +2,7 @@ import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
     searchResult:  [],
+    recentSearches: [],
     location: {
         time: null,
         timezone: null,

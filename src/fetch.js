@@ -1,13 +1,17 @@
 import { searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderSearchResults } from "./ui.js";
-import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache } from "./storage.js";
+import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch } from "./storage.js";
 
 const AGELIMIT = 60 * 60 * 1000;
 let controller;
 
 export async function manageSelectedCity(selectedCityId) {
-    const cityData = state.searchResult.find((city) => city.id === selectedCityId)
+    let cityData = state.recentSearches.find((city) => city.id === selectedCityId);
+
+    if (!cityData) {
+        cityData = state.searchResult.find((city) => city.id === selectedCityId)
+    }
 
     if (!cityData) return;
 
@@ -35,6 +39,7 @@ export async function manageSelectedCity(selectedCityId) {
         saveWeather(coords, weather)
     }
 
+    saveRecentSearch(cityData);
     setState(formatedData, weather);
     render();
 }
