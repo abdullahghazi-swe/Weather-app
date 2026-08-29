@@ -23,3 +23,7 @@ export const update = document.querySelector('.updateTime')
 
 export const hourList = document.querySelector('.hourlyForcast')
 export const dailyList = document.querySelector('.dailyForcast')
+
+export const favorites = document.querySelector('.favorites')
+export const favStar = document.querySelector('.fav-star')
+export const favText = document.querySelector('.fav-text')

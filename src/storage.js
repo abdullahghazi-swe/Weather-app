@@ -1,3 +1,4 @@
+import { favorites } from "./dom.js";
 import { state } from "./state.js";
 
 const AGELIMIT = 60 * 60 * 1000;
@@ -156,4 +157,49 @@ export function getRecentSearch() {
         localStorage.removeItem('recentSearches');
         return [];
     }
+}
+
+export function addToFavorites() {
+    const list = getFavorites();
+    if (list.length >= 4) return; //show error too
+
+    const location = {
+        city: state.location.city,
+        coords: cleanCoords(state.location.coordinates),
+    }
+    list.push(location);
+    
+    state.favorites = list;
+    localStorage.setItem('favorites', JSON.stringify(list));
+    return true;
+}
+
+export function getFavorites() {
+    const list = localStorage.getItem("favorites")
+    if (!list) return [];
+
+    try {
+        return JSON.parse(list);
+    } catch  {
+        localStorage.removeItem('favorites');
+        return [];
+    }
+}
+
+export function removeFromFavorites() {
+    const coords = cleanCoords(state.location.coordinates);
+    const list = getFavorites()
+
+    const index = list.findIndex(item => 
+        item.coords.latitude === coords.latitude &&
+        item.coords.longitude === coords.longitude
+    )
+    console.log(coords)
+    console.log(list)
+    if (index === -1) return;
+
+    list.splice(index, 1)
+
+    state.favorites = list;
+    localStorage.setItem('favorites', JSON.stringify(list));
 }

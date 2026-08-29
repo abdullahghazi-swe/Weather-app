@@ -1,6 +1,6 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText, update } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText, update, favorites, favStar, favText } from "./dom.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay, checkDefault } from "./utils.js";
+import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -58,7 +58,8 @@ export function render() {
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
 
-    addSetDefault(state.location.coordinates)
+    addSetDefault(state.location.coordinates);
+    addFavOption(state.location.coordinates);
 
     if (state.location.approx) {
         addChangeLocation();
@@ -207,4 +208,37 @@ function showUpdateTime(time) {
         text = `Offline · Updated ${hours} ${hours === 1 ? 'hour' : 'hour'} ago`
     }
     update.textContent = text;
+}
+
+export function renderFavorites() {
+    favorites.innerHTML = "";
+    favorites.classList.remove('show')
+
+    for (let city of state.favorites) {
+        const favBox = document.createElement('div')
+        const cityName = document.createElement('p')
+
+        cityName.textContent = city.city;
+        
+        favBox.classList.add('favorite-item')
+
+        favBox.appendChild(cityName);
+        favorites.appendChild(favBox);
+    }
+
+    if (favorites.children.length) {
+        favorites.classList.add('show')
+    } 
+}
+
+function addFavOption(coords) {
+    const isFav = checkInFavorites(coords);
+    
+    if (isFav) {
+        favStar.textContent = "★";
+        favText.textContent = "Favorited";
+    } else {
+        favStar.textContent = "☆";
+        favText.textContent = "Add to Favorites";
+    }
 }

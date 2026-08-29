@@ -1,9 +1,10 @@
-import { search, searchResult, star, defaultText } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText } from "./dom.js";
 import { manageSelectedCity } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
-import { setDefaultLocation, removeDefaultLocation } from "./storage.js";
-import { checkDefault } from "./utils.js";
+import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
+import { renderFavorites } from "./ui.js";
+import { checkDefault, checkInFavorites } from "./utils.js";
 
 
 export function initEventListeners() {
@@ -39,6 +40,23 @@ export function initEventListeners() {
             removeDefaultLocation();
             star.textContent = "☆";
             defaultText.textContent = "Set as default";
+        }
+    })
+
+    favStar.addEventListener('click', () => {
+        const isFav = checkInFavorites(state.location.coordinates);
+
+        if (!isFav) {
+            const added = addToFavorites();
+            if (!added) return;
+            favStar.textContent = "★";
+            favText.textContent = "Favorited";
+            renderFavorites();
+        } else {
+            removeFromFavorites();
+            favStar.textContent = "☆";
+            favText.textContent = "Add to Favorites";
+            renderFavorites();
         }
     })
 }

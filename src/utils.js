@@ -1,4 +1,4 @@
-import { getDefaultLocation } from "./storage.js";
+import { getDefaultLocation, getFavorites } from "./storage.js";
 
 const hourFormater = new Intl.DateTimeFormat('en-US', { hour12: true, hour: 'numeric' })
 const dayFormater = new Intl.DateTimeFormat('en-US', { weekday: 'short' })
@@ -76,3 +76,23 @@ export function checkDefault(currentCoords) {
 
     return false;
 }
+
+export function checkInFavorites(currentCoords) {
+    const list = getFavorites();
+
+    currentCoords = {
+        latitude: Number(currentCoords.latitude.toFixed(3)),
+        longitude: Number(currentCoords.longitude.toFixed(3))
+    }
+
+    const exists = list.find(item => 
+        item.coords.latitude === currentCoords.latitude &&
+        item.coords.longitude === currentCoords.longitude
+    )
+    
+    if (exists) return true;
+
+    return false;
+
+}
+

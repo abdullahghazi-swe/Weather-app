@@ -1,8 +1,10 @@
+import { favorites } from "./dom.js";
 import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
     searchResult:  [],
     recentSearches: [],
+    favorites: [],
     location: {
         time: null,
         timezone: null,
