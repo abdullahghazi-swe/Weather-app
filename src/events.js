@@ -1,5 +1,5 @@
-import { search, searchResult, star, defaultText, favStar, favText } from "./dom.js";
-import { manageSelectedCity } from "./fetch.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites } from "./dom.js";
+import { manageFavWeather, manageSelectedCity } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
@@ -58,5 +58,12 @@ export function initEventListeners() {
             favText.textContent = "Add to Favorites";
             renderFavorites();
         }
+    })
+
+    favorites.addEventListener('click', e => {
+        const fav = e.target.closest('.favorite-item');
+        if (!fav) return;
+
+        manageFavWeather(Number(fav.dataset.id))
     })
 }

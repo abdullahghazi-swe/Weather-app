@@ -193,6 +193,7 @@ button {
     padding: 8px;
     display: flex;
     flex-direction: column;
+    cursor: pointer;
 }
 
 .fav-star {

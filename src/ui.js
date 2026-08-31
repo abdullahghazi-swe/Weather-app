@@ -218,10 +218,10 @@ export function renderFavorites() {
         const favBox = document.createElement('div')
         const cityName = document.createElement('p')
 
-        cityName.textContent = city.city;
+        cityName.textContent = city.name;
         
         favBox.classList.add('favorite-item')
-
+        favBox.dataset.id = city.id;
         favBox.appendChild(cityName);
         favorites.appendChild(favBox);
     }

@@ -1,4 +1,4 @@
-import { favorites } from "./dom.js";
+import { country, favorites } from "./dom.js";
 import { state } from "./state.js";
 
 const AGELIMIT = 60 * 60 * 1000;
@@ -164,7 +164,10 @@ export function addToFavorites() {
     if (list.length >= 4) return; //show error too
 
     const location = {
-        city: state.location.city,
+        id: Date.now(),
+        name: state.location.city,
+        state: state.location.province,
+        country: state.location.country,
         coords: cleanCoords(state.location.coordinates),
     }
     list.push(location);

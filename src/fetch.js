@@ -44,6 +44,29 @@ export async function manageSelectedCity(selectedCityId) {
     render();
 }
 
+export async function manageFavWeather(id) {
+    const city = state.favorites.find(city => city.id === id);
+    if (!city) {
+        return;
+    }
+
+    const cachedWeather = getCache(city.coords);
+
+    const weather = cachedWeather || await getWeather(city.coords.latitude, city.coords.longitude)
+    
+    if (!weather) {
+        return;
+    }
+    
+    if (!cachedWeather) {
+        saveWeather(coords, weather)
+    }
+
+    setState(city, weather)
+    render();
+
+}
+
 export async function cityResults(searchQuery) {
     const citiesList = await getCitiesList(searchQuery);
 
