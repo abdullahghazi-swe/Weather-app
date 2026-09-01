@@ -210,19 +210,23 @@ function showUpdateTime(time) {
     update.textContent = text;
 }
 
-export function renderFavorites() {
+export function renderFavorites(favs) {
     favorites.innerHTML = "";
     favorites.classList.remove('show')
 
-    for (let city of state.favorites) {
-        const favBox = document.createElement('div')
-        const cityName = document.createElement('p')
+    for (let city of favs) {
+        const favBox = document.createElement('div');
+        const cityName = document.createElement('p');
+        const weatherState = document.createElement('div');
+        const temp = document.createElement('div');
 
         cityName.textContent = city.name;
+        weatherState.textContent = getWeatherState(city.weather.current.weather_code);
+        temp.textContent = city.weather.current.temperature_2m;
         
         favBox.classList.add('favorite-item')
         favBox.dataset.id = city.id;
-        favBox.appendChild(cityName);
+        favBox.append(cityName, weatherState, temp);
         favorites.appendChild(favBox);
     }
 

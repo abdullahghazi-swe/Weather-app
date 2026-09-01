@@ -1,4 +1,3 @@
-import { country, favorites } from "./dom.js";
 import { state } from "./state.js";
 
 const AGELIMIT = 60 * 60 * 1000;

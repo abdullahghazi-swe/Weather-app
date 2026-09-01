@@ -1,6 +1,6 @@
-import { searchErr } from "./dom.js"
+import { country, searchErr } from "./dom.js"
 import { setState, state } from "./state.js";
-import { render, renderSearchResults } from "./ui.js";
+import { render, renderFavorites, renderSearchResults } from "./ui.js";
 import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch } from "./storage.js";
 
 const AGELIMIT = 60 * 60 * 1000;
@@ -241,5 +241,28 @@ function getLocationFromBrowser() {
         maximumAge: 0,
       })
     })
+}
+
+
+export async function getFavoritesWeather() {
+    const cities = [];
+
+    for (const city of state.favorites) {
+        const cacheWeather = getCache(city.coords)
+
+        const weather = cacheWeather || await getWeather(city.coords.latitude, city.coords.longitude);
+
+        if (!cacheWeather && weather) {
+            saveWeather(city.coords, weather)
+        }
+
+        cities.push({
+            id: city.id,
+            name: city.name,
+            weather: weather || null,
+        })
+    }
+
+    renderFavorites(cities);
 }
 
