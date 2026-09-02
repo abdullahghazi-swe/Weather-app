@@ -217,17 +217,29 @@ export function renderFavorites(favs) {
     for (let city of favs) {
         const favBox = document.createElement('div');
         const cityName = document.createElement('p');
-        const weatherState = document.createElement('div');
-        const temp = document.createElement('div');
 
         cityName.textContent = city.name;
-        weatherState.textContent = getWeatherState(city.weather.current.weather_code);
-        temp.textContent = city.weather.current.temperature_2m + ' °C';
         
         favBox.classList.add('favorite-item')
         favBox.dataset.id = city.id;
-        favBox.append(cityName, weatherState, temp);
-        favorites.appendChild(favBox);
+        favBox.append(cityName);
+        
+        if (city.weather !== null) {
+            const weatherState = document.createElement('div');
+            const temp = document.createElement('div');
+
+            weatherState.textContent = getWeatherState(city.weather.current.weather_code);
+            temp.textContent = city.weather.current.temperature_2m + ' °C';
+            favBox.append(weatherState, temp);
+        } else {
+            const btn = document.createElement('button')
+            btn.textContent = 'Retry'
+
+            btn.classList.add('retry-btn')
+            favBox.append(btn)
+        }
+        
+        favorites.prepend(favBox);
     }
 
     if (favorites.children.length) {

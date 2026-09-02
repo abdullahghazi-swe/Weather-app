@@ -60,6 +60,13 @@ export function initEventListeners() {
     })
 
     favorites.addEventListener('click', e => {
+        const retry = e.target.closest('button');
+
+        if (retry) {
+            loadFavorites();
+            return;
+        }
+
         const fav = e.target.closest('.favorite-item');
         if (!fav) return;
 

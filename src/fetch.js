@@ -59,7 +59,7 @@ export async function manageFavWeather(id) {
     }
     
     if (!cachedWeather) {
-        saveWeather(coords, weather)
+        saveWeather(city.coords, weather)
     }
 
     setState(city, weather)
