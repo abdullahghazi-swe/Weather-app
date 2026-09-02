@@ -1,9 +1,8 @@
 import { search, searchResult, star, defaultText, favStar, favText, favorites } from "./dom.js";
-import { manageFavWeather, manageSelectedCity } from "./fetch.js";
+import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
-import { renderFavorites } from "./ui.js";
 import { checkDefault, checkInFavorites } from "./utils.js";
 
 
@@ -51,12 +50,12 @@ export function initEventListeners() {
             if (!added) return;
             favStar.textContent = "★";
             favText.textContent = "Favorited";
-            renderFavorites();
+            loadFavorites();
         } else {
             removeFromFavorites();
             favStar.textContent = "☆";
             favText.textContent = "Add to Favorites";
-            renderFavorites();
+            loadFavorites();
         }
     })
 

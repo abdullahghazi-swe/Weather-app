@@ -243,26 +243,23 @@ function getLocationFromBrowser() {
     })
 }
 
+async function getFavWeather(city) {
+    const cacheWeather = getCache(city.coords)
 
-export async function getFavoritesWeather() {
-    const cities = [];
+    const weather = cacheWeather || await getWeather(city.coords.latitude, city.coords.longitude);
 
-    for (const city of state.favorites) {
-        const cacheWeather = getCache(city.coords)
-
-        const weather = cacheWeather || await getWeather(city.coords.latitude, city.coords.longitude);
-
-        if (!cacheWeather && weather) {
-            saveWeather(city.coords, weather)
-        }
-
-        cities.push({
-            id: city.id,
-            name: city.name,
-            weather: weather || null,
-        })
+    if (!cacheWeather && weather) {
+        saveWeather(city.coords, weather)
     }
 
-    renderFavorites(cities);
+    return {
+        id: city.id,
+        name: city.name,
+        weather: weather || null,
+    }
 }
 
+export async function loadFavorites() {
+    const results = await Promise.all(state.favorites.map(city => getFavWeather(city)))
+    renderFavorites(results);
+}

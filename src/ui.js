@@ -222,7 +222,7 @@ export function renderFavorites(favs) {
 
         cityName.textContent = city.name;
         weatherState.textContent = getWeatherState(city.weather.current.weather_code);
-        temp.textContent = city.weather.current.temperature_2m;
+        temp.textContent = city.weather.current.temperature_2m + ' °C';
         
         favBox.classList.add('favorite-item')
         favBox.dataset.id = city.id;
