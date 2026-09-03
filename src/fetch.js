@@ -1,17 +1,13 @@
-import { country, searchErr } from "./dom.js"
+import { country, searchErr, weather } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderFavorites, renderSearchResults } from "./ui.js";
-import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch } from "./storage.js";
+import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch, AGELIMIT } from "./storage.js";
 
-const AGELIMIT = 60 * 60 * 1000;
 let controller;
 
 export async function manageSelectedCity(selectedCityId) {
-    let cityData = state.recentSearches.find((city) => city.id === selectedCityId);
-
-    if (!cityData) {
-        cityData = state.searchResult.find((city) => city.id === selectedCityId)
-    }
+    const cityData = state.recentSearches.find((city) => city.id === selectedCityId) ??
+                     state.searchResult.find((city) => city.id === selectedCityId);
 
     if (!cityData) return;
 
@@ -19,28 +15,38 @@ export async function manageSelectedCity(selectedCityId) {
         latitude: cityData.latitude,
         longitude: cityData.longitude
     }
-
+    
+    let weather;
     const cachedWeather = getCache(coords);
-
-    const weather = cachedWeather || await getWeather(cityData.latitude, cityData.longitude);
-     
-    if (!weather) {
-        return;
+    
+    if (!cachedWeather || cachedWeather.source === 'expiredCache') {
+        weather = await getWeather(cityData.latitude, cityData.longitude);
+        weather && (weather.source = 'api');
+    } else {
+        weather = cachedWeather;
     }
 
-    const formatedData = {
+    if (!weather && cachedWeather) {
+        weather = cachedWeather;
+    }
+     
+    if (!weather) {
+        return; // show error
+    }
+
+    const formattedData = {
         name: cityData.name,
         state: cityData.admin1,
         country: cityData.country,
         coords: coords,
     }
 
-    if (!cachedWeather) {
+    if (weather.source === 'api') {
         saveWeather(coords, weather)
     }
 
     saveRecentSearch(cityData);
-    setState(formatedData, weather);
+    setState(formattedData, weather);
     render();
 }
 
@@ -50,15 +56,25 @@ export async function manageFavWeather(id) {
         return;
     }
 
+    let weather;
     const cachedWeather = getCache(city.coords);
 
-    const weather = cachedWeather || await getWeather(city.coords.latitude, city.coords.longitude)
-    
-    if (!weather) {
-        return;
+    if (!cachedWeather || cachedWeather.source === 'expiredCache') {
+        weather = await getWeather(city.coords.latitude, city.coords.longitude);
+        weather && (weather.source = 'api');
+    } else {
+        weather = cachedWeather;
     }
-    
-    if (!cachedWeather) {
+
+    if (!weather && cachedWeather) {
+        weather = cachedWeather;
+    }
+     
+    if (!weather) {
+        return; // show error
+    }
+
+    if (weather.source === 'api') {
         saveWeather(city.coords, weather)
     }
 
@@ -244,11 +260,21 @@ function getLocationFromBrowser() {
 }
 
 async function getFavWeather(city) {
+    let weather;
     const cacheWeather = getCache(city.coords)
 
-    const weather = cacheWeather || await getWeather(city.coords.latitude, city.coords.longitude);
+    if (!cacheWeather || cacheWeather.source === 'expiredCache') {
+        weather = await getWeather(city.coords.latitude, city.coords.longitude);
+        weather && (weather.source = 'api');
+    } else {
+        weather = cacheWeather;
+    }
 
-    if (!cacheWeather && weather) {
+    if (!weather && cacheWeather) {
+        weather = cacheWeather;
+    }
+
+    if (weather.source === 'api') {
         saveWeather(city.coords, weather)
     }
 

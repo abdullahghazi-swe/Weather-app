@@ -231,7 +231,9 @@ export function renderFavorites(favs) {
             weatherState.textContent = getWeatherState(city.weather.current.weather_code);
             temp.textContent = city.weather.current.temperature_2m + ' °C';
             favBox.append(weatherState, temp);
-        } else {
+        }
+
+        if (city.weather === null || city.weather.source === 'expiredCache') {
             const btn = document.createElement('button')
             btn.textContent = 'Retry'
 

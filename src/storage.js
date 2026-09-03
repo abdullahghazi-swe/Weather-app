@@ -1,6 +1,6 @@
 import { state } from "./state.js";
 
-const AGELIMIT = 60 * 60 * 1000;
+export const AGELIMIT = 60 * 60 * 1000;
 
 export function saveWeather(coords, weather) {
     const cacheList = readWeather() || [];
@@ -45,7 +45,9 @@ export function getCache(coords) {
 
     const timeDiff = Date.now() - weather.time;
     if (timeDiff < 0 || timeDiff > AGELIMIT) {
-        return;
+        weather.data.source = 'expiredCache';
+    } else {
+        weather.data.source = 'cache';
     }
 
     return weather.data;
