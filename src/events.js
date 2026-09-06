@@ -1,4 +1,4 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
@@ -7,10 +7,28 @@ import { checkDefault, checkInFavorites } from "./utils.js";
 
 
 export function initEventListeners() {
+    searchBtn.addEventListener('click', e => {
+        search.classList.add('show')
+        searchBtn.classList.remove('show')
+        search.focus()
+        if (searchResult.children.length) {
+            searchResult.classList.add('show-results');
+        }
+    })
+
+    document.addEventListener('click', e => {
+        if (!search.classList.contains('show')) return;
+
+        if (!search.contains(e.target) && !searchBtn.contains(e.target)) {
+            search.classList.remove('show');
+            searchBtn.classList.add('show');
+        }
+    })
+
     document.addEventListener('click', e => {
         if (!searchResult.classList.contains('show-results')) return;
 
-        if (!search.contains(e.target) && !searchResult.contains(e.target)) {
+        if (!search.contains(e.target) && !searchResult.contains(e.target) && !searchBtn.contains(e.target)) {
             searchResult.classList.remove('show-results');
         }
     })

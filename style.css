@@ -5,30 +5,84 @@
 }
 
 body {
-    background-color: rgb(22, 49, 88);
+    background: linear-gradient(to right, #181e4b, #0b0f1e);
     color: white;
     padding: 24px 256px;
     width: 100%;
     height: 100dvh;
     display: flex;
     flex-direction: column;
+    font-family: 'Outfit', sans-serif;
     font-size: 24px;
     gap: 40px;
     position: relative;
 }
 
-.searchBox {
+.location-box {
     display: flex;
-    flex-direction: column;
-    width: 50%;
-    position: relative;
+    justify-content: space-between;
+    align-items: center;
+    gap: 300px;
+}
+
+.time {
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-size: 15px;
+    color: #8388af;
+    font-weight: 500;
+    padding: 8px 0;
+    width: fit-content;
+    text-wrap: nowrap;
+}
+
+.city {
+    padding: 3px 0;
+    letter-spacing: 0.5px;
+    font-size: 25px;
+}
+
+.country {
+    color: #8388af;
+    font-size: 17px;
 }
 
 .search {
     display: flex;
-    justify-content: end;
+    flex-direction: column;
+    align-items: end;
     width: 100%;
     gap: 8px;
+    position: relative;
+}
+
+.searchbar {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.searchField {
+    font-size: 20px;
+    padding: 8px 16px;
+    background: transparent;
+    outline: none;
+    border: 1px solid snow;
+    color: white;
+    border-radius: 200px;
+    width: 100%;
+    display: none;
+}
+
+.btn {
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    font-size: 18px;
+    padding: 6px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: none;
 }
 
 .search-results {
@@ -48,24 +102,9 @@ body {
     min-height: 12px;
 }
 
-input {
-    font-size: 20px;
-    padding: 8px 16px;
-    background: transparent;
-    outline: none;
-    border: 1px solid snow;
-    color: white;
-    border-radius: 4px;
-    width: 100%;
-}
 
-button {
-    border: none;
-    font-size: 22px;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
+
 
 .city-result {
     width: 100%;
@@ -180,10 +219,6 @@ button {
     gap: 8px;
 }
 
-.show {
-    display: flex;
-}
-
 .favorite-item {
     background-color: rgb(22, 49, 88);
     font-size: 15px;
@@ -206,4 +241,8 @@ button {
     font-size: 12px;
     padding: 0;
     width: fit-content;
+}
+
+.show {
+    display: flex;
 }
