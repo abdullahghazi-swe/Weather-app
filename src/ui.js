@@ -40,15 +40,16 @@ export function render() {
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
 
+    temp.textContent = Math.round(state.baseData.temperature);
+    feels.textContent = Math.round(state.derivedData.apparentTemp);
     weather.textContent = getWeatherState(state.baseData.weather);
-    temp.textContent = state.baseData.temperature;
     humidity.textContent = state.baseData.humidity;
     pressure.textContent = state.baseData.pressure;
 
     wind.textContent = state.derivedData.windSpeed;
     precip.textContent = state.derivedData.precipitation;
     uv.textContent = state.derivedData.uvIndex;
-    feels.textContent = state.derivedData.apparentTemp;
+    
     visibility.textContent = state.derivedData.visibility;
 
     if (state.baseData.source === 'expiredCache') {

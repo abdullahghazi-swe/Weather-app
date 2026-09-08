@@ -15,6 +15,10 @@
             <div class="time"></div>
             <div class="city"></div>
             <div class="country"></div>
+            <div class="addToFav">
+                <span class="fav-star">☆</span>
+                <span class="fav-text">Add to Favorites</span>
+            </div>
         </div>
         <div class="search">
             <div class="searchbar">
@@ -24,47 +28,65 @@
             <div class="search-results"></div>
             <span class="searchErrors"></span>
         </div>
-
+    </div>
+    <div class="default-location">
+        <span class="star">☆</span>
+        <span class="default-text">Set as default</span>
     </div>
 
     <div class="weather">
-        <div class="location">
-            <div class="time"></div>
-            <div class="location-detail">
-                <div class="loc-left">
-                    <div class="city"></div>
+        <div class="current-weather">
+            <div class="current-left">
+                <div class="temperature">
+                    <div class="temp"></div> 
+                    <span class="temp-unit">°C</span>
                 </div>
-                <div class="loc-right">
-                    <div class="default-location">
-                        <span class="star">☆</span>
-                        <span class="default-text">Set as default</span>
-                    </div>
+                <div class="weather-state"></div>
+                <div class="apparant-temp">
+                    <span>Feels Like </span>
+                    <span class="feels"></span>
+                    <span class="feels-unit">°C</span>
                 </div>
             </div>
-            <div class="country"></div>
+            <div class="current-right">
+                <div class="weather-icon">☁️</div>
+                <div class="precipitation">
+                    <span>Precip · </span>
+                    <span class="precp"></span>
+                    <span>%</span>
+                </div>
+            </div>
         </div>
-        <div class="weather-state"></div>
-        <div class="info-box">
-            <div class="info">Temperature: <span class="temp"></span> °C</div>
-            <div class="info">Feels Like: <span class="feels"></span> °C</div>
-            <div class="info">Humidity: <span class="hum"></span> %</div>
-            <div class="info">Pressure: <span class="pressure"></span> hpa</div>
-            <div class="info">Wind Speed: <span class="wind"></span> km/h</div>
-            <div class="info">UV Index: <span class="uv"></span></div>
-            <div class="info">Precipitation: <span class="precp"></span>mm</div>
-            <div class="info">Visibility: <span class="visibility"></span>m</div>
-            <div class="updateTime"></div>
-            <div class="addToFav">
-                <span class="fav-star">☆</span>
-                <span class="fav-text">Add to Favorites</span>
+        <div class="current-conditions">
+            <div class="condition">
+                <p class="condition-text">Wind Speed</p>
+                <span class="wind"></span>
+                <span class="wind-unit"> km/h</span>
+            </div>
+            <div class="condition">
+                <p class="condition-text">UV Index</p>
+                <span class="uv"></span>
+            </div>
+            <div class="condition">
+                <p class="condition-text">Visibility</p>
+                <span class="visibility"></span>
+                <span class="wind-unit"> m</span>
             </div>
         </div>
     </div>
+
     <div class="forcast">
         <div class="hourlyForcast"></div>
         <div class="dailyForcast"></div>
     </div>
     <div class="favorites"></div>
+    <div class="info-box">
+        <div class="info">Humidity: <span class="hum"></span> %</div>
+        <div class="info">Pressure: <span class="pressure"></span> hpa</div>
+        <div class="info">Precipitation: <span class="pressure"></span> mm</div>
+        <div class="info">Dew Point: <span class="dew"></span> °C</div>
+        <div class="updateTime"></div>
+    </div>
     
     <script type="module" src="src/main.js" defer></script>
 </body>

@@ -1,6 +1,6 @@
 import { state } from "./state.js";
 
-export const AGELIMIT = 60 * 60 * 1000;
+export const AGELIMIT = 20 * 60 * 1000;
 
 export function saveWeather(coords, weather) {
     const cacheList = readWeather() || [];

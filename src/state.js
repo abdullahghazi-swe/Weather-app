@@ -50,7 +50,7 @@ export function setState(city, weather) {
     state.derivedData.apparentTemp = weather.current.apparent_temperature;
     state.derivedData.windSpeed = weather.current.wind_speed_10m;
     state.derivedData.uvIndex = weather.current.uv_index;
-    state.derivedData.precipitation = weather.current.precipitation;
+    state.derivedData.precipitation = weather.current.precipitation_probability;
     state.derivedData.visibility = weather.current.visibility;
 
     state.hourlyData = cleanHourData(weather.hourly)

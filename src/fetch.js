@@ -127,7 +127,7 @@ async function getCitiesList(query) {
 
 async function getWeather(lat, long) {
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}` + 
-    "&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation,visibility,wind_speed_10m,weather_code" + 
+    "&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation_probability,visibility,wind_speed_10m,weather_code" + 
     "&hourly=temperature_2m,weather_code&forecast_hours=7" + 
     "&daily=precipitation_probability_mean,weather_code,temperature_2m_max,temperature_2m_min&timezone=auto";
 
