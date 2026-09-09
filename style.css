@@ -135,6 +135,28 @@ body {
     text-transform: capitalize;
 }
 
+.approx {
+    opacity: 0.6;
+    font-size: 12px;
+    margin-left: 48px;
+}
+
+.changeBtn {
+    background: transparent;
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.651);
+    border-radius: 20px;
+    font-size: 13px;
+    padding: 2px 4px;
+    margin-left: 4px;
+    cursor: pointer;
+}
+
+.changeBtn:hover {
+    background-color: white;
+    color: rgb(22, 49, 88);
+}
+
 .weather {
     display: flex;
     flex-direction: column;
@@ -215,7 +237,7 @@ body {
     border: 1px solid #2f4072;
     font-size: 18px;
     font-weight: 500;
-    flex-grow: 1;
+    flex: 1;
     border-radius: 18px;
 }
 

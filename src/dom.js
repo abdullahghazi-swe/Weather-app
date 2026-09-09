@@ -19,6 +19,7 @@ export const feels = document.querySelector('.feels')
 export const pressure = document.querySelector('.pressure')
 export const precip = document.querySelector('.precp')
 export const uv = document.querySelector('.uv')
+export const aqi = document.querySelector('.aqi')
 export const visibility = document.querySelector('.visibility')
 export const update = document.querySelector('.updateTime')
 

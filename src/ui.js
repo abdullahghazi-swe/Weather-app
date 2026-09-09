@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, dailyList, searchResult, locDetail, search, star, defaultText, update, favorites, favStar, favText } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, aqi, dailyList, searchResult, locDetail, search, star, defaultText, update, favorites, favStar, favText, searchBtn } from "./dom.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
 
@@ -28,7 +28,7 @@ const WEATHERCODES = {
   82: "Violent Rain Showers",
   85: "Slight Snow Showers",
   86: "Heavy Snow Showers",
-  95: "Slight/Moderate Thunderstorm",
+  95: "Moderate Thunderstorm",
   96: "Thunderstorm with Slight Hail",
   97: "Thunderstorm with Heavy Hail"
 };
@@ -43,14 +43,16 @@ export function render() {
     temp.textContent = Math.round(state.baseData.temperature);
     feels.textContent = Math.round(state.derivedData.apparentTemp);
     weather.textContent = getWeatherState(state.baseData.weather);
-    humidity.textContent = state.baseData.humidity;
-    pressure.textContent = state.baseData.pressure;
+    precip.textContent = state.derivedData.precipitation;
 
     wind.textContent = state.derivedData.windSpeed;
-    precip.textContent = state.derivedData.precipitation;
     uv.textContent = state.derivedData.uvIndex;
+    aqi.textContent = state.derivedData.aqi
+    visibility.textContent = (state.derivedData.visibility / 1000).toFixed(1);
+
+    humidity.textContent = state.baseData.humidity;
+    pressure.textContent = state.baseData.pressure;
     
-    visibility.textContent = state.derivedData.visibility;
 
     if (state.baseData.source === 'expiredCache') {
         showUpdateTime(state.location.time);
@@ -67,8 +69,6 @@ export function render() {
     }
 
     renderRecentSearches();
-
-    searchResult.classList.remove('show-results')
 }
 
 function getWeatherState(code) {
@@ -163,15 +163,19 @@ function addChangeLocation() {
     btn.textContent = "Change";
 
     note.className = 'approx';
-    btn.className = 'changeBtn'
+    btn.className = 'changeBtn';
     
     btn.addEventListener('click', () => {
-        search.focus();
-        setTimeout(() => searchResult.classList.add('show-results'), 100);
+        search.classList.add('show')
+        searchBtn.classList.remove('show')
+        search.focus()
+        if (searchResult.children.length) {
+            searchResult.classList.add('show-results');
+        }
     });
 
     note.append(btn);
-    locDetail.append(note);
+    city.append(note);
 }
 
 function resetUI() {
@@ -180,6 +184,7 @@ function resetUI() {
 
     update.textContent = '';
     search.value = '';
+    searchResult.classList.remove('show-results');
 }
 
 function addSetDefault(currentCoords) {

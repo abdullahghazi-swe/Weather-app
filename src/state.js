@@ -52,6 +52,7 @@ export function setState(city, weather) {
     state.derivedData.uvIndex = weather.current.uv_index;
     state.derivedData.precipitation = weather.current.precipitation_probability;
     state.derivedData.visibility = weather.current.visibility;
+    state.derivedData.aqi = weather.aqi_eu;
 
     state.hourlyData = cleanHourData(weather.hourly)
     state.dailyData = cleanDailyData(weather.daily)

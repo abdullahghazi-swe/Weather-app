@@ -126,21 +126,27 @@ async function getCitiesList(query) {
 }
 
 async function getWeather(lat, long) {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}` + 
+    const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${long}` + 
     "&current=temperature_2m,apparent_temperature,surface_pressure,relative_humidity_2m,uv_index,precipitation_probability,visibility,wind_speed_10m,weather_code" + 
     "&hourly=temperature_2m,weather_code&forecast_hours=7" + 
     "&daily=precipitation_probability_mean,weather_code,temperature_2m_max,temperature_2m_min&timezone=auto";
 
-    try {
-        const response = await fetch(url);
+    const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${long}&current=european_aqi,us_aqi`
 
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
+    try {
+        const [weatherRes, aqiRes] = await Promise.all([
+            fetch(weatherUrl),
+            fetch(aqiUrl)
+        ])
+
+        if (!weatherRes.ok || !aqiRes.ok) {
+            throw new Error(`HTTP Error Response failed!`);
         }
 
-        const weatherData = await response.json();
+        const weatherData = await weatherRes.json();
+        const aqi = await aqiRes.json()
         
-        return weatherData;
+        return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi };
 
     } catch (error) {
         console.error("Couldn't get weather!", error)

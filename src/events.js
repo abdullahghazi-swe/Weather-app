@@ -18,6 +18,7 @@ export function initEventListeners() {
 
     document.addEventListener('click', e => {
         if (!search.classList.contains('show')) return;
+        if (e.target.closest('.changeBtn')) return;
 
         if (!search.contains(e.target) && !searchBtn.contains(e.target)) {
             search.classList.remove('show');
