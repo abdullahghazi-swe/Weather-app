@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, uv, feels, pressure, visibility, aqi, dailyList, searchResult, locDetail, search, star, defaultText, update, favorites, favStar, favText, searchBtn } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favStar, favText, searchBtn } from "./dom.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
 
@@ -40,21 +40,22 @@ export function render() {
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
 
-    temp.textContent = Math.round(state.baseData.temperature);
-    feels.textContent = Math.round(state.derivedData.apparentTemp);
-    weather.textContent = getWeatherState(state.baseData.weather);
-    precip.textContent = state.derivedData.precipitation;
+    temp.textContent = Math.round(state.weatherData.temperature);
+    feels.textContent = Math.round(state.weatherData.apparentTemp);
+    weather.textContent = getWeatherState(state.weatherData.weather);
+    precipProb.textContent = state.weatherData.precipProbability;
 
-    wind.textContent = state.derivedData.windSpeed;
-    uv.textContent = state.derivedData.uvIndex;
-    aqi.textContent = state.derivedData.aqi
-    visibility.textContent = (state.derivedData.visibility / 1000).toFixed(1);
+    wind.textContent = state.weatherData.windSpeed;
+    uv.textContent = state.weatherData.uvIndex;
+    aqi.textContent = state.weatherData.aqi
+    visibility.textContent = (state.weatherData.visibility / 1000).toFixed(1);
 
-    humidity.textContent = state.baseData.humidity;
-    pressure.textContent = state.baseData.pressure;
-    
+    humidity.textContent = state.weatherData.humidity;
+    pressure.textContent = state.weatherData.pressure;
+    precip.textContent = state.weatherData.precipitation;
+    dew.textContent = state.weatherData.dewPoint;
 
-    if (state.baseData.source === 'expiredCache') {
+    if (state.weatherData.source === 'expiredCache') {
         showUpdateTime(state.location.time);
     }
 
