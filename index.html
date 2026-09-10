@@ -85,12 +85,30 @@
     </div>
     <div class="favorites"></div>
     <div class="info-box">
-        <div class="info">Humidity: <span class="hum"></span> %</div>
-        <div class="info">Pressure: <span class="pressure"></span> hpa</div>
-        <div class="info">Precipitation: <span class="precip"></span> mm</div>
-        <div class="info">Dew Point: <span class="dew"></span> °C</div>
-        <div class="updateTime"></div>
+        <div class="info">
+            <p class="info-text">Humidity</p>
+            <span class="hum"></span>
+            <span class="hum-unit"> %</span>
+        </div>
+        <div class="info">
+            <p class="info-text">Pressure</p>
+            <span class="pressure"></span>
+            <span class="pressure-unit"> hpa</span>
+        </div>
+        <div class="info">
+            <p class="info-text">Precipitation</p>
+            <span class="precip"></span>
+            <span class="precip-unit"> mm</span>
+        </div>
+        <div class="info">
+            <p class="info-text">Dew Point</p>
+            <span class="dew"></span>
+            <span class="dew-unit"> °C</span>
+        </div>
     </div>
+    <footer>
+        <div class="updateTime"></div>
+    </footer>
     
     <script type="module" src="src/main.js" defer></script>
 </body>
