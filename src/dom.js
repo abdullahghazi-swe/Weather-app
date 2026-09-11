@@ -25,7 +25,7 @@ export const aqi = document.querySelector('.aqi')
 export const visibility = document.querySelector('.visibility')
 export const update = document.querySelector('.updateTime')
 
-export const hourList = document.querySelector('.hourlyForcast')
+export const hourList = document.querySelector('.hour-list')
 export const dailyList = document.querySelector('.dailyForcast')
 
 export const favorites = document.querySelector('.favorites')

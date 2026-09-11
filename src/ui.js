@@ -89,9 +89,20 @@ function createHourList(hours, list, currentTime) {
         const hourTemp = document.createElement('p')
 
         hourLable.textContent = cleanHourTime(hour.time, currentTime);
+        hourLable.className = 'hourTime';
         
-        hourWeather.textContent = getWeatherState(hour.weather);
-        hourTemp.textContent = `${hour.temp} °C`;
+        hourWeather.dataset.weather = getWeatherState(hour.weather);
+        hourWeather.textContent = '🌙';
+        hourWeather.className = 'hourWeather';
+
+        hourTemp.textContent = `${Math.round(hour.temp)} °C`;
+        hourTemp.className = 'hourTemp'
+
+        if (hourLable.textContent === "Now") {
+            card.classList.add('now-hour');
+            hourLable.style.color = '#6e96be'
+        }
+
         
         card.append(hourLable, hourWeather, hourTemp)
         list.appendChild(card)

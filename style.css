@@ -281,28 +281,79 @@ body {
 }
 
 
-
 .forcast {
     width: 100%;
 }
 
 .hourlyForcast {
-    display: flex;
-    gap: 16px;
-    padding: 24px 36px;
+    padding: 8px 36px;
     border-radius: 24px;
-    background-color: rgb(5, 39, 102);
-    width: fit-content;
-    margin-bottom: 24px;
+    width: 100%;
+    margin-bottom: 36px;
+    border: 1px solid rgba(60, 72, 138, 0.65);
 }
 
-.hour-card {
-    color: black;
-    background-color: white;
-    padding: 16px;
-    width: 150px;
-    border-radius: 16px;
+.hourlyForcast > h3 {
+    color: #5a72a3;
+    padding: 8px 0;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
 }
+
+.hour-list {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 10px 0;
+    padding-bottom: 16px;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
+
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+}
+
+
+.hour-card {
+    color: rgb(252, 252, 252);
+    background-color: #161c38;
+    border: 1px solid #2a3157;
+    flex-shrink: 0;
+    padding: 20px 16px;
+    width: 117px;
+    height: 180px;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.hour-card > .hourTime {
+    color: #516999;
+    font-weight: 300;
+    font-size: 18px;
+}
+
+.hour-card > .hourWeather {
+    font-size: 30px;
+}
+
+.hour-card > .hourTemp {
+    font-size: 22px;
+}
+
+.now-hour {
+    border: 1px solid #3b5d8f;
+    background-color: #1c2746;
+}
+
 
 .dailyForcast {
     display: flex;
