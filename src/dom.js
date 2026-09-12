@@ -26,7 +26,7 @@ export const visibility = document.querySelector('.visibility')
 export const update = document.querySelector('.updateTime')
 
 export const hourList = document.querySelector('.hour-list')
-export const dailyList = document.querySelector('.dailyForcast')
+export const dailyList = document.querySelector('.day-list')
 
 export const favorites = document.querySelector('.favorites')
 export const favStar = document.querySelector('.fav-star')

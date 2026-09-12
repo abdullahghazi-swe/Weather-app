@@ -117,17 +117,34 @@ function createDailyList(daily, list, currentTime) {
         
         const dayBox = document.createElement('div')
         const weatherBox = document.createElement('div')
+
+        dayBox.className = 'dayBox'
+        weatherBox.className = 'weatherBox'
+
+        const weekDay = document.createElement('div')
+        const weather = document.createElement('div')
+
+        weekDay.className = 'weekDay'
+        weather.className = 'weekDayWeather'
+
         const precipBox = document.createElement('span')
         const tempBox = document.createElement('div')
 
-        dayBox.textContent = cleanDay(day.date, currentTime)
-        weatherBox.textContent = getWeatherState(day.weather);
+        precipBox.className = 'dailyPrecip'
+        tempBox.className = 'dailyTemp'
+
+        weekDay.textContent = cleanDay(day.date, currentTime)
+        weather.textContent = `☀️ ${getWeatherState(day.weather)}`;
         precipBox.textContent = `${day.precipitaion}%`;
         tempBox.textContent = `${day.tempMin}° - ${day.tempMax}°`
+
+        dayBox.append(weekDay, weather)
+        weatherBox.append(tempBox, precipBox)
         
-        card.append(dayBox, weatherBox, precipBox, tempBox)
+        card.append(dayBox, weatherBox)
         list.appendChild(card)
     }
+    list.lastElementChild.classList.add('last-day')
 }
 
 export function renderSearchResults() {

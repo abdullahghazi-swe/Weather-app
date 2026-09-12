@@ -356,26 +356,68 @@ body {
 
 
 .dailyForcast {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    background-color: rgb(3, 40, 141);
-    border-radius: 16px;
+    border: 1px solid rgba(60, 72, 138, 0.65);
+    border-radius: 28px;
     width: 100%;
-    padding: 20px;
+}
+
+.dailyForcast > h3 {
+    color: #5a72a3;
+    padding: 24px 36px;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .day-card {
-    color: black;
-    background-color: white;
-    border-radius: 8px;
     width: 100%;
+    border-bottom: 1px solid rgba(60, 72, 138, 0.65);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 36px;
-    padding: 16px;
+    padding: 16px 36px;
 }
+
+.day-card .dayBox {
+    display: flex;
+    align-items: center;
+}
+
+.day-card .weatherBox {
+    display: flex;
+    align-items: center;
+}
+
+.weekDay {
+    color: #8da5c9;
+    font-size: 20px;
+    font-weight: 400;
+    width: 100px;
+}
+
+.weekDayWeather {
+    color: #4e6592;
+    font-size: 21px;
+}
+
+.dailyPrecip {
+    color: #5a72a3;
+    font-size: 20px;
+}
+
+.dailyTemp {
+    width: fit-content;
+    padding: 0 80px;
+    font-size: 20px;
+}
+
+.last-day {
+    border: none;
+    padding-bottom: 20px;
+}
+
 
 .favorites {
     position: absolute;
