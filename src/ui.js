@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favStar, favText, searchBtn } from "./dom.js";
+import { time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
 
@@ -249,43 +249,71 @@ function showUpdateTime(time) {
 }
 
 export function renderFavorites(favs) {
-    favorites.innerHTML = "";
+    favList.innerHTML = "";
     favorites.classList.remove('show')
 
     for (let city of favs) {
-        const favBox = document.createElement('div');
-        const cityName = document.createElement('p');
-
-        cityName.textContent = city.name;
+        const favorite = createFavCard(city);
         
-        favBox.classList.add('favorite-item')
-        favBox.dataset.id = city.id;
-        favBox.append(cityName);
-        
-        if (city.weather !== null) {
-            const weatherState = document.createElement('div');
-            const temp = document.createElement('div');
-
-            weatherState.textContent = getWeatherState(city.weather.current.weather_code);
-            temp.textContent = city.weather.current.temperature_2m + ' °C';
-            favBox.append(weatherState, temp);
-        }
-
-        if (city.weather === null || city.weather.source === 'expiredCache') {
-            const btn = document.createElement('button')
-            btn.textContent = 'Retry'
-
-            btn.classList.add('retry-btn')
-            favBox.append(btn)
-        }
-        
-        favorites.prepend(favBox);
+        favList.prepend(favorite);
     }
 
     if (favorites.children.length) {
         favorites.classList.add('show')
     } 
 }
+
+function createFavCard(city) {
+    const favBox = document.createElement('div');
+    const cityBox = document.createElement('div');
+
+    const cityName = document.createElement('div');
+
+    favBox.dataset.id = city.id
+    favBox.className = 'favorite-item';
+    cityBox.className = 'cityBox';
+    
+
+    cityName.textContent = city.name;
+    cityName.className = 'cityName';
+
+    cityBox.append(cityName)
+
+    if (city.weather !== null) {
+        const weatherIcon = document.createElement('div');
+        const cityWeather = document.createElement('div');
+
+        const weatherState = document.createElement('div');
+        const temp = document.createElement('div');
+
+        cityWeather.className = 'cityWeather';
+
+        weatherIcon.textContent = '🌙';
+        weatherIcon.className = 'weatherIcon';
+
+        weatherState.textContent = getWeatherState(city.weather.current.weather_code);
+        weatherState.className = 'weatherState';
+
+        temp.textContent = Math.round(city.weather.current.temperature_2m) + ' °C'
+        temp.className = 'cityTemp';
+
+        cityWeather.append(weatherState, temp)
+        cityBox.append(cityWeather);
+        favBox.append(weatherIcon);
+    }
+
+    if (city.weather === null || city.weather.source === 'expiredCache') {
+        const btn = document.createElement('button')
+        btn.textContent = '🔄';
+
+        btn.classList.add('retry-btn');
+        favBox.append(btn);
+    }
+    
+    favBox.append(cityBox);
+    return favBox;
+}
+
 
 function addFavOption(coords) {
     const isFav = checkInFavorites(coords);

@@ -29,5 +29,6 @@ export const hourList = document.querySelector('.hour-list')
 export const dailyList = document.querySelector('.day-list')
 
 export const favorites = document.querySelector('.favorites')
+export const favList = document.querySelector('.favorites-list')
 export const favStar = document.querySelector('.fav-star')
 export const favText = document.querySelector('.fav-text')

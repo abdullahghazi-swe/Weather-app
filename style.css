@@ -433,10 +433,9 @@ body {
 
 .favorites {
     position: absolute;
-    top: 30%;
-    right: 50px;
-    width: 100px;
-    background-color: aliceblue;
+    top: 17%;
+    right: 15px;
+    width: 225px;
     border-radius: 8px;
     padding: 8px;
     display: none;
@@ -444,28 +443,81 @@ body {
     gap: 8px;
 }
 
-.favorite-item {
-    background-color: rgb(22, 49, 88);
-    font-size: 15px;
-    height: 80px;
-    width: 100%;
-    border-radius: 6px;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    cursor: pointer;
+.favorites > h3 {
+    color: #5a72a3;
+    padding: 6px 0;
+    font-size: 17px;
+    font-weight: 300;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.fav-star {
+.favorites-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.favorite-item {
+    background-color: #161c38;
+    border: 1px solid #293157;
+    font-size: 15px;
+    width: 100%;
+    border-radius: 12px;
+    padding: 12px 8px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
+    position: relative;
+}
+
+.favorite-item .weatherIcon {
+    font-size: 22px;
+}
+
+.favorite-item .cityBox {
+    width: 100%;
+    padding: 0 4px 0 8px;
+}
+
+.favorite-item .cityName {
+    padding-bottom: 6px;
+}
+
+.favorite-item .cityWeather {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.favorite-item .weatherState {
+    color: #7082b9;
+    font-size: 14px;
+}
+
+.favorite-item .cityTemp {
+    font-size: 18px;
+    text-wrap: nowrap;
+    color: #b8ceee;
+    font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .retry-btn {
     background: transparent;
-    color: rgba(255, 255, 255, 0.589);
-    font-size: 12px;
+    border: none;
+    font-size: 15px;
     padding: 0;
     width: fit-content;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+
+.fav-star {
+    cursor: pointer;
 }
 
 .show {
