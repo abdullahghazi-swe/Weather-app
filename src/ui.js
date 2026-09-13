@@ -177,6 +177,9 @@ function createSearchResult(city) {
     box.classList.add('city-result')
     box.dataset.id = city.id;
 
+    details.className = 'area-details';
+    cityName.className = 'city-name'
+
     cityName.textContent = city.name;
     details.textContent = division + district + state + city.country;
     box.append(cityName, details)
