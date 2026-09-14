@@ -1,7 +1,7 @@
-import { country, searchErr, weather } from "./dom.js"
 import { setState, state } from "./state.js";
 import { render, renderFavorites, renderSearchResults } from "./ui.js";
 import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch, AGELIMIT } from "./storage.js";
+import { showSearchError } from "./loading.js";
 
 let controller;
 
@@ -87,11 +87,13 @@ export async function cityResults(searchQuery) {
     const citiesList = await getCitiesList(searchQuery);
 
     if (citiesList === "Abort") return;
+    state.searchResult = citiesList || [];
+    
     if (!citiesList) {
-        searchErr.textContent = "City not found!";
+        showSearchError();
+        return;
     }
 
-    state.searchResult = citiesList || [];
     renderSearchResults();
 }
 

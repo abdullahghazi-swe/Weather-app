@@ -117,6 +117,11 @@ body {
     min-height: 12px;
 }
 
+.search-error {
+    padding: 16px;
+    text-align: center;
+}
+
 .city-result {
     width: 100%;
     border-bottom: 1px solid black;
@@ -535,4 +540,33 @@ footer > .updateTime {
     color: #6679b3;
     font-weight: 400;
     letter-spacing: 1px;
+}
+
+.search-loading {
+    width: 100%;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-loading::after {
+    content: "";
+    border: 5px solid transparent;
+    height: 25px;
+    width: 25px;
+    top: 5px;
+    border-top-color: #fff;
+    border-right-color: #fff;
+    border-radius: 50%;
+    animation: loading 500ms ease infinite;
+}
+
+@keyframes loading {
+    from {
+        transform: rotate(0turn);
+    } 
+    to {
+        transform: rotate(1turn);
+    }
 }

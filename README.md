@@ -29,3 +29,11 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 1. Clone the repo
 2. Open index.html in browser
+
+
+## Next
+
+Fix now vs current weather --- show current weather on now card
+add buttons for scrolling of hourly cards
+add comparison bars for daily temp
+make cache expire after hour completion
