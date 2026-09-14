@@ -559,10 +559,43 @@ footer > .updateTime {
     border-top-color: #fff;
     border-right-color: #fff;
     border-radius: 50%;
-    animation: loading 500ms ease infinite;
+    animation: searching 500ms ease infinite;
+}
+
+.app-loading {
+    background-color: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+    width: 100vw;
+    height: 100dvh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app-loading::after {
+    content: "";
+    border: 15px solid transparent;
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    border-top-color: #313868;
+    border-right-color: #313868;
+    animation: loading 600ms ease infinite;
 }
 
 @keyframes loading {
+    from {
+        transform: rotate(0turn);
+    }
+    to {
+        transform: rotate(1turn);
+    }
+}
+
+@keyframes searching {
     from {
         transform: rotate(0turn);
     } 

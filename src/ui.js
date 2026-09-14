@@ -1,4 +1,5 @@
 import { time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
+import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
 
@@ -68,7 +69,7 @@ export function render() {
     if (state.location.approx) {
         addChangeLocation();
     }
-
+    removeLoading()
     renderRecentSearches();
 }
 

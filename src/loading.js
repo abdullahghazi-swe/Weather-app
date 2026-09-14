@@ -18,3 +18,17 @@ export function showSearchError() {
 
     searchResult.prepend(error)
 }
+
+export function showLoading() {
+    document.body.style.overflow = "hidden";
+
+    const loader = document.createElement('div');
+    loader.className = 'app-loading';
+    document.body.append(loader);
+}
+
+export function removeLoading() {
+    document.body.style.overflow = '';
+    const loader = document.querySelector('.app-loading');
+    loader.remove()
+}
