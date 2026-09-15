@@ -20,6 +20,7 @@ export function showSearchError() {
 }
 
 export function showLoading() {
+    removeLoading();
     document.body.style.overflow = "hidden";
 
     const loader = document.createElement('div');
@@ -30,5 +31,8 @@ export function showLoading() {
 export function removeLoading() {
     document.body.style.overflow = '';
     const loader = document.querySelector('.app-loading');
-    loader.remove()
+
+    if (loader) {
+        loader.remove();
+    }
 }
