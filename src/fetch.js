@@ -1,11 +1,13 @@
 import { setState, state } from "./state.js";
 import { render, renderFavorites, renderSearchResults } from "./ui.js";
 import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch, AGELIMIT } from "./storage.js";
-import { showSearchError } from "./loading.js";
+import { showLoading, showSearchError, showErrorPage } from "./loading.js";
 
 let controller;
 
 export async function manageSelectedCity(selectedCityId) {
+    showLoading();
+    console.log('getting weathr' + selectedCityId)
     const cityData = state.recentSearches.find((city) => city.id === selectedCityId) ??
                      state.searchResult.find((city) => city.id === selectedCityId);
 
@@ -31,7 +33,9 @@ export async function manageSelectedCity(selectedCityId) {
     }
      
     if (!weather) {
-        return; // show error
+        showErrorPage("Couldn't get weather, Check your network connection", manageSelectedCity, selectedCityId);
+        return; // show error: white screen and retry
+        
     }
 
     const formattedData = {
@@ -51,6 +55,7 @@ export async function manageSelectedCity(selectedCityId) {
 }
 
 export async function manageFavWeather(id) {
+    showLoading();
     const city = state.favorites.find(city => city.id === id);
     if (!city) {
         return;
@@ -71,7 +76,8 @@ export async function manageFavWeather(id) {
     }
      
     if (!weather) {
-        return; // show error
+        showErrorPage("Couldn't get weather, Check your network connection", manageFavWeather, id);
+        return; // show error: white screen and retry
     }
 
     if (weather.source === 'api') {
@@ -106,7 +112,7 @@ async function getCitiesList(query) {
         const response = await fetch(url, {signal: controller.signal});
 
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
+            throw new Error(`HTTP ${response.status} : ${response.statusText}`); // Toast error
         }
 
         const cities = await response.json();
@@ -122,7 +128,7 @@ async function getCitiesList(query) {
             console.log("Request aborted.")
             return "Abort";
         }
-        console.error("Couldn't connect to server!", error)
+        console.error("Couldn't connect to server!", error) // Toast error
         return;
     }
 }
@@ -142,7 +148,7 @@ async function getWeather(lat, long) {
         ])
 
         if (!weatherRes.ok || !aqiRes.ok) {
-            throw new Error(`HTTP Error Response failed!`);
+            throw new Error(`HTTP Error Response failed!`); // Toast error
         }
 
         const weatherData = await weatherRes.json();
@@ -151,18 +157,20 @@ async function getWeather(lat, long) {
         return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi };
 
     } catch (error) {
-        console.error("Couldn't get weather!", error)
+        console.error("Couldn't get weather!", error); // Toast error
         return;
     } 
 }
 
 export async function getWeatherOnLoad() {
+    showLoading();
     const location = await getlocationOnLoad();
 
     if (!location) {
-        console.log("Couldn't get location");
-        return
+        showErrorPage("Couldn't get location, Check your network connection", getWeatherOnLoad); // show error: white screen and retry
+        return;
     }
+
     let cache;
     if (location.default) {
         cache = getDefWeatherCache();
@@ -185,7 +193,7 @@ export async function getWeatherOnLoad() {
     }
 
     if (!weather) {
-        console.log("Couldnt get weather!")
+        showErrorPage("Couldn't get weather, Check your network connection", getWeatherOnLoad);  // show error: white screen and retry
         return;
     }
 
@@ -193,8 +201,8 @@ export async function getWeatherOnLoad() {
         cacheDefLocWeather(weather);
     }
 
-    setState(location, weather)
-    render()
+    setState(location, weather);
+    render();
 }
 
 
@@ -207,7 +215,7 @@ async function getlocationOnLoad() {
     }
 
     try {
-        const data = await getLocationFromBrowser()
+        const data = await getLocationFromBrowser() // show Toast: Allow location
         const url = `https://nominatim.openstreetmap.org/reverse?lat=${data.lat}&lon=${data.lon}&format=json`;
 
         const response = await fetch(url);
@@ -226,7 +234,7 @@ async function getlocationOnLoad() {
             }
         }
     } catch (error) {
-        console.error(error)
+        console.error(error) // no error
     }
 
     try {

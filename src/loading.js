@@ -36,3 +36,34 @@ export function removeLoading() {
         loader.remove();
     }
 }
+
+export function showErrorPage(message, retry, id) {
+    removeLoading();
+    document.body.style.overflow = "hidden";
+
+    const errorPage = document.createElement('div');
+    const text = document.createElement('p');
+    const retryBtn = document.createElement('button');
+
+    errorPage.className = 'app-error';
+    text.className = 'app-error-text';
+    retryBtn.className = 'tryAgain-btn';
+
+    text.textContent = message;
+    retryBtn.textContent = "Try again";
+
+    retryBtn.addEventListener('click', e => {
+        removeErrorPage();
+        retry(id);
+    });
+
+    errorPage.append(text, retryBtn);
+    document.body.append(errorPage);
+}
+
+function removeErrorPage() {
+    const page = document.querySelector('.app-error');
+    if (page) {
+        page.remove();
+    }
+}
