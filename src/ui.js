@@ -56,15 +56,17 @@ export function render() {
     precip.textContent = state.weatherData.precipitation;
     dew.textContent = state.weatherData.dewPoint;
 
-    if (state.weatherData.source === 'expiredCache') {
-        showUpdateTime(state.location.time);
-    }
+    showUpdateTime(state.location.time);
 
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
 
     addSetDefault(state.location.coordinates);
     addFavOption(state.location.coordinates);
+
+    if (state.weatherData.source === 'expiredCache') {
+        showOffline();
+    }
 
     if (state.location.approx) {
         addChangeLocation();
@@ -232,20 +234,39 @@ function addSetDefault(currentCoords) {
     }
 }
 
+function showOffline() {
+    update.textContent = `Offline · ${update.textContent}`;
+
+    const sidebar = document.querySelector('aside');
+
+    const offline = document.createElement('span')
+    offline.textContent = 'Offline';
+    offline.className = 'offline';
+
+    sidebar.append(offline);
+}
+
 function showUpdateTime(time) {
-    const weatherTime = new Date(time)
-    const now = new Date()
+    const weatherTime = new Date(time);
+    const now = new Date();
 
     const timeDiff = now - weatherTime;
-    const hours = Math.floor(timeDiff / (1000 * 60 * 60)) 
+    const minutes = Math.floor(timeDiff / (1000 * 60)) ;
+    const hours = Math.floor(minutes / 60);
 
     let text;
+
     if (hours >= 24) {
         const days = Math.floor(hours / 24);
-        text = `Offline · Updated ${days} ${days === 1 ? 'day' : 'days'} ago`
+        text = `Updated ${days} ${days === 1 ? 'day' : 'days'} ago`;
+    } else if (hours > 0) {
+        text = `Updated ${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+    } else if (minutes <= 10) {
+        text = 'Updated Just Now';
     } else {
-        text = `Offline · Updated ${hours} ${hours === 1 ? 'hour' : 'hour'} ago`
+        text = `Updated ${minutes} minutes ago`;
     }
+
     update.textContent = text;
 }
 

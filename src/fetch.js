@@ -7,7 +7,7 @@ let controller;
 
 export async function manageSelectedCity(selectedCityId) {
     showLoading();
-    console.log('getting weathr' + selectedCityId)
+
     const cityData = state.recentSearches.find((city) => city.id === selectedCityId) ??
                      state.searchResult.find((city) => city.id === selectedCityId);
 
@@ -189,7 +189,6 @@ export async function getWeatherOnLoad() {
     if (!weather && cache) {
         weather = cache.weather;
         weather.source = 'expiredCache';
-        weather.cachedTime = cache.time;
     }
 
     if (!weather) {

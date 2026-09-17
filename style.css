@@ -143,12 +143,24 @@ body {
     font-size: 18px;
 }
 
+aside {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 36px;
+}
 
 .default-location {
-    position: absolute;
-    top: 28px;
-    left: 38px;
     font-size: 20px;
+    margin-bottom: 24px;
+}
+
+.offline {
+    padding: 12px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    font-family: 'JetBrains Mono', monospace;
+    color: rgba(81, 101, 187, 0.979);
 }
 
 .star {
