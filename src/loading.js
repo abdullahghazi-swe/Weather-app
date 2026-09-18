@@ -68,15 +68,16 @@ function removeErrorPage() {
     }
 }
 
-export function addToast() {
-    const toast = document.createElement('div')
+export function addToast(msg) {
+    removeLoading();
+    const toast = document.createElement('div');
     toast.className = 'toast';
 
-    toast.textContent = "Check your internet connection";
+    toast.textContent = msg;
     toastBox.prepend(toast);
 
     setTimeout(() => {
-        toast.classList.add('toastEnd')
+        toast.classList.add('toastEnd');
         toast.addEventListener('transitionend', e => e.target.remove());
-    }, 4000)
+    }, 4000);
 }

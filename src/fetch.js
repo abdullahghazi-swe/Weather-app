@@ -11,7 +11,10 @@ export async function manageSelectedCity(selectedCityId) {
     const cityData = state.recentSearches.find((city) => city.id === selectedCityId) ??
                      state.searchResult.find((city) => city.id === selectedCityId);
 
-    if (!cityData) return;
+    if (!cityData) {
+        addToast("Something went wrong. Please try again.");
+        return;
+    }
 
     const coords = { 
         latitude: cityData.latitude,
@@ -48,7 +51,7 @@ export async function manageSelectedCity(selectedCityId) {
     if (weather.source === 'api') {
         saveWeather(coords, weather)
     }
-    addToast()
+
     saveRecentSearch(cityData);
     setState(formattedData, weather);
     render();
@@ -58,6 +61,7 @@ export async function manageFavWeather(id) {
     showLoading();
     const city = state.favorites.find(city => city.id === id);
     if (!city) {
+        addToast("Something went wrong. Please try again.");
         return;
     }
 
@@ -95,7 +99,7 @@ export async function cityResults(searchQuery) {
     if (citiesList === "Abort") return;
     state.searchResult = citiesList || [];
     
-    if (!citiesList) {
+    if (citiesList === "no result") {
         showSearchError();
         return;
     }
@@ -112,13 +116,14 @@ async function getCitiesList(query) {
         const response = await fetch(url, {signal: controller.signal});
 
         if (!response.ok) {
-            throw new Error(`HTTP ${response.status} : ${response.statusText}`); // Toast error
+            addToast("Something went wrong. Please try again.") // Toast error
+            throw new Error(`HTTP ${response.status} : ${response.statusText}`);
         }
 
         const cities = await response.json();
 
         if (!cities.results || cities.results.length === 0) {
-            return;
+            return "no result";
         }
 
         return cities.results;
@@ -128,7 +133,8 @@ async function getCitiesList(query) {
             console.log("Request aborted.")
             return "Abort";
         }
-        console.error("Couldn't connect to server!", error) // Toast error
+        addToast("Please check your connection and try again.")  // Toast error
+        console.error("Couldn't connect to server!", error)
         return;
     }
 }
@@ -148,6 +154,7 @@ async function getWeather(lat, long) {
         ])
 
         if (!weatherRes.ok || !aqiRes.ok) {
+            addToast("Something went wrong. Please try again.");
             throw new Error(`HTTP Error Response failed!`); // Toast error
         }
 
@@ -157,6 +164,7 @@ async function getWeather(lat, long) {
         return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi };
 
     } catch (error) {
+        addToast("Please check your connection and try again.");
         console.error("Couldn't get weather!", error); // Toast error
         return;
     } 
@@ -200,6 +208,10 @@ export async function getWeatherOnLoad() {
         cacheDefLocWeather(weather);
     }
 
+    if (location.approx) {
+        addToast("Location access denied. Using approximate location.");
+    }
+
     setState(location, weather);
     render();
 }
@@ -214,7 +226,7 @@ async function getlocationOnLoad() {
     }
 
     try {
-        const data = await getLocationFromBrowser() // show Toast: Allow location
+        const data = await getLocationFromBrowser()
         const url = `https://nominatim.openstreetmap.org/reverse?lat=${data.lat}&lon=${data.lon}&format=json`;
 
         const response = await fetch(url);
