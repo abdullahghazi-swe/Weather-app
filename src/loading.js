@@ -1,4 +1,4 @@
-import { searchResult } from "./dom.js"
+import { searchResult, toastBox } from "./dom.js"
 
 export function showSearching() {
     searchResult.innerHTML = '';
@@ -66,4 +66,17 @@ function removeErrorPage() {
     if (page) {
         page.remove();
     }
+}
+
+export function addToast() {
+    const toast = document.createElement('div')
+    toast.className = 'toast';
+
+    toast.textContent = "Check your internet connection";
+    toastBox.prepend(toast);
+
+    setTimeout(() => {
+        toast.classList.add('toastEnd')
+        toast.addEventListener('transitionend', e => e.target.remove());
+    }, 4000)
 }

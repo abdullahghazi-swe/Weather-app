@@ -646,3 +646,30 @@ footer > .updateTime {
         transform: rotate(1turn);
     }
 }
+
+.toastBox {
+    margin-top: 120px;
+    width: 500px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.toast {
+    width: 100%;
+    font-size: 20px;
+    padding: 12px 16px;
+    border-radius: 16px;
+    background: rgba(139, 146, 187, 0.5);
+    backdrop-filter: blur(25px);
+    z-index: 25;
+    transition: all 500ms ease;
+}
+
+.toastEnd {
+    opacity: 0;
+}

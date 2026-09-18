@@ -1,7 +1,7 @@
 import { setState, state } from "./state.js";
 import { render, renderFavorites, renderSearchResults } from "./ui.js";
 import { saveWeather, getCache, getDefaultLocation, cacheDefLocWeather, getDefWeatherCache, saveRecentSearch, AGELIMIT } from "./storage.js";
-import { showLoading, showSearchError, showErrorPage } from "./loading.js";
+import { showLoading, showSearchError, showErrorPage, addToast } from "./loading.js";
 
 let controller;
 
@@ -48,7 +48,7 @@ export async function manageSelectedCity(selectedCityId) {
     if (weather.source === 'api') {
         saveWeather(coords, weather)
     }
-
+    addToast()
     saveRecentSearch(cityData);
     setState(formattedData, weather);
     render();
