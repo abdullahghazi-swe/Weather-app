@@ -4,6 +4,17 @@
     box-sizing: border-box;
 }
 
+html {
+    scrollbar-width: none;       /* Fixes Firefox */
+    -ms-overflow-style: none;    /* Fixes IE/Edge */
+}
+
+/* 2. ALSO APPLY WIDELY TO TARGET ALL BROWSER ENGINE SCENARIOS */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;               /* Fixes Chrome, Safari, Opera, Brave */
+}
+
 body {
     background: linear-gradient(to right, #181e4b, #0b0f1e);
     color: white;
@@ -15,10 +26,6 @@ body {
     font-size: 24px;
     gap: 40px;
     position: relative;
-
-     &::-webkit-scrollbar {
-        display: none;
-    }
 
     scrollbar-width: none;
 
