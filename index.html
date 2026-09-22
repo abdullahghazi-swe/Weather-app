@@ -10,115 +10,126 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div class="location-box">
-        <div class="current-location">
-            <div class="time"></div>
-            <div class="city"></div>
-            <div class="country"></div>
-            <div class="addToFav">
-                <span class="fav-star">☆</span>
-                <span class="fav-text">Add to Favorites</span>
+    <header>
+        <div class="logo">Skies</div>
+        <button class="setting">⚙️</button>
+    </header>
+    <main>
+        <div class="location-box">
+            <div class="time-search">
+                <div class="time"></div>
+                <div class="search">
+                    <div class="searchbar">
+                        <input class="searchField" type="search" placeholder="Search city...">
+                        <button class="btn show">🔍</button>
+                    </div>
+                    <div class="search-results"></div>
+                </div>
+            </div>
+            <div class="current-location">
+                <div class="area">
+                    <div class="city"></div>
+                    <div class="country"></div>
+                </div>
+                <div class="city-controls">
+                    <div class="default-location">
+                        <span class="star">☆</span>
+                        <span class="default-text">Set as default</span>
+                    </div>
+                    <div class="addToFav">
+                        <span class="fav-star">☆</span>
+                        <span class="fav-text">Add to Favorites</span>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="search">
-            <div class="searchbar">
-                <input class="searchField" type="search" placeholder="Search city...">
-                <button class="btn show">🔍</button>
-            </div>
-            <div class="search-results"></div>
-        </div>
-    </div>
 
-    <div class="weather">
-        <div class="current-weather">
-            <div class="current-left">
-                <div class="temperature">
-                    <div class="temp"></div> 
-                    <span class="temp-unit">°C</span>
+        <div class="weather">
+            <div class="current-weather">
+                <div class="current-left">
+                    <div class="temperature">
+                        <div class="temp"></div> 
+                        <span class="temp-unit">°C</span>
+                    </div>
+                    <div class="weather-state"></div>
+                    <div class="apparant-temp">
+                        <span>Feels Like </span>
+                        <span class="feels"></span>
+                        <span class="feels-unit">°C</span>
+                    </div>
                 </div>
-                <div class="weather-state"></div>
-                <div class="apparant-temp">
-                    <span>Feels Like </span>
-                    <span class="feels"></span>
-                    <span class="feels-unit">°C</span>
+                <div class="current-right">
+                    <div class="weather-icon">☁️</div>
+                    <div class="precipitation">
+                        <span>Precip · </span>
+                        <span class="precipProbability"></span>
+                        <span>%</span>
+                    </div>
                 </div>
             </div>
-            <div class="current-right">
-                <div class="weather-icon">☁️</div>
-                <div class="precipitation">
-                    <span>Precip · </span>
-                    <span class="precipProbability"></span>
-                    <span>%</span>
+            <div class="current-conditions">
+                <div class="condition">
+                    <p class="condition-text">Wind Speed</p>
+                    <span class="wind"></span>
+                    <span class="wind-unit"> km/h</span>
+                </div>
+                <div class="condition">
+                    <p class="condition-text">UV Index</p>
+                    <span class="uv"></span>
+                </div>
+                <div class="condition">
+                    <p class="condition-text">AQI</p>
+                    <span class="aqi"></span>
+                </div>
+                <div class="condition">
+                    <p class="condition-text">Visibility</p>
+                    <span class="visibility"></span>
+                    <span class="wind-unit"> km</span>
                 </div>
             </div>
         </div>
-        <div class="current-conditions">
-            <div class="condition">
-                <p class="condition-text">Wind Speed</p>
-                <span class="wind"></span>
-                <span class="wind-unit"> km/h</span>
-            </div>
-            <div class="condition">
-                <p class="condition-text">UV Index</p>
-                <span class="uv"></span>
-            </div>
-            <div class="condition">
-                <p class="condition-text">AQI</p>
-                <span class="aqi"></span>
-            </div>
-            <div class="condition">
-                <p class="condition-text">Visibility</p>
-                <span class="visibility"></span>
-                <span class="wind-unit"> km</span>
-            </div>
-        </div>
-    </div>
 
-    <div class="forcast">
-        <div class="hourlyForcast">
-            <h3>Hourly Forecast</h3>
-            <div class="hour-list"></div>
+        <div class="forcast">
+            <div class="hourlyForcast">
+                <h3>Hourly Forecast</h3>
+                <div class="hour-list"></div>
+            </div>
+            <div class="dailyForcast">
+                <h3>7-day Forecast</h3>
+                <div class="day-list"></div>
+            </div>
         </div>
-        <div class="dailyForcast">
-            <h3>7-day Forecast</h3>
-            <div class="day-list"></div>
+        <div class="info-box">
+            <div class="info">
+                <p class="info-text">Humidity</p>
+                <span class="hum"></span>
+                <span class="hum-unit"> %</span>
+            </div>
+            <div class="info">
+                <p class="info-text">Pressure</p>
+                <span class="pressure"></span>
+                <span class="pressure-unit"> hpa</span>
+            </div>
+            <div class="info">
+                <p class="info-text">Precipitation</p>
+                <span class="precip"></span>
+                <span class="precip-unit"> mm</span>
+            </div>
+            <div class="info">
+                <p class="info-text">Dew Point</p>
+                <span class="dew"></span>
+                <span class="dew-unit"> °C</span>
+            </div>
         </div>
-    </div>
+        <footer>
+            <div class="updateTime"></div>
+        </footer>
+    </main>
+    
     <div class="favorites">
         <h3>Favorites</h3>
         <div class="favorites-list"></div>
     </div>
-    <div class="info-box">
-        <div class="info">
-            <p class="info-text">Humidity</p>
-            <span class="hum"></span>
-            <span class="hum-unit"> %</span>
-        </div>
-        <div class="info">
-            <p class="info-text">Pressure</p>
-            <span class="pressure"></span>
-            <span class="pressure-unit"> hpa</span>
-        </div>
-        <div class="info">
-            <p class="info-text">Precipitation</p>
-            <span class="precip"></span>
-            <span class="precip-unit"> mm</span>
-        </div>
-        <div class="info">
-            <p class="info-text">Dew Point</p>
-            <span class="dew"></span>
-            <span class="dew-unit"> °C</span>
-        </div>
-    </div>
-    <aside>
-        <div class="default-location">
-            <span class="star">☆</span>
-            <span class="default-text">Set as default</span>
-        </div>
-    </aside>
-    <footer>
-        <div class="updateTime"></div>
-    </footer>
     <div class="app-loading"></div>
     <div class="toastBox"></div>
     <script type="module" src="src/main.js" defer></script>

@@ -38,5 +38,5 @@ add buttons for scrolling of hourly cards
 add comparison bars for daily temp
 make cache expire after hour completion
 Favorites heading is should not be shown when there are no favorites
-remove scroll bar for body
 use closure for debounce search
+show favorites limit toast

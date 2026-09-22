@@ -5,38 +5,53 @@
 }
 
 html {
-    scrollbar-width: none;       /* Fixes Firefox */
-    -ms-overflow-style: none;    /* Fixes IE/Edge */
+    scrollbar-width: none;       
+    -ms-overflow-style: none;    
 }
 
-/* 2. ALSO APPLY WIDELY TO TARGET ALL BROWSER ENGINE SCENARIOS */
+
 html::-webkit-scrollbar,
 body::-webkit-scrollbar {
-    display: none;               /* Fixes Chrome, Safari, Opera, Brave */
+    display: none;         
 }
 
 body {
     background: linear-gradient(to right, #181e4b, #0b0f1e);
     color: white;
-    padding: 24px 256px;
     width: 100%;
-    display: flex;
-    flex-direction: column;
     font-family: 'Outfit', sans-serif;
     font-size: 24px;
-    gap: 40px;
     position: relative;
-
     scrollbar-width: none;
-
     -ms-overflow-style: none;
 }
 
-.location-box {
+header {
+    height: 56px;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 300px;
+    justify-content: space-between;
+    padding: 16px 56px 0 100px;
+}
+
+main {
+    padding: 0 256px 24px 256px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.logo {
+    color: #a2aceb;
+    font-size: 22px;
+    letter-spacing: 0.5px;
+}
+
+.time-search {
+    display: flex;
+    gap: 200px;
+    height: 41px;
 }
 
 .time {
@@ -46,9 +61,13 @@ body {
     font-size: 15px;
     color: #8388af;
     font-weight: 500;
-    padding: 7px 0;
     width: fit-content;
     text-wrap: nowrap;
+}
+
+.current-location {
+    display: flex;
+    justify-content: space-between;
 }
 
 .city {
@@ -61,11 +80,6 @@ body {
 .country {
     color: #8388af;
     font-size: 17px;
-}
-
-.addToFav {
-    font-size: 18px;
-    padding: 12px 0;
 }
 
 .search {
@@ -150,18 +164,6 @@ body {
     font-size: 18px;
 }
 
-aside {
-    position: absolute;
-    top: 0;
-    left: 0;
-    padding: 36px;
-}
-
-.default-location {
-    font-size: 20px;
-    margin-bottom: 24px;
-}
-
 .offline {
     padding: 12px;
     font-size: 20px;
@@ -198,6 +200,20 @@ aside {
 .changeBtn:hover {
     background-color: white;
     color: rgb(22, 49, 88);
+}
+
+.city-controls {
+    display: flex;
+    align-items: end;
+    gap: 24px;
+}
+
+.default-location {
+    font-size: 18px;
+}
+
+.addToFav {
+    font-size: 18px;
 }
 
 .weather {
@@ -458,7 +474,7 @@ aside {
 .favorites {
     position: absolute;
     top: 17%;
-    right: 15px;
+    left: 15px;
     width: 225px;
     border-radius: 8px;
     padding: 8px;

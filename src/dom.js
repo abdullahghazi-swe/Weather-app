@@ -1,5 +1,5 @@
 export const search = document.querySelector('input');
-export const searchBtn = document.querySelector('button')
+export const searchBtn = document.querySelector('.btn')
 export const searchResult = document.querySelector('.search-results')
 
 export const time = document.querySelector('.time')
