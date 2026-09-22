@@ -1,4 +1,4 @@
-import { time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
+import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
@@ -237,13 +237,11 @@ function addSetDefault(currentCoords) {
 function showOffline() {
     update.textContent = `Offline · ${update.textContent}`;
 
-    const sidebar = document.querySelector('aside');
-
-    const offline = document.createElement('span')
-    offline.textContent = 'Offline';
+    const offline = document.createElement('div')
+    offline.textContent = 'Offline — showing cached data';
     offline.className = 'offline';
 
-    sidebar.append(offline);
+    locBox.append(offline);
 }
 
 function showUpdateTime(time) {

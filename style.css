@@ -165,11 +165,14 @@ main {
 }
 
 .offline {
-    padding: 12px;
+    background-color: rgb(29, 25, 25, 0.7);
+    border: 1px solid #e0b048;
+    margin-top: 12px;
+    width: 100%;
+    padding: 12px 24px;
     font-size: 20px;
-    letter-spacing: 1px;
-    font-family: 'JetBrains Mono', monospace;
-    color: rgba(81, 101, 187, 0.979);
+    border-radius: 12px;
+    color: #e0b048;
 }
 
 .star {
