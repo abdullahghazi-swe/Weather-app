@@ -1,9 +1,10 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
 import { checkDefault, checkInFavorites } from "./utils.js";
+import { showSettings, hideSettings } from "./prefs.js";
 
 
 export function initEventListeners() {
@@ -90,5 +91,19 @@ export function initEventListeners() {
         if (!fav) return;
 
         manageFavWeather(Number(fav.dataset.id))
+    })
+
+    settingBtn.addEventListener('click', () => {
+        showSettings();
+    })
+
+    settingClose.addEventListener('click', () => {
+        hideSettings();
+    })
+
+    settings.addEventListener('click', e => {
+        if (e.target === settings) {
+            hideSettings();
+        }
     })
 }

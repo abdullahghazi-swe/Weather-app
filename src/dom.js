@@ -33,3 +33,7 @@ export const favStar = document.querySelector('.fav-star')
 export const favText = document.querySelector('.fav-text')
 
 export const toastBox = document.querySelector('.toastBox')
+
+export const settingBtn = document.querySelector('.setting-btn')
+export const settings = document.querySelector('.setting-overlay')
+export const settingClose = document.querySelector('.close-btn')
