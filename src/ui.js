@@ -54,7 +54,7 @@ export function render() {
     humidity.textContent = state.weatherData.humidity;
     pressure.textContent = state.weatherData.pressure;
     precip.textContent = state.weatherData.precipitation;
-    dew.textContent = state.weatherData.dewPoint;
+    dew.textContent = Math.round(state.weatherData.dewPoint);
 
     showUpdateTime(state.location.time);
 

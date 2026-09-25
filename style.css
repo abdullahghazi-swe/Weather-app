@@ -768,6 +768,35 @@ footer > .updateTime {
     text-transform: uppercase;
 }
 
+.weather-unit {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px 0;
+    border-bottom: 1px solid #222c4d;
+}
+
+.setting-btns {
+    display: flex;
+    gap: 16px;
+}
+
+.setting-btns button {
+    flex: 1;
+    background-color: #141b33;
+    border: 1px solid #222c4d;
+    color: #3a4774;
+    padding: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.weather-unit h5 {
+    font-weight: 300;
+    color: #a8b9eb;
+    font-size: 16px;
+}
+
 .show {
     display: flex;
 }
