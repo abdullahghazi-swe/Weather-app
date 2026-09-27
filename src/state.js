@@ -1,3 +1,4 @@
+import { temp } from "./dom.js";
 import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
@@ -32,6 +33,13 @@ export const state = {
     },
     hourlyData: [],
     dailyData: [],
+    units: {
+        temp: 'celsius',
+        pres: 'hectopascals',
+        precip: 'millimeters',
+        wind: 'kilometersPerHour',
+        visib: 'kilometers',
+    }
 }
 
 export function setState(city, weather) {

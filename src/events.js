@@ -1,10 +1,10 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
 import { checkDefault, checkInFavorites } from "./utils.js";
-import { showSettings, hideSettings } from "./prefs.js";
+import { showSettings, hideSettings, changePrefs } from "./prefs.js";
 
 
 export function initEventListeners() {
@@ -104,6 +104,14 @@ export function initEventListeners() {
     settings.addEventListener('click', e => {
         if (e.target === settings) {
             hideSettings();
+        }
+    })
+
+    units.addEventListener('click', e => {
+        const btn = e.target.closest('button') 
+        
+        if (btn) {
+            changePrefs(btn.dataset.type, btn.dataset.unit)
         }
     })
 }

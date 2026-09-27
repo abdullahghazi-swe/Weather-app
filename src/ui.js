@@ -1,4 +1,5 @@
 import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
+import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
@@ -52,7 +53,7 @@ export function render() {
     visibility.textContent = (state.weatherData.visibility / 1000).toFixed(1);
 
     humidity.textContent = state.weatherData.humidity;
-    pressure.textContent = state.weatherData.pressure;
+    pressure.textContent = Math.round(state.weatherData.pressure);
     precip.textContent = state.weatherData.precipitation;
     dew.textContent = Math.round(state.weatherData.dewPoint);
 
@@ -64,6 +65,8 @@ export function render() {
     addSetDefault(state.location.coordinates);
     addFavOption(state.location.coordinates);
 
+    setUnits()
+
     if (state.weatherData.source === 'expiredCache') {
         showOffline();
     }
@@ -73,6 +76,7 @@ export function render() {
     }
     removeLoading()
     renderRecentSearches();
+    
 }
 
 function getWeatherState(code) {
@@ -98,7 +102,7 @@ function createHourList(hours, list, currentTime) {
         hourWeather.textContent = '🌙';
         hourWeather.className = 'hourWeather';
 
-        hourTemp.textContent = `${Math.round(hour.temp)} °C`;
+        hourTemp.textContent = `${Math.round(hour.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         hourTemp.className = 'hourTemp'
 
         if (hourLable.textContent === "Now") {
@@ -314,7 +318,7 @@ function createFavCard(city) {
         weatherState.textContent = getWeatherState(city.weather.current.weather_code);
         weatherState.className = 'weatherState';
 
-        temp.textContent = Math.round(city.weather.current.temperature_2m) + ' °C'
+        temp.textContent = `${Math.round(city.weather.current.temperature_2m)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         temp.className = 'cityTemp';
 
         cityWeather.append(weatherState, temp)
@@ -345,4 +349,15 @@ function addFavOption(coords) {
         favStar.textContent = "☆";
         favText.textContent = "Add to Favorites";
     }
+}
+
+function setUnits() {
+
+    tempUnit.textContent = state.units.temp === "celsius" ? "°C": "°F";
+    feelsUnit.textContent = state.units.temp === "celsius" ? "°C": "°F";
+    dewUnit.textContent = ` ${state.units.temp === "celsius" ? "°C": "°F"}`;
+    precipUnit.textContent = ` ${state.units.precip === "millimeters" ? "mm": "in"}`;
+    presUnit.textContent = ` ${state.units.pres === "hectopascals" ? "hPa": "mmHg"}`;
+    windUnit.textContent = ` ${state.units.wind === "kilometersPerHour" ? "Km/h": state.units.wind === "milesPerHour" ? "mph": "kn"}`;
+    visibUnit.textContent = ` ${state.units.visib === "kilometers" ? "Km": state.units.visib === "miles"? "mi": "m"}`;
 }
