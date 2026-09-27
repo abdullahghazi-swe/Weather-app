@@ -21,12 +21,14 @@ export function loadPrefs() {
     const prefs = localStorage.getItem("preferences")
     if (!prefs) {
         savePrefs();
+        highlightPrefs();
         return;
     };
 
     try {
         const units = JSON.parse(prefs)
         state.units = units;
+        highlightPrefs();
     } catch {
         localStorage.removeItem('preferences');
     }
@@ -39,7 +41,21 @@ export function savePrefs() {
 
 export function changePrefs(type, unit) {
     state.units[type] = unit;
-    savePrefs()
+
+    const selected = document.querySelector(`[data-type=${type}].selected`)
+    selected?.classList.remove("selected");
+    
+    savePrefs();
+    highlightPrefs();
     render();
     loadFavorites();
+}
+
+function highlightPrefs() {
+    for (const [type, unit] of Object.entries(state.units)) {
+        const selected = document.querySelector(`[data-type=${type}][data-unit=${unit}]`)
+        if (selected) {
+            selected.classList.add("selected")
+        }
+    }
 }

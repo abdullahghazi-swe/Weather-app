@@ -93,6 +93,5 @@ export function checkInFavorites(currentCoords) {
     if (exists) return true;
 
     return false;
-
 }
 

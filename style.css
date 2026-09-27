@@ -781,7 +781,7 @@ footer > .updateTime {
     gap: 16px;
 }
 
-.setting-btns button {
+.unit-btn {
     flex: 1;
     background-color: #141b33;
     border: 1px solid #222c4d;
@@ -795,6 +795,12 @@ footer > .updateTime {
     font-weight: 300;
     color: #a8b9eb;
     font-size: 16px;
+}
+
+.selected {
+    color: #9eabd3;
+    border: 1px solid #47598f;
+    background-color: #28355a;
 }
 
 .show {
