@@ -2,7 +2,7 @@ import { locBox, time, city, country, weather, temp, humidity, wind, hourList, p
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites } from "./utils.js";
+import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -37,27 +37,27 @@ const WEATHERCODES = {
 
 export function render() {
     resetUI();
-
+    console.log(state)
     time.textContent = formateTime(state.location.timezone);
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
 
-    temp.textContent = Math.round(state.weatherData.temperature);
-    feels.textContent = Math.round(state.weatherData.apparentTemp);
-    weather.textContent = getWeatherState(state.weatherData.weather);
+    temp.textContent = convertTemp(state.weatherData.temperature, state.units.temp);
+    feels.textContent = convertTemp(state.weatherData.apparentTemp, state.units.temp);
+    weather.textContent = getWeatherState(state.weatherData.weatherCode);
     precipProb.textContent = state.weatherData.precipProbability;
 
-    wind.textContent = state.weatherData.windSpeed;
+    wind.textContent = convertWind(state.weatherData.windSpeed, state.units.wind);
     uv.textContent = state.weatherData.uvIndex;
     aqi.textContent = state.weatherData.aqi
-    visibility.textContent = (state.weatherData.visibility / 1000).toFixed(1);
+    visibility.textContent = convertVisib(state.weatherData.visibility, state.units.visib);
 
     humidity.textContent = state.weatherData.humidity;
-    pressure.textContent = Math.round(state.weatherData.pressure);
-    precip.textContent = state.weatherData.precipitation;
-    dew.textContent = Math.round(state.weatherData.dewPoint);
+    pressure.textContent = convertPressure(state.weatherData.pressure, state.units.pres);
+    precip.textContent = convertPrecip(state.weatherData.precipitation, state.units.precip);
+    dew.textContent = convertTemp(state.weatherData.dewPoint, state.units.temp);
 
-    showUpdateTime(state.location.time);
+    showUpdateTime(state.weatherData.updateTime);
 
     createHourList(state.hourlyData, hourList, state.location.time);
     createDailyList(state.dailyData, dailyList, state.location.time);
@@ -102,7 +102,7 @@ function createHourList(hours, list, currentTime) {
         hourWeather.textContent = '🌙';
         hourWeather.className = 'hourWeather';
 
-        hourTemp.textContent = `${Math.round(hour.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
+        hourTemp.textContent = `${convertTemp(hour.temp, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         hourTemp.className = 'hourTemp'
 
         if (hourLable.textContent === "Now") {
@@ -318,7 +318,7 @@ function createFavCard(city) {
         weatherState.textContent = getWeatherState(city.weather.current.weather_code);
         weatherState.className = 'weatherState';
 
-        temp.textContent = `${Math.round(city.weather.current.temperature_2m)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
+        temp.textContent = `${convertTemp(city.weather.current.temperature_2m, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         temp.className = 'cityTemp';
 
         cityWeather.append(weatherState, temp)

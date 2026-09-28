@@ -1,4 +1,3 @@
-import { temp } from "./dom.js";
 import { cleanHourData, cleanDailyData } from "./utils.js";
 
 export const state = {
@@ -15,6 +14,7 @@ export const state = {
         coordinates: null,
     },
     weatherData: {
+        updateTime: null,
         weatherCode: null,
         temperature: null,
         apparentTemp: null,
@@ -66,6 +66,7 @@ export function setState(city, weather) {
     state.weatherData.precipitation = weather.current.precipitation;
     state.weatherData.dewPoint = weather.current.dew_point_2m;
     state.weatherData.source = weather.source;
+    state.weatherData.updateTime = weather.updateTime;
 
     state.hourlyData = cleanHourData(weather.hourly)
     state.dailyData = cleanDailyData(weather.daily)

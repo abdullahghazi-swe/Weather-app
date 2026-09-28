@@ -161,7 +161,7 @@ async function getWeather(lat, long) {
         const weatherData = await weatherRes.json();
         const aqi = await aqiRes.json()
         
-        return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi };
+        return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi, updateTime: Date.now()};
 
     } catch (error) {
         addToast("Please check your connection and try again.");

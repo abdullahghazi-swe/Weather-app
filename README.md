@@ -41,3 +41,4 @@ Favorites heading is should not be shown when there are no favorites
 use closure for debounce search
 show favorites limit toast
 keyboard navigation for search
+animate search bar from button

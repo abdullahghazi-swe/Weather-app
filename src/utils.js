@@ -12,6 +12,7 @@ export function formateTime(timezone) {
 }
 
 export function cleanHourTime(timeStr, currentTime) {
+    
     if (timeStr.slice(0, 13) === currentTime.slice(0, 13)) {
         return "Now";
     } 
@@ -95,3 +96,49 @@ export function checkInFavorites(currentCoords) {
     return false;
 }
 
+export function convertTemp(value, unit) {
+    if (unit === 'celsius') return Math.round(value);
+
+    return Math.round((value * 1.8) + 32);
+}
+
+export function convertPressure(value, unit) {
+    if (unit === 'hectopascals') return Math.round(value);
+
+    return Math.round(value * 0.75006150504341);
+}
+
+export function convertPrecip(value, unit) {
+    if (unit === 'millimeters') return value;
+
+    return (value / 25.4).toFixed(2);
+}
+
+export function convertWind(value, unit) {
+    if (unit === 'kilometersPerHour') {
+        return Math.round(value);
+    } 
+    
+    if (unit === 'milesPerHour') {
+        return (value / 1.609344).toFixed(1);
+    }
+    
+    if (unit === 'knots') {
+        return (value / 1.852).toFixed(1);
+    }
+}
+
+export function convertVisib(value, unit) {
+
+    if (unit === 'meters') {
+        return Math.round(value);
+    } 
+    
+    if (unit === 'miles') {
+        return (value / 1609.344).toFixed(1)
+    }
+    
+    if (unit === 'kilometers') {
+        return (value / 1000).toFixed(1);
+    }
+}
