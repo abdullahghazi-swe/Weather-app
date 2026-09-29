@@ -11,11 +11,7 @@ export function formateTime(timezone) {
     return `${dateFormater.format(now)} · ${timeFormater.format(now)}`;
 }
 
-export function cleanHourTime(timeStr, currentTime) {
-    
-    if (timeStr.slice(0, 13) === currentTime.slice(0, 13)) {
-        return "Now";
-    } 
+export function cleanHourTime(timeStr) {
 
     const time = new Date(timeStr);
     return hourFormater.format(time);

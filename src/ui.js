@@ -95,7 +95,7 @@ function createHourList(hours, list, currentTime) {
         const hourWeather = document.createElement('div')
         const hourTemp = document.createElement('p')
 
-        hourLable.textContent = cleanHourTime(hour.time, currentTime);
+        hourLable.textContent = cleanHourTime(hour.time);
         hourLable.className = 'hourTime';
         
         hourWeather.dataset.weather = getWeatherState(hour.weather);
@@ -105,12 +105,14 @@ function createHourList(hours, list, currentTime) {
         hourTemp.textContent = `${convertTemp(hour.temp, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         hourTemp.className = 'hourTemp'
 
-        if (hourLable.textContent === "Now") {
+        if (hour.time.slice(0, 13) === currentTime.slice(0, 13)) {
+            hourLable.textContent = "Now";
+            hourWeather.dataset.weather = state.weatherData.weatherCode;
+            hourTemp.textContent = `${convertTemp(state.weatherData.temperature, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
             card.classList.add('now-hour');
             hourLable.style.color = '#6e96be'
         }
 
-        
         card.append(hourLable, hourWeather, hourTemp)
         list.appendChild(card)
     }
