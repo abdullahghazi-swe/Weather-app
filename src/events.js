@@ -1,4 +1,4 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
@@ -113,5 +113,30 @@ export function initEventListeners() {
         if (btn) {
             changePrefs(btn.dataset.type, btn.dataset.unit)
         }
+    })
+
+    hourList.addEventListener('scroll', () => {
+        const atLeft = hourList.scrollLeft <= 0;
+        const atRight = hourList.scrollLeft + hourList.clientWidth >= hourList.scrollWidth - 1;
+
+        if (atLeft) {
+            leftScroll.classList.remove('show')
+        } else {
+            !leftScroll.classList.contains('show') && leftScroll.classList.add('show')
+        }
+
+        if (atRight) {
+            rightScroll.classList.remove('show')
+        } else {
+            !rightScroll.classList.contains('show') && rightScroll.classList.add('show')
+        }
+    })
+
+    leftScroll.addEventListener('click', () => {
+        hourList.scrollTo({behavior: "smooth", left:0});
+    })
+
+    rightScroll.addEventListener('click', () => {
+        hourList.scrollTo({behavior: "smooth", left: hourList.scrollWidth - hourList.clientWidth})
     })
 }

@@ -350,6 +350,7 @@ main {
 }
 
 .hourlyForcast {
+    position: relative;
     padding: 8px 36px;
     border-radius: 24px;
     width: 100%;
@@ -383,6 +384,32 @@ main {
     scrollbar-width: none;  
 }
 
+.hourly-scroll {
+    background-color: #161c44;
+    border-radius: 50%;
+    color: white;
+    border: 1px solid #2a3157;
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 50%;
+    cursor: pointer;
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.hourly-scroll:hover {
+    background-color: #242c61;
+}
+
+.hourly-scroll.left {
+    left: 15px;
+}
+
+.hourly-scroll.right {
+    right: 15px;
+}
 
 .hour-card {
     color: rgb(252, 252, 252);

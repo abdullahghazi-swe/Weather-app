@@ -27,6 +27,9 @@ export const update = document.querySelector('.updateTime')
 export const hourList = document.querySelector('.hour-list')
 export const dailyList = document.querySelector('.day-list')
 
+export const leftScroll = document.querySelector('.hourly-scroll.left')
+export const rightScroll = document.querySelector('.hourly-scroll.right')
+
 export const favorites = document.querySelector('.favorites')
 export const favList = document.querySelector('.favorites-list')
 export const favStar = document.querySelector('.fav-star')
