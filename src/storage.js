@@ -50,6 +50,13 @@ export function getCache(coords) {
         weather.data.source = 'cache';
     }
 
+    const cacheTime = new Date(weather.time)
+    const nowTime = new Date()
+
+    if (cacheTime.getHours() !== nowTime.getHours()) {
+        weather.data.source = 'expiredCache';
+    }
+
     return weather.data;
 }
 

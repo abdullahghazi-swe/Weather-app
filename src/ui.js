@@ -37,7 +37,7 @@ const WEATHERCODES = {
 
 export function render() {
     resetUI();
-    console.log(state)
+
     time.textContent = formateTime(state.location.timezone);
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
@@ -223,6 +223,9 @@ function resetUI() {
     const appox = document.querySelector('.approx');
     if (appox) appox.remove();
 
+    const offline = document.querySelector('.offline');
+    if (offline) offline.remove();
+
     update.textContent = '';
     search.value = '';
     searchResult.classList.remove('show-results');
@@ -284,7 +287,7 @@ export function renderFavorites(favs) {
         favList.prepend(favorite);
     }
 
-    if (favorites.children.length) {
+    if (favList.children.length) {
         favorites.classList.add('show')
     } 
 }
