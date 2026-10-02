@@ -3,9 +3,7 @@ import { cityResults } from "./fetch.js";
 import { renderRecentSearches } from "./ui.js";
 import { showSearching } from "./loading.js";
 
-const searchState = {
-    timer: null,
-}
+const searching = debounce((query) => cityResults(query))
 
 export function getCities() {
 
@@ -15,19 +13,22 @@ export function getCities() {
         renderRecentSearches();
     }
 
-    if (searchState.timer) {
-        clearTimeout(searchState.timer);
-        searchState.timer = null;
-    }
-
-    searchState.timer = setTimeout(() => {
-        if (query.length >= 2) {
-            showSearching();
-            cityResults(search.value)
-        }
-    }, 600)
+    searching(query);
 }
 
 
+function debounce(callback) {
+    let timer;
 
+    return function(query) {
+        clearTimeout(timer);
+
+        timer = setTimeout(() => {
+            if (query.length < 2) return;
+
+            showSearching();
+            callback(query);
+        }, 600)
+    }
+}
         

@@ -34,7 +34,6 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 ## Next
 
 add comparison bars for daily temp
-use closure for debounce search
 show favorites limit toast
 keyboard navigation for search
 animate search bar from button
