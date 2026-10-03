@@ -12,6 +12,9 @@ export function initEventListeners() {
         search.classList.add('show')
         searchBtn.classList.remove('show')
         search.focus()
+        requestAnimationFrame(() => {
+            search.classList.add('active')
+        })
         if (searchResult.children.length) {
             searchResult.classList.add('show-results');
         }
@@ -22,9 +25,15 @@ export function initEventListeners() {
         if (e.target.closest('.changeBtn')) return;
 
         if (!search.contains(e.target) && !searchBtn.contains(e.target)) {
-            search.classList.remove('show');
-            searchBtn.classList.add('show');
+            search.classList.remove('active');
         }
+    })
+
+    search.addEventListener('transitionend', e => {
+        if (e.target.classList.contains('active')) return;
+
+        search.classList.remove('show')
+        searchBtn.classList.add('show');
     })
 
     document.addEventListener('click', e => {

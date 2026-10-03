@@ -36,7 +36,6 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 add comparison bars for daily temp
 show favorites limit toast
 keyboard navigation for search
-animate search bar from button
 add live time
 fix toast on offline
 fix hours cache on offline

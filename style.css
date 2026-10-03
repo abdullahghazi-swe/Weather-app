@@ -59,7 +59,7 @@ main {
 
 .time-search {
     display: flex;
-    gap: 200px;
+    gap: 250px;
     height: 41px;
 }
 
@@ -113,9 +113,14 @@ main {
     outline: none;
     border: 1px solid snow;
     color: white;
+    width: 38px;
     border-radius: 200px;
-    width: 100%;
     display: none;
+    transition: width 100ms ease;
+}
+
+.searchField.active {
+    width: 100%;
 }
 
 .btn {
