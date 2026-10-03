@@ -1,6 +1,8 @@
+import { addToast } from "./loading.js";
 import { state } from "./state.js";
 
 export const AGELIMIT = 20 * 60 * 1000;
+const FAVORITES_LIMIT = 7;
 
 export function saveWeather(coords, weather) {
     const cacheList = readWeather() || [];
@@ -169,7 +171,10 @@ export function getRecentSearch() {
 
 export function addToFavorites() {
     const list = getFavorites();
-    if (list.length >= 4) return; //show error too
+    if (list.length >= FAVORITES_LIMIT) {
+        addToast("You've reached the 7-location favorites limit.");
+        return;
+    } 
 
     const location = {
         id: Date.now(),

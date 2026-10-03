@@ -1,5 +1,7 @@
 import { searchResult, toastBox } from "./dom.js"
 
+const TOAST_TIME = 3000;
+
 export function showSearching() {
     searchResult.innerHTML = '';
     const loader = document.createElement('div');
@@ -79,5 +81,5 @@ export function addToast(msg) {
     setTimeout(() => {
         toast.classList.add('toastEnd');
         toast.addEventListener('transitionend', e => e.target.remove());
-    }, 4000);
+    }, TOAST_TIME);
 }
