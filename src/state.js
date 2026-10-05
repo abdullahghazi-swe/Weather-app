@@ -4,6 +4,7 @@ export const state = {
     searchResult:  [],
     recentSearches: [],
     favorites: [],
+    interval: null,
     location: {
         time: null,
         timezone: null,

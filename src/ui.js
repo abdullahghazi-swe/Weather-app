@@ -38,7 +38,7 @@ const WEATHERCODES = {
 export function render() {
     resetUI();
 
-    time.textContent = formateTime(state.location.timezone);
+    showTime(state.location.timezone)
     city.textContent = state.location.city;
     country.textContent = `${state.location.province}, ${state.location.country}`;
 
@@ -365,4 +365,14 @@ function setUnits() {
     presUnit.textContent = ` ${state.units.pres === "hectopascals" ? "hPa": "mmHg"}`;
     windUnit.textContent = ` ${state.units.wind === "kilometersPerHour" ? "Km/h": state.units.wind === "milesPerHour" ? "mph": "kn"}`;
     visibUnit.textContent = ` ${state.units.visib === "kilometers" ? "Km": state.units.visib === "miles"? "mi": "m"}`;
+}
+
+function showTime(timezone) {
+    clearInterval(state.interval)
+
+    time.textContent = formateTime(timezone);
+    
+    state.interval = setInterval(() => {
+        time.textContent = formateTime(timezone);
+    }, 20 * 1000)
 }
