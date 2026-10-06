@@ -33,7 +33,14 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 ## Next
 
-add comparison bars for daily temp
 keyboard navigation for search
 fix toast on offline
-fix hours cache on offline
+add cache rules
+
+## Cache Rules 
+
+in 20 everything fine
+in 1 hour everything fine but try refetch
+1-12 hour old filter out passed hours and use hourly forcast to display current weather, fetch 15 hours but show 12 max
+12-24 just dont show hours at all
+more than 24 cache is just too oldshow error state 

@@ -501,12 +501,36 @@ main {
 .dailyPrecip {
     color: #5a72a3;
     font-size: 20px;
+    width: 45px;
+    text-align: end;
 }
 
-.dailyTemp {
-    width: fit-content;
-    padding: 0 80px;
-    font-size: 20px;
+.dailyTempBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    padding: 0 50px;
+    font-size: 17px;
+    font-weight: 500;
+    color: #7d84a8;
+}
+
+.dailyTempBox .tempBarBox {
+    height: 5px;
+    background-color: #333333;
+    width: 65px;
+    border-radius: 5px;
+}
+
+.dailyTempBox .tempBar {
+    height: 100%;
+    background-color: #ffc83d;
+    border-radius: 5px;
+}
+
+.dailyTempBox .maxTemp {
+    color: #bec6ec;
 }
 
 .last-day {

@@ -120,6 +120,9 @@ function createHourList(hours, list, currentTime) {
 
 function createDailyList(daily, list, currentTime) {
     list.innerHTML = "";
+    const highestTemp = daily.reduce((highest, temp) => Math.max(highest, temp.tempMax), -Infinity)
+    const lowestTemp = daily.reduce((lowest, temp) => Math.min(lowest, temp.tempMin), Infinity)
+
     for (const day of daily) {
         const card = document.createElement('div')
         card.classList.add('day-card')
@@ -137,15 +140,14 @@ function createDailyList(daily, list, currentTime) {
         weather.className = 'weekDayWeather'
 
         const precipBox = document.createElement('span')
-        const tempBox = document.createElement('div')
+        const tempBox = getDailyTempBox(day.tempMin, day.tempMax, highestTemp, lowestTemp)
 
         precipBox.className = 'dailyPrecip'
-        tempBox.className = 'dailyTemp'
+        tempBox.className = 'dailyTempBox'
 
         weekDay.textContent = cleanDay(day.date, currentTime)
         weather.textContent = `☀️ ${getWeatherState(day.weather)}`;
         precipBox.textContent = `${day.precipitaion}%`;
-        tempBox.textContent = `${day.tempMin}° - ${day.tempMax}°`
 
         dayBox.append(weekDay, weather)
         weatherBox.append(tempBox, precipBox)
@@ -154,6 +156,39 @@ function createDailyList(daily, list, currentTime) {
         list.appendChild(card)
     }
     list.lastElementChild.classList.add('last-day')
+}
+
+function getDailyTempBox(min, max, highest, lowest) {
+    const weekTempDiff = highest - lowest;
+    const dayTempDiff = max - min;
+    const lowDiff = min - lowest;
+
+    const percentOfWeek =  Math.round(dayTempDiff / weekTempDiff * 100)
+    const percentOfLow = Math.round(lowDiff / weekTempDiff * 100)
+    
+    const dailyTemp = document.createElement('div')
+    const minBox = document.createElement('span')
+    const maxBox = document.createElement('span')
+
+    const tempBox = document.createElement('div')
+    const tempBar = document.createElement('div')
+
+    tempBox.className = 'tempBarBox'
+    tempBar.className = 'tempBar'
+
+    tempBar.style.width = `${percentOfWeek}%`
+    tempBar.style.marginLeft = `${percentOfLow}%`
+
+    minBox.textContent = `${convertTemp(min, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
+    maxBox.textContent = `${convertTemp(max, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
+
+    maxBox.className = 'maxTemp';
+
+    tempBox.appendChild(tempBar)
+
+    dailyTemp.append(minBox, tempBox, maxBox)
+
+    return dailyTemp;
 }
 
 export function renderSearchResults() {
