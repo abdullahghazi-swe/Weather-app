@@ -164,8 +164,7 @@ async function getWeather(lat, long) {
         return {...weatherData, aqi_us: aqi.current.us_aqi, aqi_eu: aqi.current.european_aqi, updateTime: Date.now()};
 
     } catch (error) {
-        addToast("Please check your connection and try again.");
-        console.error("Couldn't get weather!", error); // Toast error
+        console.error("Couldn't get weather!", error); // No need for toast
         return;
     } 
 }
