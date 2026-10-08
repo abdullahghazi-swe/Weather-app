@@ -1,4 +1,4 @@
-import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn } from "./dom.js";
+import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn } from "./dom.js";
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
@@ -273,9 +273,11 @@ function addSetDefault(currentCoords) {
     if (isDefault) {
         star.textContent = "★";
         defaultText.textContent = "Default Location";
+        defaultBtn.classList.add('selected');
     } else {
         star.textContent = "☆";
         defaultText.textContent = "Set as default";
+        defaultBtn.classList.remove('selected');
     }
 }
 
@@ -386,9 +388,11 @@ function addFavOption(coords) {
     if (isFav) {
         favStar.textContent = "★";
         favText.textContent = "Favorited";
+        favBtn.classList.add('selected');
     } else {
         favStar.textContent = "☆";
         favText.textContent = "Add to Favorites";
+        favBtn.classList.remove('selected');
     }
 }
 

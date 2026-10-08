@@ -1,4 +1,4 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
@@ -141,21 +141,23 @@ export function initEventListeners() {
         manageSelectedCity(Number(selectedCity.dataset.id));
     })
 
-    star.addEventListener('click', () => {
+    defaultBtn.addEventListener('click', () => {
         const isDefault = checkDefault(state.location.coordinates)
         
         if (!isDefault) {
             setDefaultLocation();
             star.textContent = "★";
             defaultText.textContent = "Default Location";
+            defaultBtn.classList.add('selected')
         } else {
             removeDefaultLocation();
             star.textContent = "☆";
             defaultText.textContent = "Set as default";
+            defaultBtn.classList.remove('selected')
         }
     })
 
-    favStar.addEventListener('click', () => {
+    favBtn.addEventListener('click', () => {
         const isFav = checkInFavorites(state.location.coordinates);
 
         if (!isFav) {
@@ -163,11 +165,13 @@ export function initEventListeners() {
             if (!added) return;
             favStar.textContent = "★";
             favText.textContent = "Favorited";
+            favBtn.classList.add('selected')
             loadFavorites();
         } else {
             removeFromFavorites();
             favStar.textContent = "☆";
             favText.textContent = "Add to Favorites";
+            favBtn.classList.remove('selected')
             loadFavorites();
         }
     })

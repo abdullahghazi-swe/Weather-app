@@ -9,6 +9,7 @@ export const locBox = document.querySelector('.location-box')
 
 export const star = document.querySelector('.star')
 export const defaultText = document.querySelector('.default-text')
+export const defaultBtn = document.querySelector('.default-location')
 
 export const weather = document.querySelector('.weather-state')
 export const temp = document.querySelector('.temp')
@@ -34,6 +35,7 @@ export const favorites = document.querySelector('.favorites')
 export const favList = document.querySelector('.favorites-list')
 export const favStar = document.querySelector('.fav-star')
 export const favText = document.querySelector('.fav-text')
+export const favBtn = document.querySelector('.addToFav')
 
 export const toastBox = document.querySelector('.toastBox')
 

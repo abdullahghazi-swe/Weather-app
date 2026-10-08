@@ -35,6 +35,7 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 show real weather icons
 add cache rules
+add proper logo
 make mobile responsive
 
 ## Cache Rules 
