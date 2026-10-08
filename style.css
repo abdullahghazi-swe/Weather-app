@@ -164,9 +164,13 @@ main {
     cursor: pointer;
 }
 
-.city-result:hover {
-    background-color: #263358;
+.city-result.current {
+    background-color: #1e2558;
 }
+
+/* .city-result:hover {
+    background-color: #1e2558;
+} */
 
 .city-result .city-name {
     font-size: 22px;

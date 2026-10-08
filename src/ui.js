@@ -264,6 +264,7 @@ function resetUI() {
     update.textContent = '';
     search.value = '';
     searchResult.classList.remove('show-results');
+    search.classList.remove('active');
 }
 
 function addSetDefault(currentCoords) {

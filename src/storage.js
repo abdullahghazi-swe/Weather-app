@@ -210,8 +210,7 @@ export function removeFromFavorites() {
         item.coords.latitude === coords.latitude &&
         item.coords.longitude === coords.longitude
     )
-    console.log(coords)
-    console.log(list)
+
     if (index === -1) return;
 
     list.splice(index, 1)

@@ -8,16 +8,99 @@ import { showSettings, hideSettings, changePrefs } from "./prefs.js";
 
 
 export function initEventListeners() {
-    searchBtn.addEventListener('click', e => {
-        search.classList.add('show')
-        searchBtn.classList.remove('show')
-        search.focus()
-        requestAnimationFrame(() => {
-            search.classList.add('active')
-        })
-        if (searchResult.children.length) {
-            searchResult.classList.add('show-results');
+    document.addEventListener('keydown', e => {
+        const key = e.key;
+
+        if (key === "Escape") {
+
+            if (settings.classList.contains('show')) {
+                hideSettings()
+            }
+
+            if (search.classList.contains('show')) {
+                search.classList.remove('active')
+                searchResult.classList.remove('show-results');
+                document.querySelector('.city-result.current')?.classList.remove('current');
+            }
+            
+            e.preventDefault();
         }
+
+        if (e.ctrlKey && key === ',') {
+            showSettings();
+            search.classList.remove('active')
+            searchResult.classList.remove('show-results');
+        }
+
+        if (key === '/' && !search.classList.contains('show')) {
+            showSearch();
+            hideSettings();
+            e.preventDefault();
+        }
+
+        if (key === 'ArrowDown' || key === 'ArrowUp') {
+            if (!searchResult.classList.contains('show-results')) return;
+            e.preventDefault()
+
+            const activeResult = document.querySelector('.city-result.current');
+            activeResult?.classList.remove('current');
+            if (key === 'ArrowDown') {
+                if (!activeResult) {
+                    searchResult.firstElementChild.classList.add('current');
+                    return;
+                }
+
+                const nextElement = activeResult.nextElementSibling;
+                if (!nextElement) {
+                    searchResult.firstElementChild.classList.add('current');
+                } else {
+                    nextElement.classList.add('current')
+                }
+            }
+
+            if (key === 'ArrowUp') {
+                if (!activeResult) {
+                    searchResult.lastElementChild.classList.add('current');
+                    return;
+                }
+
+                const nextElement = activeResult.previousElementSibling;
+                if (!nextElement) {
+                    searchResult.lastElementChild.classList.add('current');
+                } else {
+                    nextElement.classList.add('current')
+                }
+            }
+        }
+
+        if (key === 'Enter' && searchResult.classList.contains('show-results')) {
+            e.preventDefault()
+
+            const selectedCity = document.querySelector('.city-result.current')
+            if (!selectedCity) return;
+
+            manageSelectedCity(Number(selectedCity.dataset.id));
+        }
+    })
+
+    searchResult.addEventListener('mousemove', e => {
+        if (!searchResult.classList.contains('show-results')) return;
+
+        const over = e.target.closest('.city-result')
+
+        if (!over) return;
+        if (over.classList.contains('current')) return;
+
+        const currentActive = document.querySelector('.city-result.current');
+        if (currentActive) {
+            currentActive.classList.remove('current');
+        }
+
+        over.classList.add('current');
+    })
+
+    searchBtn.addEventListener('click', () => {
+        showSearch();
     })
 
     document.addEventListener('click', e => {
@@ -26,6 +109,7 @@ export function initEventListeners() {
 
         if (!search.contains(e.target) && !searchBtn.contains(e.target)) {
             search.classList.remove('active');
+            document.querySelector('.city-result.current')?.classList.remove('current');
         }
     })
 
@@ -148,4 +232,16 @@ export function initEventListeners() {
     rightScroll.addEventListener('click', () => {
         hourList.scrollTo({behavior: "smooth", left: hourList.scrollWidth - hourList.clientWidth})
     })
+}
+
+function showSearch() {
+    search.classList.add('show')
+    searchBtn.classList.remove('show')
+    search.focus()
+    requestAnimationFrame(() => {
+        search.classList.add('active')
+    })
+    if (searchResult.children.length) {
+        searchResult.classList.add('show-results');
+    }
 }

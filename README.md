@@ -33,10 +33,9 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 ## Next
 
-keyboard navigation for search
+show real weather icons
 add cache rules
 make mobile responsive
-show real weather icons
 
 ## Cache Rules 
 
