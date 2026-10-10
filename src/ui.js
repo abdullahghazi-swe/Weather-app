@@ -2,7 +2,7 @@ import { locBox, time, city, country, weather, temp, humidity, wind, hourList, p
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib } from "./utils.js";
+import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime } from "./utils.js";
 
 const WEATHERCODES = {
   0: "Clear",
@@ -85,9 +85,13 @@ function getWeatherState(code) {
 
 
 
-function createHourList(hours, list, currentTime) {
-    list.innerHTML = ''
-    for (const hour of hours) {
+function createHourList(allHours, list, currentTime) {
+    list.innerHTML = '';
+    const now = getTimezoneDateTime(state.location.timezone);
+
+    const remainingHours = allHours.filter(hour => hour.time.slice(0, 13) >= now.slice(0, 13))
+
+    for (const hour of remainingHours) {
         const card = document.createElement('div')
         card.classList.add('hour-card')
         
@@ -120,10 +124,14 @@ function createHourList(hours, list, currentTime) {
 
 function createDailyList(daily, list, currentTime) {
     list.innerHTML = "";
-    const highestTemp = daily.reduce((highest, temp) => Math.max(highest, temp.tempMax), -Infinity)
-    const lowestTemp = daily.reduce((lowest, temp) => Math.min(lowest, temp.tempMin), Infinity)
 
-    for (const day of daily) {
+    const now = getTimezoneDateTime(state.location.timezone);
+    const days = daily.filter(day => day.date >= now.slice(0, 10))
+
+    const highestTemp = days.reduce((highest, temp) => Math.max(highest, temp.tempMax), -Infinity)
+    const lowestTemp = days.reduce((lowest, temp) => Math.min(lowest, temp.tempMin), Infinity)
+
+    for (const day of days) {
         const card = document.createElement('div')
         card.classList.add('day-card')
         
@@ -145,7 +153,7 @@ function createDailyList(daily, list, currentTime) {
         precipBox.className = 'dailyPrecip'
         tempBox.className = 'dailyTempBox'
 
-        weekDay.textContent = cleanDay(day.date, currentTime)
+        weekDay.textContent = cleanDay(day.date, now)
         weather.textContent = `☀️ ${getWeatherState(day.weather)}`;
         precipBox.textContent = `${day.precipitaion}%`;
 

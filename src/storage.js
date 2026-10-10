@@ -46,17 +46,15 @@ export function getCache(coords) {
     }
 
     const timeDiff = Date.now() - weather.time;
+
+    if (timeDiff > 86400000) {
+        return;
+    }
+
     if (timeDiff < 0 || timeDiff > AGELIMIT) {
         weather.data.source = 'expiredCache';
     } else {
         weather.data.source = 'cache';
-    }
-
-    const cacheTime = new Date(weather.time)
-    const nowTime = new Date()
-
-    if (cacheTime.getHours() !== nowTime.getHours()) {
-        weather.data.source = 'expiredCache';
     }
 
     return weather.data;

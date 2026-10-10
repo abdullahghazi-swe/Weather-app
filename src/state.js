@@ -1,4 +1,4 @@
-import { cleanHourData, cleanDailyData } from "./utils.js";
+import { cleanHourData, cleanDailyData, manageExpiry } from "./utils.js";
 
 export const state = {
     searchResult:  [],
@@ -43,7 +43,9 @@ export const state = {
     }
 }
 
-export function setState(city, weather) {
+export function setState(city, weatherData) {
+    const weather = manageExpiry(weatherData);
+
     state.location.time = weather.current.time;
     state.location.timezone = weather.timezone;
     state.location.city = city.name;

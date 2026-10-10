@@ -138,3 +138,40 @@ export function convertVisib(value, unit) {
         return (value / 1000).toFixed(1);
     }
 }
+
+export function manageExpiry(weather) {
+    if (weather.source !== "expiredCache") return weather;
+
+    const thisHour = getTimezoneDateTime(weather.timezone)
+
+    if (weather.current.time.slice(0, 13) === thisHour) return weather;
+
+    const matchingHour = weather.hourly.time.findIndex(hour => hour.slice(0, 13) === thisHour);
+
+    if (matchingHour < 0) {
+        return weather;
+    }
+
+    weather.current.temperature_2m = weather.hourly.temperature_2m[matchingHour];
+    weather.current.weather_code = weather.hourly.weather_code[matchingHour];
+
+    return weather;
+}
+
+
+export function getTimezoneDateTime(timezone) {
+    const parts = new Intl.DateTimeFormat("en-CA", {
+        timeZone: timezone,
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+        hourCycle: "h23"
+    }).formatToParts(new Date());
+
+    const values = Object.fromEntries(parts.map(p => [p.type, p.value]));
+
+    return `${values.year}-${values.month}-${values.day}T${values.hour}:${values.minute}:${values.second}`;
+}

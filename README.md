@@ -37,11 +37,12 @@ show real weather icons
 add cache rules
 add proper logo
 make mobile responsive
+fetch more hours and days but limit render
 
 ## Cache Rules 
 
 in 20 everything fine
 in 1 hour everything fine but try refetch
-1-12 hour old filter out passed hours and use hourly forcast to display current weather, fetch 15 hours but show 12 max
-12-24 just dont show hours at all
+1-12 hour old filter out passed hours and use hourly forcast to display current weather
+just dont show hourly section if no hourly after filter
 more than 24 cache is just too oldshow error state 
