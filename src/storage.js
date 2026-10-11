@@ -1,3 +1,4 @@
+import { weather } from "./dom.js";
 import { addToast } from "./loading.js";
 import { state } from "./state.js";
 
@@ -124,13 +125,22 @@ export function cacheDefLocWeather(weather) {
 export function getDefWeatherCache() {
     const savedWeather = localStorage.getItem('defWeather');
     if (!savedWeather) return;
+    let data;
 
     try {
-        return JSON.parse(savedWeather);
+        data = JSON.parse(savedWeather);
+        if (!data) return;
     } catch {
         localStorage.removeItem('defWeather');
         return;
     }
+
+    const timeDiff = Date.now() - data.time;
+
+    if (timeDiff > 86400000) {
+        return;
+    }
+    return data;
 }
 
 export function removeDefWeatherCache() {

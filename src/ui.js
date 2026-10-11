@@ -1,4 +1,4 @@
-import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn } from "./dom.js";
+import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll } from "./dom.js";
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
@@ -59,8 +59,8 @@ export function render() {
 
     showUpdateTime(state.weatherData.updateTime);
 
-    createHourList(state.hourlyData, hourList, state.location.time);
-    createDailyList(state.dailyData, dailyList, state.location.time);
+    createHourList(state.hourlyData, hourList);
+    createDailyList(state.dailyData, dailyList);
 
     addSetDefault(state.location.coordinates);
     addFavOption(state.location.coordinates);
@@ -74,9 +74,8 @@ export function render() {
     if (state.location.approx) {
         addChangeLocation();
     }
-    removeLoading()
+    removeLoading();
     renderRecentSearches();
-    
 }
 
 function getWeatherState(code) {
@@ -85,11 +84,11 @@ function getWeatherState(code) {
 
 
 
-function createHourList(allHours, list, currentTime) {
+function createHourList(allHours, list) {
     list.innerHTML = '';
     const now = getTimezoneDateTime(state.location.timezone);
 
-    const remainingHours = allHours.filter(hour => hour.time.slice(0, 13) >= now.slice(0, 13))
+    const remainingHours = allHours.filter(hour => hour.time.slice(0, 13) >= now.slice(0, 13)).slice(0, 13)
 
     for (const hour of remainingHours) {
         const card = document.createElement('div')
@@ -109,7 +108,7 @@ function createHourList(allHours, list, currentTime) {
         hourTemp.textContent = `${convertTemp(hour.temp, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
         hourTemp.className = 'hourTemp'
 
-        if (hour.time.slice(0, 13) === currentTime.slice(0, 13)) {
+        if (hour.time.slice(0, 13) === now.slice(0, 13)) {
             hourLable.textContent = "Now";
             hourWeather.dataset.weather = state.weatherData.weatherCode;
             hourTemp.textContent = `${convertTemp(state.weatherData.temperature, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
@@ -120,13 +119,21 @@ function createHourList(allHours, list, currentTime) {
         card.append(hourLable, hourWeather, hourTemp)
         list.appendChild(card)
     }
+
+    if (list.scrollWidth > list.clientWidth) {
+        rightScroll.classList.add("show");
+    }
+
+    if (!list.children.length) {
+        list.parentElement.classList.add('hide');
+    }
 }
 
-function createDailyList(daily, list, currentTime) {
+function createDailyList(daily, list) {
     list.innerHTML = "";
 
     const now = getTimezoneDateTime(state.location.timezone);
-    const days = daily.filter(day => day.date >= now.slice(0, 10))
+    const days = daily.filter(day => day.date >= now.slice(0, 10)).slice(0, 7)
 
     const highestTemp = days.reduce((highest, temp) => Math.max(highest, temp.tempMax), -Infinity)
     const lowestTemp = days.reduce((lowest, temp) => Math.min(lowest, temp.tempMin), Infinity)
@@ -273,6 +280,9 @@ function resetUI() {
     search.value = '';
     searchResult.classList.remove('show-results');
     search.classList.remove('active');
+    hourList.parentElement.classList.remove('hide');
+    rightScroll.classList.remove('show');
+    leftScroll.classList.remove('show');
 }
 
 function addSetDefault(currentCoords) {

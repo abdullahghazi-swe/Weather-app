@@ -142,11 +142,11 @@ export function convertVisib(value, unit) {
 export function manageExpiry(weather) {
     if (weather.source !== "expiredCache") return weather;
 
-    const thisHour = getTimezoneDateTime(weather.timezone)
+    const now = getTimezoneDateTime(weather.timezone)
 
-    if (weather.current.time.slice(0, 13) === thisHour) return weather;
+    if (weather.current.time.slice(0, 13) === now.slice(0, 13)) return weather;
 
-    const matchingHour = weather.hourly.time.findIndex(hour => hour.slice(0, 13) === thisHour);
+    const matchingHour = weather.hourly.time.findIndex(hour => hour.slice(0, 13) === now.slice(0, 13));
 
     if (matchingHour < 0) {
         return weather;
