@@ -37,10 +37,10 @@ const WEATHERCODES = {
 
 export function render() {
     resetUI();
-
+    console.log(state.location)
     showTime(state.location.timezone)
     city.textContent = state.location.city;
-    country.textContent = `${state.location.province}, ${state.location.country}`;
+    country.textContent = showCountry(state.location.province, state.location.country);
 
     temp.textContent = convertTemp(state.weatherData.temperature, state.units.temp);
     feels.textContent = convertTemp(state.weatherData.apparentTemp, state.units.temp);
@@ -232,6 +232,7 @@ function createSearchResult(city) {
     const state = city.admin1 ? `${city.admin1}, ` : '';
     const district = city.admin2 ? `${city.admin2}, ` : '';
     const division = city.admin3 ? `${city.admin3}, ` : '';
+    const country = city.country ? `${city.country}` : '';
 
     box.classList.add('city-result')
     box.dataset.id = city.id;
@@ -240,7 +241,12 @@ function createSearchResult(city) {
     cityName.className = 'city-name'
 
     cityName.textContent = city.name;
-    details.textContent = division + district + state + city.country;
+    details.textContent = division + district + state + country;
+
+    if (details.textContent === '') {
+        details.textContent = 'none'
+        details.classList.add('invisible')
+    }
     box.append(cityName, details)
 
     return box;
@@ -433,4 +439,16 @@ function showTime(timezone) {
     state.interval = setInterval(() => {
         time.textContent = formateTime(timezone);
     }, 20 * 1000)
+}
+
+function showCountry(stateData, countryData) {
+    country.classList.remove('invisible')
+
+    if (!stateData && ! countryData) {
+        country.classList.add('invisible')
+    }
+
+    if (!stateData && countryData) return countryData;
+
+    return `${stateData}, ${countryData}`
 }

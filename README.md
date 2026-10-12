@@ -34,10 +34,9 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 ## Next
 
 show real weather icons
-add cache rules
 add proper logo
 make mobile responsive
-fetch more hours and days but limit render
+
 
 ## Cache Rules 
 

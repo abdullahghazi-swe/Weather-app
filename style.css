@@ -891,3 +891,7 @@ footer > .updateTime {
 .hide {
     display: none;
 }
+
+.invisible {
+    visibility: hidden;
+}
