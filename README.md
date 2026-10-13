@@ -33,10 +33,11 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 ## Next
 
-show real weather icons
+show real weather icons for favorites
 add proper logo
 make mobile responsive
-
+Weather insights
+reset hourly scroll
 
 ## Cache Rules 
 

@@ -11,6 +11,7 @@ export const star = document.querySelector('.star')
 export const defaultText = document.querySelector('.default-text')
 export const defaultBtn = document.querySelector('.default-location')
 
+export const weatherIcon = document.querySelector('.weather-icon')
 export const weather = document.querySelector('.weather-state')
 export const temp = document.querySelector('.temp')
 export const humidity = document.querySelector('.hum')

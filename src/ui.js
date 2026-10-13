@@ -1,43 +1,13 @@
-import { locBox, time, city, country, weather, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll } from "./dom.js";
+import { locBox, time, city, country, weather, weatherIcon, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll } from "./dom.js";
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime } from "./utils.js";
-
-const WEATHERCODES = {
-  0: "Clear",
-  1: "Clear",
-  2: "Partly Cloudy",
-  3: "Cloudy",
-  45: "Foggy",
-  48: "Heavy Fog",
-  51: "Light Drizzle",
-  53: "Moderate Drizzle",
-  55: "Dense Drizzle",
-  56: "Light Freezing Drizzle",
-  57: "Dense Freezing Drizzle",
-  61: "Slight Rain",
-  63: "Moderate Rain",
-  65: "Heavy Rain",
-  66: "Light Freezing Rain",
-  67: "Heavy Freezing Rain",
-  71: "Slight Snowfall",
-  73: "Moderate Snowfall",
-  75: "Heavy Snowfall",
-  77: "Snow Grains",
-  80: "Slight Rain Showers",
-  81: "Moderate Rain Showers",
-  82: "Violent Rain Showers",
-  85: "Slight Snow Showers",
-  86: "Heavy Snow Showers",
-  95: "Moderate Thunderstorm",
-  96: "Thunderstorm with Slight Hail",
-  97: "Thunderstorm with Heavy Hail"
-};
+import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay } from "./utils.js";
+import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
 
 export function render() {
     resetUI();
-    console.log(state.location)
+    
     showTime(state.location.timezone)
     city.textContent = state.location.city;
     country.textContent = showCountry(state.location.province, state.location.country);
@@ -46,6 +16,7 @@ export function render() {
     feels.textContent = convertTemp(state.weatherData.apparentTemp, state.units.temp);
     weather.textContent = getWeatherState(state.weatherData.weatherCode);
     precipProb.textContent = state.weatherData.precipProbability;
+    weatherIcon.textContent = getWeatherIcon(state.weatherData.weatherCode, getTimezoneDateTime(state.location.timezone))
 
     wind.textContent = convertWind(state.weatherData.windSpeed, state.units.wind);
     uv.textContent = state.weatherData.uvIndex;
@@ -79,7 +50,7 @@ export function render() {
 }
 
 function getWeatherState(code) {
-    return WEATHERCODES[code] || 'Clear';
+    return WEATHER_CODES[code] || 'Clear';
 }
 
 
@@ -101,8 +72,7 @@ function createHourList(allHours, list) {
         hourLable.textContent = cleanHourTime(hour.time);
         hourLable.className = 'hourTime';
         
-        hourWeather.dataset.weather = getWeatherState(hour.weather);
-        hourWeather.textContent = '🌙';
+        hourWeather.textContent = getWeatherIcon(hour.weather, hour.time);
         hourWeather.className = 'hourWeather';
 
         hourTemp.textContent = `${convertTemp(hour.temp, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
@@ -161,7 +131,7 @@ function createDailyList(daily, list) {
         tempBox.className = 'dailyTempBox'
 
         weekDay.textContent = cleanDay(day.date, now)
-        weather.textContent = `☀️ ${getWeatherState(day.weather)}`;
+        weather.textContent = `${getWeatherIcon(day.weather)} ${getWeatherState(day.weather)}`;
         precipBox.textContent = `${day.precipitaion}%`;
 
         dayBox.append(weekDay, weather)
@@ -451,4 +421,15 @@ function showCountry(stateData, countryData) {
     if (!stateData && countryData) return countryData;
 
     return `${stateData}, ${countryData}`
+}
+
+
+function getWeatherIcon(code, time=null) {
+    
+    if (time) {
+        const timeState = checkDay(state.dailyData, time)
+        return WEATHER_ICONS[timeState][code] ?? WEATHER_ICONS.general[code]
+    }
+
+    return WEATHER_ICONS.day[code] ?? WEATHER_ICONS.general[code]
 }

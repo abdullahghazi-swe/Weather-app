@@ -48,6 +48,8 @@ export function cleanDailyData(daily) {
             precipitaion: daily.precipitation_probability_mean[i],
             tempMax: daily.temperature_2m_max[i],
             tempMin: daily.temperature_2m_min[i],
+            sunset: daily.sunset[i],
+            sunrise: daily.sunrise[i],
         })
     }
     return dayList;
@@ -174,4 +176,15 @@ export function getTimezoneDateTime(timezone) {
     const values = Object.fromEntries(parts.map(p => [p.type, p.value]));
 
     return `${values.year}-${values.month}-${values.day}T${values.hour}:${values.minute}:${values.second}`;
+}
+
+
+export function checkDay(dayList, time) {
+
+    const index = dayList.findIndex(day => day.date === time.slice(0, 10))
+    const todaySunrise = dayList[index].sunrise
+    const todaySunset = dayList[index].sunset
+
+    const isNight = time < todaySunrise || time >= todaySunset;
+    return isNight ? 'night': 'day'; 
 }
