@@ -146,7 +146,7 @@ async function getWeather(lat, long) {
     "&daily=precipitation_probability_mean,weather_code,temperature_2m_max,temperature_2m_min,sunset,sunrise&forecast_days=8&timezone=auto";
 
     const aqiUrl = `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${long}&current=european_aqi,us_aqi`;
-    console.log(weatherUrl)
+
     try {
         const [weatherRes, aqiRes] = await Promise.all([
             fetch(weatherUrl),
@@ -300,7 +300,7 @@ async function getFavWeather(city) {
         weather = cacheWeather;
     }
 
-    if (weather.source === 'api') {
+    if (weather && weather.source === 'api') {
         saveWeather(city.coords, weather)
     }
 

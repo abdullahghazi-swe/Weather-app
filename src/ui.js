@@ -7,7 +7,7 @@ import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
 
 export function render() {
     resetUI();
-    
+
     showTime(state.location.timezone)
     city.textContent = state.location.city;
     country.textContent = showCountry(state.location.province, state.location.country);
@@ -56,6 +56,7 @@ function getWeatherState(code) {
 
 
 function createHourList(allHours, list) {
+    list.scrollTo({left:0});
     list.innerHTML = '';
     const now = getTimezoneDateTime(state.location.timezone);
 
@@ -349,7 +350,7 @@ function createFavCard(city) {
 
         cityWeather.className = 'cityWeather';
 
-        weatherIcon.textContent = '🌙';
+        weatherIcon.textContent = favWeatherIcon(city.weather.timezone, city.weather.daily.sunset[0], city.weather.daily.sunrise[0], city.weather.current.weather_code);
         weatherIcon.className = 'weatherIcon';
 
         weatherState.textContent = getWeatherState(city.weather.current.weather_code);
@@ -432,4 +433,16 @@ function getWeatherIcon(code, time=null) {
     }
 
     return WEATHER_ICONS.day[code] ?? WEATHER_ICONS.general[code]
+}
+
+function favWeatherIcon(timezone, sunset, sunrise, code) {
+    const now = getTimezoneDateTime(timezone);
+    let timeState;
+    if (now < sunrise || now >= sunset) {
+        timeState = 'night';
+    } else {
+        timeState = 'day';
+    }
+
+    return WEATHER_ICONS[timeState][code] ?? WEATHER_ICONS.general[code];
 }
