@@ -32,7 +32,9 @@ header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 56px 0 100px;
+    padding-top: 12px;
+    padding-left: clamp(10px, 5vw, 100px);
+    padding-right: clamp(10px, 4vw, 56px);
 }
 
 header .setting-btn {
@@ -45,10 +47,11 @@ header .setting-btn {
 }
 
 main {
-    padding: 0 256px 24px 256px;
+    padding: 0 clamp(24px, 15vw, 256px);
+    padding-bottom: 16px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    gap: clamp(12px, 5vw, 40px);
 }
 
 .logo {
@@ -58,16 +61,17 @@ main {
 }
 
 .time-search {
+    position: relative;
     display: flex;
-    gap: 250px;
-    height: 41px;
+    gap: clamp(20px, 10vw, 250px);
+    height: clamp(30px, 4vw, 41px);
 }
 
 .time {
     font-family: 'JetBrains Mono', monospace;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: clamp(13px, 3vw, 15px);
     color: #8388af;
     font-weight: 500;
     width: fit-content;
@@ -77,6 +81,7 @@ main {
 .current-location {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .city {
@@ -92,12 +97,12 @@ main {
 }
 
 .search {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: end;
     width: 100%;
     gap: 8px;
-    position: relative;
 }
 
 .searchbar {
@@ -107,8 +112,8 @@ main {
 }
 
 .searchField {
-    font-size: 20px;
-    padding: 8px 16px;
+    font-size: clamp(15px, 3vw, 20px);
+    padding: clamp(4px, 2vw, 8px) clamp(6px, 3vw, 16px);
     background: transparent;
     outline: none;
     border: 1px solid snow;
@@ -120,14 +125,15 @@ main {
 }
 
 .searchField.active {
+    z-index: 2;
     width: 100%;
 }
 
 .btn {
     border: 1px solid rgba(60, 72, 138, 0.65);
     background: transparent;
-    font-size: 18px;
-    padding: 6px;
+    font-size: clamp(15px, 2vw, 18px);
+    padding: clamp(4px, 1vw, 6px);
     border-radius: 50%;
     cursor: pointer;
     display: none;
@@ -235,6 +241,7 @@ main {
     border-radius: 10px;
     line-height: 24px;
     cursor: pointer;
+    text-wrap: nowrap;
 }
 
 .default-location.selected {
@@ -249,6 +256,7 @@ main {
     border-radius: 10px;
     line-height: 24px;
     cursor: pointer;
+    text-wrap: nowrap;
 }
 
 .addToFav.selected {
@@ -327,8 +335,10 @@ main {
 }
 
 .current-conditions {
+    width: 100%;
     display: flex;
     gap: 24px;
+    flex-wrap: wrap;
 }
 
 .condition {
@@ -338,6 +348,7 @@ main {
     font-size: 18px;
     font-weight: 500;
     flex: 1;
+    max-width: 25%;
     border-radius: 18px;
 }
 
@@ -353,6 +364,7 @@ main {
     display: flex;
     width: 100%;
     gap: 28px;
+    flex-wrap: wrap;
 }
 
 .info {
@@ -363,11 +375,12 @@ main {
     border-radius: 20px;
     font-size: 18px;
     font-weight: 500;
+    max-width: 25%;
 }
 
 .info-text {
     text-transform: uppercase;
-    font-size: 15px;
+    font-size: clamp(12px, 1vw, 15px);
     color: #697aad;
     margin-bottom: 8px;
     letter-spacing: 0.8px;
@@ -497,7 +510,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px 36px;
+    padding: 16px clamp(4px, 2vw, 36px);
 }
 
 .day-card .dayBox {
@@ -512,14 +525,14 @@ main {
 
 .weekDay {
     color: #8da5c9;
-    font-size: 20px;
+    font-size: clamp(16px, 2vw, 20px);
     font-weight: 400;
-    width: 100px;
+    width: clamp(70px, 5vw, 100px);
 }
 
 .weekDayWeather {
     color: #4e6592;
-    font-size: 21px;
+    font-size: clamp(16px, 2vw, 21px);
 }
 
 .dailyPrecip {
@@ -534,7 +547,7 @@ main {
     align-items: center;
     justify-content: center;
     gap: 15px;
-    padding: 0 50px;
+    padding: 0 clamp(4px, 3vw, 50px);
     font-size: 17px;
     font-weight: 500;
     color: #7d84a8;
@@ -894,4 +907,37 @@ footer > .updateTime {
 
 .invisible {
     visibility: hidden;
+}
+
+@media (max-width:768px) {
+    header {
+        padding-top: 4px;    
+    }
+
+    main {
+        margin-top: 8px;
+        padding: 0 20px;
+    }
+
+    .favorites {
+        display: none;
+    }
+
+    .search {
+        position: absolute;
+    }
+    .searchField {
+        padding-top: 8px;
+    }
+
+    .time-search:has(.searchField.show) .time {
+        display: none;
+    }
+
+    .city-controls {
+        margin-top: 12px;
+        font-size: 14px;
+        width: 100%;
+        justify-content: end;
+    }
 }
