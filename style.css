@@ -271,7 +271,7 @@ main {
     gap: 24px;
     width: 100%;
     border: 1px solid rgba(60, 72, 138, 0.65);
-    padding: 28px 36px;
+    padding: clamp(18px, 4vw, 28px) clamp(8px, 4vw, 36px);
     border-radius: 28px;
 }
 
@@ -287,7 +287,7 @@ main {
 }
 
 .temp {
-    font-size: 100px;
+    font-size: clamp(68px, 10vw, 100px);
     font-weight: 300;
     height: 100px;
     line-height: 100px;
@@ -295,7 +295,7 @@ main {
 
 .temp-unit {
     padding-top: 18px;
-    font-size: 38px;
+    font-size: clamp(24px, 4vw ,38px);
     color: #5a72a3;
 }
 
@@ -321,7 +321,7 @@ main {
 }
 
 .weather-icon {
-    font-size: 92px;
+    font-size: clamp(68px, 12vw, 92px);
     height: 100px;
     line-height: 100px;
 }
@@ -337,7 +337,7 @@ main {
 .current-conditions {
     width: 100%;
     display: flex;
-    gap: 24px;
+    gap: clamp(8px, 3vw, 24px);
     flex-wrap: wrap;
 }
 
@@ -348,8 +348,9 @@ main {
     font-size: 18px;
     font-weight: 500;
     flex: 1;
-    max-width: 25%;
-    border-radius: 18px;
+    max-width: 50%;
+    min-width: 150px;
+    border-radius: clamp(8px, 3vw, 18px);
 }
 
 .condition-text {
@@ -916,11 +917,20 @@ footer > .updateTime {
 
     main {
         margin-top: 8px;
-        padding: 0 20px;
+        padding: 0 12px;
+    }
+
+    .location-box {
+        padding: 0 10px;
     }
 
     .favorites {
         display: none;
+    }
+
+    .time-search {
+        margin-bottom: 6px;
+        align-items: center;
     }
 
     .search {
@@ -939,5 +949,21 @@ footer > .updateTime {
         font-size: 14px;
         width: 100%;
         justify-content: end;
+    }
+
+    .temp-unit {
+        padding-top: 32px;
+    }
+
+    .current-right {
+        gap: 16px;
+    }
+
+    .current-weather {
+        padding: 0 8px;
+    }
+
+    .weather-icon {
+        text-align: center;
     }
 }
