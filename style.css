@@ -343,9 +343,9 @@ main {
 
 .condition {
     background-color: #0d1741;
-    padding: 16px;
+    padding: 16px 20px;
     border: 1px solid #2f4072;
-    font-size: 18px;
+    font-size: clamp(14px, 3vw, 18px);
     font-weight: 500;
     flex: 1;
     max-width: 50%;
@@ -354,7 +354,7 @@ main {
 }
 
 .condition-text {
-    font-size: 14px;
+    font-size: clamp(11px, 3vw, 14px);
     text-transform: uppercase;
     color: #5f6e9b;
     letter-spacing: 1.5px;
@@ -394,17 +394,17 @@ main {
 
 .hourlyForcast {
     position: relative;
-    padding: 8px 36px;
+    padding: 8px clamp(12px, 4vw, 36px);
     border-radius: 24px;
     width: 100%;
-    margin-bottom: 36px;
+    margin-bottom: clamp(16px, 5vw, 36px);
     border: 1px solid rgba(60, 72, 138, 0.65);
 }
 
 .hourlyForcast > h3 {
     color: #5a72a3;
-    padding: 8px 0;
-    font-size: 17px;
+    padding: clamp(4px, 1vw, 8px) 0;
+    font-size: clamp(15px, 3vw, 17px);
     font-weight: 300;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -413,11 +413,11 @@ main {
 
 .hour-list {
     display: flex;
-    gap: 16px;
+    gap: clamp(10px, 2vw, 16px);
     width: 100%;
     overflow-x: auto;
     padding: 10px 0;
-    padding-bottom: 16px;
+    padding-bottom: clamp(4px, 2vw, 16px);
 
     &::-webkit-scrollbar {
         display: none;
@@ -432,8 +432,8 @@ main {
     border-radius: 50%;
     color: white;
     border: 1px solid #2a3157;
-    width: 35px;
-    height: 35px;
+    width: clamp(27px, 5vw, 35px);;
+    height: clamp(27px, 5vw, 35px);;
     position: absolute;
     top: 50%;
     cursor: pointer;
@@ -447,11 +447,11 @@ main {
 }
 
 .hourly-scroll.left {
-    left: 15px;
+    left: clamp(2px, 1vw, 15px);
 }
 
 .hourly-scroll.right {
-    right: 15px;
+    right: clamp(2px, 1vw, 15px);
 }
 
 .hour-card {
@@ -459,9 +459,9 @@ main {
     background-color: #161c38;
     border: 1px solid #2a3157;
     flex-shrink: 0;
-    padding: 20px 16px;
-    width: 117px;
-    height: 180px;
+    padding: clamp(12px, 3vw, 20px) clamp(4px, 3vw, 16px);
+    width: clamp(85px, 15vw, 116px);
+    height: clamp(130px, 30vw, 180px);
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -472,15 +472,15 @@ main {
 .hour-card > .hourTime {
     color: #516999;
     font-weight: 300;
-    font-size: 18px;
+    font-size: clamp(15px, 3vw, 18px);
 }
 
 .hour-card > .hourWeather {
-    font-size: 30px;
+    font-size: clamp(23px, 5vw, 30px);
 }
 
 .hour-card > .hourTemp {
-    font-size: 22px;
+    font-size: clamp(17px, 3vw, 22px);
 }
 
 .now-hour {
@@ -497,8 +497,9 @@ main {
 
 .dailyForcast > h3 {
     color: #5a72a3;
-    padding: 24px 36px;
-    font-size: 17px;
+    padding: clamp(8px, 3vw, 24px) clamp(18px, 4vw, 36px);
+    padding-bottom: 12px;
+    font-size: clamp(15px, 3vw, 17px);
     font-weight: 300;
     letter-spacing: 1px;
     text-transform: uppercase;
@@ -511,7 +512,7 @@ main {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 16px clamp(4px, 2vw, 36px);
+    padding: clamp(8px, 2vw, 16px) clamp(4px, 2vw, 36px);
 }
 
 .day-card .dayBox {
@@ -526,20 +527,21 @@ main {
 
 .weekDay {
     color: #8da5c9;
-    font-size: clamp(16px, 2vw, 20px);
+    font-size: clamp(14px, 2vw, 20px);
     font-weight: 400;
-    width: clamp(70px, 5vw, 100px);
+    width: clamp(50px, 5vw, 100px);
 }
 
 .weekDayWeather {
     color: #4e6592;
-    font-size: clamp(16px, 2vw, 21px);
+    font-size: clamp(14px, 3vw, 21px);
+    text-wrap: nowrap;
 }
 
 .dailyPrecip {
     color: #5a72a3;
-    font-size: 20px;
-    width: 45px;
+    font-size: clamp(15px, 2vw, 20px);
+    width: clamp(30px, 3vw, 45px);
     text-align: end;
 }
 
@@ -547,17 +549,21 @@ main {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 15px;
+    gap: clamp(4px, 2vw, 15px);
     padding: 0 clamp(4px, 3vw, 50px);
-    font-size: 17px;
+    font-size: clamp(12px, 2vw, 17px);
     font-weight: 500;
     color: #7d84a8;
+}
+
+.dailyTempBox span {
+    text-wrap: nowrap;
 }
 
 .dailyTempBox .tempBarBox {
     height: 5px;
     background-color: #333333;
-    width: 65px;
+    width: clamp(35px, 5vw, 65px);
     border-radius: 5px;
 }
 
@@ -965,5 +971,37 @@ footer > .updateTime {
 
     .weather-icon {
         text-align: center;
+    }
+
+    .condition {
+        padding: 8px 12px;
+        min-width: 40%;
+    }
+
+    .day-card {
+        padding-left: 12px;
+        padding-right: 10px;
+    }
+
+    .dailyTempBox {
+        padding: 0 4px;
+    }
+
+    .dailyForcast h3 {
+        padding-bottom: 6px;
+    }
+
+    .dailyTempBox .tempBarBox {
+        height: 4px;
+    }
+
+    .last-day {
+        padding-bottom: 13px;
+    }
+}
+
+@media (max-width:320px) {
+    .dailyTempBox .tempBarBox {
+        width: 10px;
     }
 }
