@@ -4,6 +4,7 @@ import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay } from "./utils.js";
 import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
+import { showSearch } from "./events.js";
 
 export function render() {
     resetUI();
@@ -233,14 +234,7 @@ function addChangeLocation() {
     note.className = 'approx';
     btn.className = 'changeBtn';
     
-    btn.addEventListener('click', () => {
-        search.classList.add('show')
-        searchBtn.classList.remove('show')
-        search.focus()
-        if (searchResult.children.length) {
-            searchResult.classList.add('show-results');
-        }
-    });
+    btn.addEventListener('click', showSearch);
 
     note.append(btn);
     city.append(note);

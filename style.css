@@ -364,7 +364,7 @@ main {
 .info-box {
     display: flex;
     width: 100%;
-    gap: 28px;
+    gap: clamp(16px, 3vw, 28px);
     flex-wrap: wrap;
 }
 
@@ -372,9 +372,9 @@ main {
     background-color: #161c44;
     border: 1px solid #2f4071;
     flex: 1;
-    padding: 24px 28px;
-    border-radius: 20px;
-    font-size: 18px;
+    padding: clamp(10px, 3vw, 24px) clamp(16px, 3vw, 28px);
+    border-radius: clamp(12px, 3vw, 20px);
+    font-size: clamp(15px, 2vw, 18px);
     font-weight: 500;
     max-width: 25%;
 }
@@ -675,11 +675,11 @@ main {
 
 footer {
     border-top: 1px solid #2f4071;
-    padding-top: 16px;
+    padding-top: clamp(10px, 2vw, 16px);
 }
 
 footer > .updateTime {
-    font-size: 18px;
+    font-size: clamp(15px, 2vw, 18px);
     color: #6679b3;
     font-weight: 400;
     letter-spacing: 1px;
@@ -743,12 +743,12 @@ footer > .updateTime {
     justify-content: center;
     align-items: center;
     z-index: 10;
-    
+    gap: 20px;
 }
 
 .app-error-text {
     color: #161c44;
-    font-size: 32px;
+    font-size: clamp(18px, 3vw, 32px);
 }
 
 .tryAgain-btn {
@@ -756,7 +756,7 @@ footer > .updateTime {
     text-decoration: underline;
     color: #2a3157;
     border: none;
-    font-size: 24px;
+    font-size: clamp(20px, 3vw, 24px);
     cursor: pointer;
 }
 
@@ -780,19 +780,19 @@ footer > .updateTime {
 
 .toastBox {
     margin-top: 120px;
-    width: 500px;
+    width: clamp(310px, 40vw, 500px);
     position: absolute;
     top: 0;
     right: 0;
-    padding: 0 24px;
+    padding: 0 clamp(12px, 2vw, 24px);
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: clamp(12px, 2vw, 24px);
 }
 
 .toast {
     width: 100%;
-    font-size: 20px;
+    font-size: clamp(16px, 2vw, 20px);
     padding: 12px 16px;
     border-radius: 16px;
     background: rgba(139, 146, 187, 0.5);
@@ -820,7 +820,7 @@ footer > .updateTime {
     position: absolute;
     right: 0;
     top: 0;
-    width: 20%;
+    width: clamp(280px, 70vw, 380px);
     height: 100%;
     border-left: 1px solid #2a3157;
 
@@ -924,6 +924,7 @@ footer > .updateTime {
     main {
         margin-top: 8px;
         padding: 0 12px;
+        padding-bottom: 8px;
     }
 
     .location-box {
@@ -998,10 +999,27 @@ footer > .updateTime {
     .last-day {
         padding-bottom: 13px;
     }
+
+    .info {
+        min-width: 47%;
+    }
+
+    .app-error-text {
+        padding: 0 8px;
+        text-align: center;
+    }
 }
 
 @media (max-width:320px) {
     .dailyTempBox .tempBarBox {
         width: 10px;
+    }
+
+    .city {
+        font-size: 21px;
+    }
+
+    .approx {
+        margin: 10px;
     }
 }

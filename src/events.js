@@ -238,7 +238,7 @@ export function initEventListeners() {
     })
 }
 
-function showSearch() {
+export function showSearch() {
     search.classList.add('show')
     searchBtn.classList.remove('show')
     search.focus()
