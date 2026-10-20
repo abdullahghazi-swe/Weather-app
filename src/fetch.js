@@ -315,3 +315,22 @@ export async function loadFavorites() {
     const results = await Promise.all(state.favorites.map(city => getFavWeather(city)))
     renderFavorites(results);
 }
+
+export async function refresh(coords) {
+    const data = await getWeather(coords.latitude, coords.longitude);
+
+    if (!data) {
+        return;
+    }
+    
+    saveWeather(coords, data);
+    const cityData = {
+        name: state.location.city,
+        state: state.location.province,
+        country: state.location.country,
+        coords: coords,
+    }
+
+    setState(cityData, data);
+    render();
+}

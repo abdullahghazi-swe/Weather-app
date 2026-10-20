@@ -190,9 +190,21 @@ main {
     margin-top: 12px;
     width: 100%;
     padding: 12px 24px;
-    font-size: 20px;
+    font-size: clamp(15px, 2vw, 20px);
     border-radius: 12px;
     color: #e0b048;
+    display: flex;
+    justify-content: space-between;
+}
+
+.retry {
+    display: none;
+    color: #e0b048;
+    border: none;
+    background: #644d1b;
+    padding: 2px 8px;
+    border-radius: 8px;
+    align-items: center;
 }
 
 .star {

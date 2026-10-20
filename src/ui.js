@@ -1,4 +1,4 @@
-import { locBox, time, city, country, weather, weatherIcon, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll } from "./dom.js";
+import { locBox, time, city, country, weather, weatherIcon, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll, retryBtn } from "./dom.js";
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
@@ -254,6 +254,7 @@ function resetUI() {
     hourList.parentElement.classList.remove('hide');
     rightScroll.classList.remove('show');
     leftScroll.classList.remove('show');
+    retryBtn.classList.remove('show')
 }
 
 function addSetDefault(currentCoords) {
@@ -276,6 +277,9 @@ function showOffline() {
     const offline = document.createElement('div')
     offline.textContent = 'Offline — showing cached data';
     offline.className = 'offline';
+    retryBtn.classList.add('show')
+    offline.append(retryBtn);
+    
 
     locBox.append(offline);
 }

@@ -1,5 +1,5 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn } from "./dom.js";
-import { manageFavWeather, manageSelectedCity, loadFavorites } from "./fetch.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn, retryBtn } from "./dom.js";
+import { manageFavWeather, manageSelectedCity, loadFavorites, refresh } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
@@ -235,6 +235,10 @@ export function initEventListeners() {
 
     rightScroll.addEventListener('click', () => {
         hourList.scrollTo({behavior: "smooth", left: hourList.scrollWidth - hourList.clientWidth})
+    })
+
+    retryBtn.addEventListener('click', () => {
+        refresh(state.location.coordinates)
     })
 }
 
