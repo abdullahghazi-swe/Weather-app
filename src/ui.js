@@ -4,7 +4,7 @@ import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay } from "./utils.js";
 import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
-import { showSearch } from "./events.js";
+import { closeFavs, showSearch } from "./events.js";
 
 export function render() {
     resetUI();

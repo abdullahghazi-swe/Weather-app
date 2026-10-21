@@ -37,6 +37,7 @@ export const favList = document.querySelector('.favorites-list')
 export const favStar = document.querySelector('.fav-star')
 export const favText = document.querySelector('.fav-text')
 export const favBtn = document.querySelector('.addToFav')
+export const favListBtn = document.querySelector('.favo-btn')
 
 export const toastBox = document.querySelector('.toastBox')
 

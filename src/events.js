@@ -1,4 +1,4 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn, retryBtn } from "./dom.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn, retryBtn, favListBtn } from "./dom.js";
 import { manageFavWeather, manageSelectedCity, loadFavorites, refresh } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
@@ -186,7 +186,7 @@ export function initEventListeners() {
 
         const fav = e.target.closest('.favorite-item');
         if (!fav) return;
-
+        closeFavs();
         manageFavWeather(Number(fav.dataset.id))
     })
 
@@ -240,6 +240,31 @@ export function initEventListeners() {
     retryBtn.addEventListener('click', () => {
         refresh(state.location.coordinates)
     })
+
+    favListBtn.addEventListener('click', e => {
+        const hideBg = document.createElement('div');
+        const favBg = document.createElement('div');
+        const close = document.createElement('button');
+
+        hideBg.className = 'hide-bg';
+        favBg.className = 'fav-bg';
+        close.className = 'fav-close';
+        close.textContent = '×';
+
+        favBg.append(close);
+        hideBg.append(favBg);
+        document.body.append(hideBg);
+
+        hideBg.addEventListener('click', e => {
+            if (e.target !== hideBg) return;
+            closeFavs();
+        });
+
+        close.addEventListener('click', closeFavs);
+
+        document.body.style.overflow = "hidden";
+        favorites.classList.add('show-force');
+    })
 }
 
 export function showSearch() {
@@ -252,4 +277,10 @@ export function showSearch() {
     if (searchResult.children.length) {
         searchResult.classList.add('show-results');
     }
+}
+
+export function closeFavs() {
+    document.querySelector('.hide-bg')?.remove();
+    document.body.style.overflow = '';
+    favorites.classList.remove('show-force');
 }
