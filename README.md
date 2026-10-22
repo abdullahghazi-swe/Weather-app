@@ -34,7 +34,6 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 ## Next
 
 Add proper logo
-Redirect to default on logo
 Weather insights
 
 ## Cache Rules 

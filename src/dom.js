@@ -1,3 +1,4 @@
+export const logo = document.querySelector('.logo')
 export const search = document.querySelector('input');
 export const searchBtn = document.querySelector('.btn')
 export const searchResult = document.querySelector('.search-results')

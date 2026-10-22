@@ -83,6 +83,7 @@ function createHourList(allHours, list) {
         if (hour.time.slice(0, 13) === now.slice(0, 13)) {
             hourLable.textContent = "Now";
             hourWeather.dataset.weather = state.weatherData.weatherCode;
+            hourWeather.textContent = weatherIcon.textContent;
             hourTemp.textContent = `${convertTemp(state.weatherData.temperature, state.units.temp)} ${state.units.temp === "celsius" ? "°C": "°F"}`;
             card.classList.add('now-hour');
             hourLable.style.color = '#6e96be'

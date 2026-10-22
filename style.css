@@ -58,6 +58,7 @@ main {
     color: #a2aceb;
     font-size: 22px;
     letter-spacing: 0.5px;
+    cursor: pointer;
 }
 
 .time-search {
@@ -956,6 +957,7 @@ footer > .updateTime {
         height: 100%;
         width: clamp(200px, 55vw, 270px);
         z-index: 26;
+        border-right: 1px solid #3c4977;
     }
 
     .fav-close {

@@ -1,5 +1,5 @@
-import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn, retryBtn, favListBtn } from "./dom.js";
-import { manageFavWeather, manageSelectedCity, loadFavorites, refresh } from "./fetch.js";
+import { search, searchResult, star, defaultText, favStar, favText, favorites, searchBtn, settingBtn, settings, settingClose, units, hourList, leftScroll, rightScroll, defaultBtn, favBtn, retryBtn, favListBtn, logo } from "./dom.js";
+import { manageFavWeather, manageSelectedCity, loadFavorites, refresh, getWeatherOnLoad } from "./fetch.js";
 import { getCities } from "./search.js";
 import { state } from "./state.js";
 import { setDefaultLocation, removeDefaultLocation, addToFavorites, removeFromFavorites } from "./storage.js";
@@ -265,6 +265,8 @@ export function initEventListeners() {
         document.body.style.overflow = "hidden";
         favorites.classList.add('show-force');
     })
+
+    logo.addEventListener('click', getWeatherOnLoad)
 }
 
 export function showSearch() {
