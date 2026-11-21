@@ -606,7 +606,6 @@ main {
     display: none;
     flex-direction: column;
     gap: 8px;
-    z-index: 100;
 }
 
 .favorites > h3 {
@@ -985,6 +984,7 @@ footer > .updateTime {
         height: 100vh;
         padding-bottom: 56px;
         width: clamp(190px, 54vw, 260px);
+        z-index: 100;
     }
 
     .favorites-list {

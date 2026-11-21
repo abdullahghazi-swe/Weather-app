@@ -40,6 +40,11 @@ export const state = {
         precip: 'millimeters',
         wind: 'kilometersPerHour',
         visib: 'kilometers',
+    },
+    conditions: {
+        time:null,
+        weather:null,
+        temp:null
     }
 }
 

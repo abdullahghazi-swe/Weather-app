@@ -5,8 +5,10 @@ import { state } from "./state.js";
 import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay } from "./utils.js";
 import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
 import { closeFavs, showSearch } from "./events.js";
+import { setConditions } from "./conditons.js";
 
 export function render() {
+    setConditions(state.weatherData.weatherCode, getTimezoneDateTime(state.location.timezone), state.weatherData.apparentTemp)
     resetUI();
 
     showTime(state.location.timezone)
@@ -48,6 +50,7 @@ export function render() {
     }
     removeLoading();
     renderRecentSearches();
+    console.log(state.conditions)
 }
 
 function getWeatherState(code) {
