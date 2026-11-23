@@ -16,6 +16,7 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 - Save cache weather data to minimize API calls
 - Refresh expired weather 
 - Show stale weather on API failure
+- Show Condition based weather insights
 
 ## Tech Stack
 - HTML5
@@ -34,7 +35,7 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 ## Next
 
 Add proper logo
-Weather insights
+fix long forcast on daily forcast
 
 ## Cache Rules 
 

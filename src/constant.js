@@ -76,3 +76,45 @@ export const WEATHER_CODES = {
 	97: "Heavy Thunderstorm",
 	99: "Thunderstorm with Heavy Hail"
 };
+
+export const INSIGHTS = [
+
+  { time: "morning", temp: "cold", weather: "clear", message: "Crisp, clear morning. A light jacket and a short walk will feel great." },
+  { time: "noon", temp: "hot", weather: "clear", message: "Hot sun overhead. Wear sunscreen, drink plenty of water and avoid long stretches outdoors." },
+  { time: "evening", temp: "moderate", weather: "rain", message: "A mild, rainy evening. Grab an umbrella and enjoy the calm." },
+  { time: "night", temp: "freezing", weather: "snow", message: "Freezing, snowy night. Bundle up and watch for icy roads." },
+
+  { time: "morning", weather: "fog", message: "Foggy morning. Drive carefully and use low-beam headlights." },
+  { time: "morning", weather: "rain", message: "Rainy morning. Keep an umbrella by the door before you head out." },
+  { time: "morning", weather: "clear", message: "Clear morning sky. A great time for a walk or workout." },
+  { time: "noon", weather: "thunder", message: "Thunderstorms around midday. Stay indoors and away from open areas." },
+  { time: "noon", weather: "cloud", message: "Clouds are softening the midday sun. Comfortable for running errands." },
+  { time: "noon", weather: "rain", message: "Rainy midday. Keep an umbrella with you and watch for wet roads." }, 
+  { time: "evening", weather: "rain", message: "Rainy evening. Keep an umbrella handy on your way home." },
+  { time: "evening", weather: "clear", message: "Clear evening. A nice time to catch the sunset." },
+  { time: "evening", weather: "fog", message: "Fog is settling in this evening. Take extra care if you're driving." },
+  { time: "night", weather: "clear", message: "Clear night sky. Perfect weather for stargazing." },
+  { time: "night", weather: "rain", message: "Rain tonight. A cozy night in sounds about right." },
+  { time: "night", weather: "cloud", message: "Clouds are covering the night sky, limiting views of the stars and moon." },
+
+  { time: "morning", temp: "freezing", message: "Freezing morning. Watch for frost and icy patches." },
+  { time: "morning", temp: "hot", message: "Already hot this morning. Do outdoor tasks early before the heat peaks." },
+  { time: "morning", temp: "moderate", message: "Mild morning. Comfortable conditions to start the day outside." },
+  { time: "noon", temp: "hot", message: "Peak heat of the day. Stay out of direct sun and keep hydrated." },
+  { time: "noon", temp: "cold", message: "Cold even at midday. Keep a warm layer on while you're out." },
+  { time: "noon", temp: "warm", message: "Warm midday. Light clothing and some water will keep you comfortable." },
+  { time: "evening", temp: "warm", message: "Warm evening. Perfect for spending time outside." },
+  { time: "evening", temp: "cold", message: "It's getting chilly this evening. Carry an extra layer." },
+  { time: "evening", temp: "moderate", message: "Pleasant evening temperature. A good time for a stroll." },
+  { time: "night", temp: "cold", message: "Cold night. Keep warm and keep the windows closed." },
+  { time: "night", temp: "hot", message: "A hot night. Keep a fan or AC handy and stay hydrated." },
+  { time: "night", temp: "freezing", message: "Freezing night. Frost is likely, so bundle up and stay cozy." },
+
+  { weather: "clear", message: "Clear skies. Great conditions to be outside." },
+  { weather: "clear", message: "No clouds in sight. Visibility is good all around." },
+  { weather: "cloud", message: "Cloudy skies. It may feel a little cooler and duller than usual." },
+  { weather: "fog", message: "Fog reduces visibility. Take it slow on the roads." },
+  { weather: "rain", message: "Rain expected. Carry an umbrella or a waterproof jacket." },
+  { weather: "snow", message: "Snowfall expected. Dress warmly and allow extra travel time." },
+  { weather: "thunder", message: "Thunderstorms in the area. Stay indoors until they pass." }
+];

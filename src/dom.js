@@ -26,6 +26,7 @@ export const uv = document.querySelector('.uv')
 export const aqi = document.querySelector('.aqi')
 export const visibility = document.querySelector('.visibility')
 export const update = document.querySelector('.updateTime')
+export const insightBox = document.querySelector('.insight')
 
 export const hourList = document.querySelector('.hour-list')
 export const dailyList = document.querySelector('.day-list')

@@ -160,6 +160,9 @@ export function manageExpiry(weather) {
     return weather;
 }
 
+export function getRandomIndex(len) {
+    return Math.floor(Math.random() * len);
+}
 
 export function getTimezoneDateTime(timezone) {
     const parts = new Intl.DateTimeFormat("en-CA", {
@@ -177,7 +180,6 @@ export function getTimezoneDateTime(timezone) {
 
     return `${values.year}-${values.month}-${values.day}T${values.hour}:${values.minute}:${values.second}`;
 }
-
 
 export function checkDay(dayList, time) {
 

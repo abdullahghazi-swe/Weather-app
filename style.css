@@ -281,7 +281,7 @@ main {
 .weather {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 8px;
     width: 100%;
     border: 1px solid rgba(60, 72, 138, 0.65);
     padding: clamp(18px, 4vw, 28px) clamp(8px, 4vw, 36px);
@@ -291,6 +291,15 @@ main {
 .current-weather {
     display: flex;
     justify-content: space-between;
+}
+
+.insight {
+    color: #98abe4;
+    font-size: clamp(15px, 1vw, 19px);
+    font-weight: 400;
+    margin-bottom: 8px;
+    letter-spacing: 0.75px;
+    text-wrap: wrap;
 }
 
 .temperature {
@@ -1044,6 +1053,9 @@ footer > .updateTime {
     }
 
     .current-weather {
+        padding: 0 8px;
+    }
+    .insight {
         padding: 0 8px;
     }
 

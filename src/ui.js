@@ -1,9 +1,9 @@
-import { locBox, time, city, country, weather, weatherIcon, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll, retryBtn } from "./dom.js";
+import { locBox, time, city, country, weather, weatherIcon, temp, humidity, wind, hourList, precip, precipProb, dew, uv, feels, pressure, visibility, aqi, dailyList, searchResult, search, star, defaultText, update, favorites, favList, favStar, favText, searchBtn, defaultBtn, favBtn, rightScroll, leftScroll, retryBtn, insightBox } from "./dom.js";
 import { tempUnit, feelsUnit, windUnit, visibUnit, dewUnit, presUnit, precipUnit  } from "./dom.js";
 import { removeLoading } from "./loading.js";
 import { state } from "./state.js";
-import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay } from "./utils.js";
-import { WEATHER_ICONS, WEATHER_CODES } from "./constant.js";
+import { formateTime, cleanHourTime, cleanDay, checkDefault, checkInFavorites, convertTemp, convertPrecip, convertPressure, convertWind, convertVisib, getTimezoneDateTime, checkDay, getRandomIndex } from "./utils.js";
+import { WEATHER_ICONS, WEATHER_CODES, INSIGHTS } from "./constant.js";
 import { closeFavs, showSearch } from "./events.js";
 import { setConditions } from "./conditons.js";
 
@@ -20,6 +20,7 @@ export function render() {
     weather.textContent = getWeatherState(state.weatherData.weatherCode);
     precipProb.textContent = state.weatherData.precipProbability;
     weatherIcon.textContent = getWeatherIcon(state.weatherData.weatherCode, getTimezoneDateTime(state.location.timezone))
+    insightBox.textContent = setInsights();
 
     wind.textContent = convertWind(state.weatherData.windSpeed, state.units.wind);
     uv.textContent = state.weatherData.uvIndex;
@@ -50,7 +51,6 @@ export function render() {
     }
     removeLoading();
     renderRecentSearches();
-    console.log(state.conditions)
 }
 
 function getWeatherState(code) {
@@ -447,4 +447,43 @@ function favWeatherIcon(timezone, sunset, sunrise, code) {
     }
 
     return WEATHER_ICONS[timeState][code] ?? WEATHER_ICONS.general[code];
+}
+
+function setInsights() {
+    const time = state.conditions.time;
+    const temp = state.conditions.temp;
+    const weather = state.conditions.weather;
+    console.log(time, temp, weather)
+    const fullMatch = INSIGHTS.filter(insight => 
+        insight.time === time &&
+        insight.temp === temp &&
+        insight.weather === weather);
+
+    if (fullMatch.length !== 0) {
+        console.log(fullMatch)
+        return fullMatch[getRandomIndex(fullMatch.length)].message;
+    }
+
+    const halfMatch = INSIGHTS.filter(insight => 
+        insight.time === time && (
+        (insight.temp === temp && insight.weather === undefined) ||
+        (insight.weather === weather && insight.temp === undefined))
+    );
+
+    if (halfMatch.length !== 0) {
+        console.log(halfMatch)
+        return halfMatch[getRandomIndex(halfMatch.length)].message;
+    }
+
+    const minMatch = INSIGHTS.filter(insight => 
+        insight.weather === weather &&
+        insight.time === undefined &&
+        insight.temp === undefined);
+
+    if (minMatch.length !== 0) {
+        console.log(minMatch)
+        return minMatch[getRandomIndex(minMatch.length)].message;
+    }
+
+    return "It's always a good idea to stay prepared, even when the weather seems calm."
 }
