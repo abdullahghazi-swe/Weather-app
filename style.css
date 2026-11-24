@@ -281,7 +281,7 @@ main {
 .weather {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 16px;
     width: 100%;
     border: 1px solid rgba(60, 72, 138, 0.65);
     padding: clamp(18px, 4vw, 28px) clamp(8px, 4vw, 36px);
@@ -294,12 +294,39 @@ main {
 }
 
 .insight {
-    color: #98abe4;
-    font-size: clamp(15px, 1vw, 19px);
-    font-weight: 400;
-    margin-bottom: 8px;
-    letter-spacing: 0.75px;
+    background-color: #1c2746;
+    border-radius: 16px;
+    border: 1px solid #355888;
+    padding: clamp(8px, 1vw, 14px) clamp(10px, 1vw, 16px);
+    display: flex;
+}
+
+.insight-bar {
+    background: #6394da;
+    width: 5px;
+    border-radius: 4px;
+}
+
+.insightBox {
+    padding-left: clamp(10px, 1vw, 16px);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.insightBox > h4 {
+    font-size: clamp(12px, 1vw, 14px);
+    font-weight: 300;
+    color: #7eb3fc;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.insight-text {
+    font-size: clamp(11px, 1vw, 14px);
     text-wrap: wrap;
+    letter-spacing: 0.25px;
+    color: #d1e0f7;
 }
 
 .temperature {
@@ -1056,7 +1083,7 @@ footer > .updateTime {
         padding: 0 8px;
     }
     .insight {
-        padding: 0 8px;
+        
     }
 
     .weather-icon {

@@ -38,9 +38,9 @@ function checkWeather(code) {
 
 function checkTemp(temp) {
     if (temp <= 0) return 'freezing';
-    if (temp <= 10) return 'cold';
-    if (temp <= 25) return 'moderate';
-    if (temp <= 35) return 'warm';
+    if (temp <= 14) return 'cold';
+    if (temp <= 26) return 'moderate';
+    if (temp <= 33) return 'warm';
 
     return 'hot';
 }
