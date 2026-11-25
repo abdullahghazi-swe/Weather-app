@@ -34,8 +34,9 @@ Weather app built in vanilla Javascript that show weather and forcast of any cit
 
 ## Next
 
+Dynamic theme
 Add proper logo
-fix long forcast on daily forcast
+Add real icons
 
 ## Cache Rules 
 

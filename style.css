@@ -584,7 +584,7 @@ main {
 .weekDayWeather {
     color: #4e6592;
     font-size: clamp(14px, 3vw, 21px);
-    text-wrap: nowrap;
+    white-space: nowrap;
 }
 
 .dailyPrecip {
@@ -1082,9 +1082,6 @@ footer > .updateTime {
     .current-weather {
         padding: 0 8px;
     }
-    .insight {
-        
-    }
 
     .weather-icon {
         text-align: center;
@@ -1098,6 +1095,16 @@ footer > .updateTime {
     .day-card {
         padding-left: 12px;
         padding-right: 10px;
+    }
+
+    .dayBox {
+        max-width: 55%;
+    }
+
+    .weekDayWeather {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 75%;
     }
 
     .dailyTempBox {
